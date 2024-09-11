@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css');
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+header, footer {
+    background-color: #333;
+    color: white;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header {
+    position: relative;
+}
+header .title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5em;
+    font-family: 'Dancing Script', cursive;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    background-clip: text;
+}
+header .date {
+    font-size: 1em;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 100%);
+    padding: 0.2em 0.5em;
+    border-radius: 10px;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    justify-content: center;
+}
+.header, .footer {
+    transition: transform 0.3s ease;
+}
+.nav-wrapper {
+    display: flex;
+    justify-content: space-around;
+    background-color: #d0d0d0;
+    padding: 10px;
+    border-radius: 10px;
+}
+.nav-wrapper a {
+    flex: 1; /* 모든 버튼의 크기를 통일 */
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 1em;
+    text-decoration: none;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    border-radius: 10px; /* 둥글게 */
+    box-shadow: 0 4px #999; /* 3D 효과 */
+}
+.nav-wrapper a:hover {
+    background-color: #b0b0b0;
+    box-shadow: 0 2px #666;
+}
+.nav-wrapper a:active {
+    box-shadow: 0 1px #666;
+    transform: translateY(2px);
+}
+.nav-wrapper a.active {
+    background-color: #888; /* 눌린 상태의 버튼 색상 */
+}
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+.recommendation-box, .nutrition-box, .weather-box {
+    border: 2px solid #333;
+    padding: 20px;
+    text-align: left;
+    background-color: #f9f9f9;
+    border-radius: 10px; /* 둥글게 */
+    width: 80%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.recommendation-box h2, .nutrition-box h2, .weather-box h2 {
+    font-size: 1em; /* 작은 제목 */
+    margin-bottom: 10px;
+}
+.recommendation-box p {
+    font-size: 2em; /* 큰 음식 이름 */
+}
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
