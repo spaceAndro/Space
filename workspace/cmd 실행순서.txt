@@ -4,3 +4,4 @@ pip install certifi --upgrade
 pip install pandas
 pip install scikit-learn
 pip install mysql-connector-python
+pip install openpyxl
