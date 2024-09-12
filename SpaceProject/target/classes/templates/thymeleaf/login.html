@@ -144,8 +144,14 @@
 <body>
     <header>
         <h1 class="title">Space</h1>
-        <div class="date">2024-05-30</div>
+        <div class="date" id="current-date"></div>
     </header>
+	<script>
+		const dateElment = document.getElementById('current-date');
+		const today = new Date();
+		const formattable = today.toISOString().split('T')[0]; // 'YYYY-MM-DD' 형식으로 포맷
+		dateElment.textContent = formattable;
+	</script>
     <div class="content">
         <div class="login-container">
             <h2>로그인</h2>

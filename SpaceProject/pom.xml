@@ -11,7 +11,7 @@
 	<groupId>com.rubypaper</groupId>
 	<artifactId>spaceproject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>chapter51</name>
+	<name>spaceproject</name>
 	<description>진입점배우기 controller</description>
 	<properties>
 		<java.version>17</java.version>

@@ -14,6 +14,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int uSeq;
+	
 	public String id;
 	public String pw;
 	public String name;
