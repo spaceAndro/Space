@@ -17,12 +17,20 @@ public class Allergy {
 	@Column(name="allergy_seq")
 	public int aSeq;
 	
-	public String milk;
-	public String egg;
-	public String peanut;
-	public String nuts;
-	public String seafood;
-	public String shellfish;
-	public String wheat;
-	public String bean;
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	public boolean milk;
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	public boolean egg;
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	public boolean peanut;
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	public boolean nuts;
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	public boolean seafood;
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	public boolean shellfish;
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	public boolean wheat;
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	public boolean Leguminoseae;
 }
