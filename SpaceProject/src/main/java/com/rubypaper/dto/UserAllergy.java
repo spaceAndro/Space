@@ -19,13 +19,13 @@ public class UserAllergy {
 	@JoinColumn(name="uSeq")
 	public User user;
 	
+	//9/18 db 내용 수정
 	public String milk;
 	public String egg;
 	public String peanut;
 	public String nuts;
 	public String seafood;
+	public String shellfish;
 	public String wheat;
 	public String bean;
-	public String fruit;
-	public String meat;
 }

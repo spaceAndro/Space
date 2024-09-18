@@ -17,6 +17,12 @@ public class Allergy {
 	@Column(name="allergy_seq")
 	public int aSeq;
 	
-	@Column(name="allergy_name")
-	public String name;
+	public String milk;
+	public String egg;
+	public String peanut;
+	public String nuts;
+	public String seafood;
+	public String shellfish;
+	public String wheat;
+	public String bean;
 }
