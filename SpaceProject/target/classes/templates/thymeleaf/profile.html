@@ -43,22 +43,31 @@
             <span th:text="${date}"></span>
         </div>
         <div class="title">Space</div>
-        <div class="login-button"><button>로그인</button></div>
+		<div class="logout-button">
+		    <form action="/logout" method="post" style="display: inline;">
+		        <button type="submit">로그아웃</button>
+		    </form>
+		</div>
     </header>
     <div class="nav-wrapper">
-        <a href="/">음식 추천</a>
+        <a href="/index">음식 추천</a>
         <a href="/restaurant">식당 추천</a>
         <a href="/calendar">음식 캘린더</a>
         <a href="/history">지난 먹은 음식 내역</a>
         <a href="/profile" class="active">내 정보</a>
     </div>
-    <div class="content">
-        <div class="recommendation-box">
-            <h2>내 정보</h2>
-            <p>사용자 정보</p>
-			
-        </div>
-    </div>
+	<div class="recommendation-box">
+	    <h2>내 정보</h2>
+	    <p th:if="${user != null}">
+	        아이디: <span th:text="${user.id}"></span><br>
+	        이름: <span th:text="${user.name}"></span><br>
+	        나이: <span th:text="${user.age}"></span><br>
+	        성별: <span th:text="${user.gender}"></span><br>
+	        주소: <span th:text="${user.addr}"></span><br>
+	    </p>
+	    <p th:if="${user == null}">사용자 정보를 찾을 수 없습니다.</p>
+	    <a href="/AllergyForm">알러지 설문</a>
+	</div>
     <footer class="footer">
         <p>© 2024 Space. All rights reserved.</p>
     </footer>

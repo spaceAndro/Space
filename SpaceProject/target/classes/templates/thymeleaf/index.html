@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space - 음식 추천</title>
     <link rel="stylesheet" href="/css/styles.css">
-    <script src="/js/weather.js" defer></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const links = document.querySelectorAll(".nav-wrapper a");
@@ -50,10 +49,14 @@
             <span th:text="${date}"></span>
         </div>
         <div class="title">Space</div>
-        <div class="login-button"><button>로그인</button></div>
+		<div class="logout-button">
+		    <form action="/logout" method="post" style="display: inline;">
+		        <button type="submit">로그아웃</button>
+		    </form>
+		</div>
     </header>
     <div class="nav-wrapper">
-        <a href="/" class="active">음식 추천</a>
+        <a href="/index" class="active">음식 추천</a>
         <a href="/restaurant">식당 추천</a>
         <a href="/calendar">음식 캘린더</a>
         <a href="/history">지난 먹은 음식 내역</a>
@@ -61,16 +64,15 @@
     </div>
     <div class="content">
         <div class="weather-box">
-            <h2>현재 날씨</h2>
-            <!-- 날씨 정보가 여기 표시됩니다 -->
+            <h2>현재 서울 날씨</h2>
+            <p th:text="${weather}"></p>  <!-- 날씨 정보 출력 -->
         </div>
         <div class="nutrition-box">
             <h2>영양성분 확인</h2>
-            <!-- 영양성분 정보 추가 -->
         </div>
         <div class="recommendation-box">
             <h2>오늘의 음식 추천</h2>
-            <p th:text="${recommendedFood}"></p>
+            <p th:text="${recommendedFood}"></p>  <!-- 추천된 음식 출력 -->
         </div>
     </div>
     <footer class="footer">

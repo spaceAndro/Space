@@ -1,8 +1,11 @@
 package com.rubypaper.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.rubypaper.service.WeatherService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,15 +13,27 @@ import java.util.Random;
 
 @Controller
 public class FoodController {
-
-    @GetMapping("/")
+	
+	@Autowired
+    private WeatherService weatherService;
+	
+	@GetMapping("/index")
     public String home(Model model) {
+        // 날짜 추가
         model.addAttribute("date", LocalDate.now().toString().replace("-", "."));
+
+        // 음식 추천 추가
         List<String> foods = List.of("비빔밥", "된장찌개", "김치찌개", "불고기", "떡볶이");
         String recommendedFood = foods.get(new Random().nextInt(foods.size()));
         model.addAttribute("recommendedFood", recommendedFood);
-        return "index"; // 변경: "thymeleaf/index"에서 "index"로 수정
+
+        // 날씨 정보 추가
+        String weather = weatherService.getSeoulWeather();  // 서울 날씨 정보 가져오기
+        model.addAttribute("weather", weather);
+
+        return "index";  // index.html 템플릿을 반환
     }
+    
 
     @GetMapping("/restaurant")
     public String restaurant(Model model) {
@@ -41,10 +56,4 @@ public class FoodController {
         return "history"; // 변경: "thymeleaf/history"에서 "history"로 수정
     }
 
-    @GetMapping("/profile")
-    public String profile(Model model) {
-        model.addAttribute("date", LocalDate.now().toString().replace("-", "."));
-        model.addAttribute("message", "내 정보 페이지");
-        return "profile"; // 변경: "thymeleaf/profile"에서 "profile"로 수정
-    }
 }
