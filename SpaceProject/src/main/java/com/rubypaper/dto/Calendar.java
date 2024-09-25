@@ -1,14 +1,14 @@
 package com.rubypaper.dto;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -16,11 +16,13 @@ import lombok.Data;
 public class Calendar {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="c_seq")
 	public int cSeq;
 	
+	public String userId;
 	public Date saveDate;
-	/* 후에 매핑 실험할 것
-	@OneToMany
-	private List<Food> foodList = new ArrayList<Food>();
-	*/
+	
+	@ManyToOne
+	@JoinColumn(name="f_seq")
+	private Food food;
 }

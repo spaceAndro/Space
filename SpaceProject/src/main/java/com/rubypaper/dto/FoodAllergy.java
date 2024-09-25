@@ -36,5 +36,5 @@ public class FoodAllergy {
 	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
 	public boolean wheat;
 	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
-	public boolean Leguminoseae;
+	public boolean leguminoseae;
 }

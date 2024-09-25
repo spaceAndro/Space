@@ -33,7 +33,7 @@ public class UserAllergyService {
         userAllergy.setSeafood(allergies.contains("seafood"));
         userAllergy.setShellfish(allergies.contains("shellfish"));
         userAllergy.setWheat(allergies.contains("wheat"));
-        userAllergy.setLeguminoseae(allergies.contains("Leguminoseae"));
+        userAllergy.setLeguminoseae(allergies.contains("leguminoseae"));
 
         userAllergyRepository.save(userAllergy);
     }

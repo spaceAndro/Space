@@ -17,20 +17,20 @@ public class Allergy {
 	@Column(name="allergy_seq")
 	public int aSeq;
 	
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "1")
 	public boolean milk;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "2")
 	public boolean egg;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "3")
 	public boolean peanut;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "4")
 	public boolean nuts;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "5")
 	public boolean seafood;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "6")
 	public boolean shellfish;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "7")
 	public boolean wheat;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0")
-	public boolean Leguminoseae;
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "8")
+	public boolean leguminoseae;
 }

@@ -1,5 +1,6 @@
 package com.rubypaper.dto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,8 +17,10 @@ import lombok.Data;
 public class Food {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "f_seq")
 	public int fSeq;
 	
+	@Column(name = "f_name")
 	public String fName;
 	public int kcal;
 	public int carbohydrate;
@@ -26,10 +29,4 @@ public class Food {
 	
 //	public int gravity;
 //	public String ingredient; 임시 삭제
-	
-	/* 후에 양방향 매핑 실험
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="cSeq", nullable=false)
-	private Calendar calendar;
-	*/
 }
