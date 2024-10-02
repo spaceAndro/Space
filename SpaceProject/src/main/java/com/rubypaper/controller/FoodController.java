@@ -55,5 +55,10 @@ public class FoodController {
         model.addAttribute("message", "지난 먹은 음식 내역 페이지");
         return "history"; // 변경: "thymeleaf/history"에서 "history"로 수정
     }
+    
+    @GetMapping("/index2")
+    public String das() {
+    	return "index2";
+    }
 
 }
