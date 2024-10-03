@@ -1,0 +1,116 @@
+* {
+	margin : 0;
+}
+body {
+	padding-top: 70px;
+	padding-bottom: 70px;
+	background-color: lightgray;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.wapper{
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+header{
+	display: flex;
+	position: fixed;
+	top : 0;
+	left: 0;
+	right: 0;
+	white-space: pre-wrap;
+	flex-shrink: 0;
+	height: 50px;
+	background-color: white;
+	
+}
+
+main{
+	white-space: pre-wrap;
+	background-color: skyblue;
+	max-width: 40em;
+	min-width: 1em;
+	margin: auto;
+}
+
+nav {
+	background-color: red;
+}
+
+footer{
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	white-space: pre-wrap;
+	flex-shrink: 0;
+	height: 50px;
+	background-color: white;
+}
+
+.footer_item{
+	justify-content: space-between;
+	align-items: center;
+	display: flex;
+	background-color: aqua;
+	width: 400px;
+	height: 40px;
+	margin:auto
+}
+
+.sidebar {
+    height: 100%;
+    width: 250px; /* 기본 너비를 250px로 설정 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    overflow: hidden;
+    transition: transform 0.5s ease, opacity 0.5s ease; /* 애니메이션 추가 */
+    padding-top: 60px;
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.sidebar.closed {
+    transform: translateX(-100%); /* 왼쪽으로 슬라이드 */
+    opacity: 0; /* 투명도 변경 */
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #000000;
+    display: block;
+    transition: 0.3s;
+}
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+}
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #fff;
+    color: black;
+    padding: 10px 15px;
+    border: none;
+}
+.openbtn:hover {
+    background-color: #f1f1f1;
+}
+#main-content {
+    margin-left: 20px;
+}
