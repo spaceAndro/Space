@@ -15,6 +15,12 @@
 	<header>
 		<button class="openbtn" onclick="openNav()">&#9776;</button>
 		Space
+		<div class="header-right">
+	        <span th:if="${user.name != null}" th:text="${user.name} + '님 안녕하세요'"></span>
+			<form action="/logout" method="post" style="display: inline;">
+		        <button type="submit" class="logout-btn">로그아웃</button>
+		    </form>
+	    </div>
 	</header>
 	<div id="mySidebar" class="sidebar closed">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -64,10 +70,6 @@
 			<div>111</div>
 		</main>
 	</div>
-	<footer>
-		<div class="footer_item">
-		
-	</footer>
  </div>
 </body>
 </html>
