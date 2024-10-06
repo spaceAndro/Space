@@ -1,60 +1,118 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" lang="ko">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space - 음식 추천</title>
-    <link rel="stylesheet" href="/css/reset.css">
-	<link rel="stylesheet" href="/css/main.css">
-		<script 
-		src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous">
-		</script>
+    <title>SpaceProject</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous"></script>
 </head>
 <body>
- <div class="wrapper">
-	<header>
-		Space
-	</header>
-	<div id="content">
-	<main>
-		<nav> 대충 날씨 </nav>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-		<div>111</div>
-	</main>
-	</div>
-	<footer>
-		<div class="footer_item">
-		<div><a>홈</a></div>
-		<div><a>달력</a></div>
-		<div><i class="fa-solid fa-user"></i></div>
-		</div>
-	</footer>
- </div>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="logo">Space</div>
+        <nav class="nav">
+            <ul>
+                <li><a href="#">#유한대학교</a></li>
+                <li><a href="#">#졸업작품</a></li>
+                <li><a href="#">#3조</a></li>
+            </ul>
+        </nav>
+		<div class="cart-search">
+		            <a href="#" onclick="toggleDropdown(event)" class="user-icon"><i class="fa-regular fa-user"></i></a>
+		            <div id="userDropdown" class="dropdown-menu">
+		                <>
+		                    <li><a href="/login">로그인</a></li>
+		                    <li><a href="#">회원가입</a></li>
+							<li> <a href="/profile">내 정보</a></li>
+							<li><a href="/logout">로그아웃</a></li>
+		                </ul>
+		            </div>
+		        </div>
+    </header>
+
+    <!-- 메인 슬라이드 -->
+    <section class="main-slide">
+        <div class="slide-container" id="slideContainer">
+            <div class="slide">
+                <img src="images/foodslide2.jpg" alt="음식 1">
+                <div class="slide-text">
+                    <h1>오늘의 추천</h1>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/foodslide1.jpg" alt="음식 2">
+                <div class="slide-text">
+                    <h1>음식 2</h1>
+                    <p>맛있는 음식 2 설명</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/foodslide3.png" alt="음식 3">
+                <div class="slide-text">
+                    <h1>음식 3</h1>
+                    <p>맛있는 음식 3 설명</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 메뉴 -->
+    <section class="products">
+        <div class="product-grid">
+            <div class="product">
+                <img src="images/clouds.png" alt="weather">
+                <h2>오늘의 날씨</h2>
+            </div>
+            <div class="product">
+                <img src="images/MenuRecommand.png" alt="음식추천">
+                <h2>음식추천</h2>
+            </div>
+            <div class="product">
+                <img src="images/calender.png" alt="달력">
+                <h2>나의 음식 달력</h2>
+            </div>
+			<div class="product">
+			    <img src="images/calender.png" alt="달력">
+			    <h2>나의 음식 달력</h2>
+			</div>
+			<div class="product">
+			    <img src="images/calender.png" alt="달력">
+			    <h2>나의 음식 달력</h2>
+			</div>
+        </div>
+    </section>
+
+    <!-- 하단 메뉴 -->
+    <footer class="footer">
+        <div class="menu">
+            <a href="#">메뉴</a>
+            <a href="#">혜택</a>
+            <a href="#">나의 정보</a>
+            <a href="#">최근 먹은 음식</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript 슬라이드 동작 -->
+	<script>
+	    function toggleDropdown(event) {
+	        const dropdown = document.getElementById("userDropdown");
+	        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+	    }
+
+	    // 페이지를 클릭할 때 드롭다운 메뉴 닫기
+	    window.onclick = function(event) {
+	        if (!event.target.matches('.user-icon')) {
+	            const dropdowns = document.getElementsByClassName("dropdown-menu");
+	            for (let i = 0; i < dropdowns.length; i++) {
+	                const openDropdown = dropdowns[i];
+	                if (openDropdown.style.display === "block") {
+	                    openDropdown.style.display = "none";
+	                }
+	            }
+	        }
+	    }
+	</script>
 </body>
 </html>
