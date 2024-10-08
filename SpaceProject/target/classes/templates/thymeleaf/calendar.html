@@ -1,118 +1,49 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" lang="ko">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>음식 캘린더</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/calendarStyle.css">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const links = document.querySelectorAll(".nav-wrapper a");
-
-            links.forEach(link => {
-                link.addEventListener("click", function(event) {
-                    event.preventDefault();
-                    links.forEach(link => link.classList.remove("active"));
-                    this.classList.add("active");
-
-                    const href = this.getAttribute("href");
-                    const content = document.querySelector(".content");
-                    content.style.animation = "fadeOut 1s forwards";
-
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 1000);
-                });
-            });
-
-            function createCalendar(year, month) {
-                const calendarContainer = document.querySelector(".calendar");
-                calendarContainer.innerHTML = "";
-
-                const firstDay = new Date(year, month, 1).getDay();
-                const lastDate = new Date(year, month + 1, 0).getDate();
-
-                for (let i = 0; i < firstDay; i++) {
-                    const emptyCell = document.createElement("div");
-                    calendarContainer.appendChild(emptyCell);
-                }
-
-                for (let date = 1; date <= lastDate; date++) {
-                    const dayCell = document.createElement("div");
-                    dayCell.classList.add("day");
-                    dayCell.setAttribute("data-date", `${year}-${month + 1}-${date}`);
-                    dayCell.innerHTML = `
-                        <div>${date}</div>
-                        <textarea rows="4"></textarea>
-                        <button class="save-button">저장</button>
-                    `;
-                    calendarContainer.appendChild(dayCell);
-                }
-
-                const days = document.querySelectorAll(".day");
-                days.forEach(day => {
-                    const date = day.getAttribute("data-date");
-                    const savedData = localStorage.getItem(date);
-                    if (savedData) {
-                        day.querySelector("textarea").value = savedData;
-                    }
-
-                    day.querySelector(".save-button").addEventListener("click", function() {
-                        const data = day.querySelector("textarea").value;
-                        localStorage.setItem(date, data);
-                        alert("저장되었습니다.");
-                    });
-                });
-            }
-
-            const today = new Date();
-            const currentYear = today.getFullYear();
-            const currentMonth = today.getMonth();
-
-            createCalendar(currentYear, currentMonth);
-
-            // Footer visibility control
-            const footer = document.querySelector("footer");
-            let lastScrollTop = 0;
-
-            window.addEventListener("scroll", function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                if (scrollTop > lastScrollTop) {
-                    // Scroll down
-                    footer.classList.add("footer-hidden");
-                } else {
-                    // Scroll up
-                    footer.classList.remove("footer-hidden");
-                }
-                lastScrollTop = scrollTop;
-            });
-        });
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>캘린더 디자인</title>
+  <link rel="stylesheet" href="/css/calendarStyle.css">
 </head>
 <body>
-    <header class="header">
-        <div class="date">
-            <span th:text="${date}"></span>
-        </div>
-        <div class="title">Space</div>
-        <div class="login-button"><button>로그인</button></div>
-    </header>
-    <div class="nav-wrapper">
-        <a href="/index">음식 추천</a>
-        <a href="/restaurant">식당 추천</a>
-        <a href="/calendar" class="active">음식 캘린더</a>
-        <a href="/history">지난 먹은 음식 내역</a>
-        <a href="/profile">내 정보</a>
+  <div class="calendar-container">
+    <div class="spring"></div>
+
+    <div class="header">
+      <div>
+        <button id="prevYear">&lt;&lt;</button>
+        <button id="prevMonth">&lt;</button>
+        <span id="monthYear"></span>
+        <button id="nextMonth">&gt;</button>
+        <button id="nextYear">&gt;&gt;</button>
+      </div>
+
+      <div id="selectedDateInfo" class="selected-date-info">
+        <h2>선택한 날짜의 메뉴</h2>
+        <p>날짜: <span id="selectedDate">날짜를 선택하세요</span></p>
+        <p>아침: <span id="selectedBreakfast">---</span></p>
+        <p>점심: <span id="selectedLunch">---</span></p>
+        <p>저녁: <span id="selectedDinner">---</span></p>
+      </div>
     </div>
-    <div class="content">
-        <div class="recommendation-box">
-            <h2>음식 캘린더</h2>
-            <div class="calendar"></div>
-        </div>
-    </div>
-    <footer class="footer">
-        <p>© 2024 Space. All rights reserved.</p>
-    </footer>
+
+    <table id="calendar">
+      <thead>
+        <tr>
+          <th>일</th>
+          <th>월</th>
+          <th>화</th>
+          <th>수</th>
+          <th>목</th>
+          <th>금</th>
+          <th>토</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="/js/script.js"></script>
 </body>
 </html>

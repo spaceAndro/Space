@@ -1,131 +1,78 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space - 음식 추천</title>
-    <link rel="stylesheet" href="/css/reset.css">
-	<link rel="stylesheet" href="/css/main.css">
-		<script 
-		src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous">
-		</script>
+    <title>음식 추천</title>
 </head>
 <body>
- <div class="wrapper">
-	<header>
-		<button class="openbtn" onclick="openNav()">&#9776;</button>
-		Space
-<<<<<<< HEAD
-	</header>
-	<div id="mySidebar" class="sidebar closed">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="/index"><i class="fa-solid fa-house"></i> 홈</a>
-        <a href="/calendar"><i class="fa-regular fa-calendar"></i> 달력</a>
-        <a href="/profile"><i class="fa-solid fa-user"></i> 내정보</a>
-    </div>
-	<script>
-		function openNav() {
-            document.getElementById("mySidebar").classList.remove("closed");
-        }
+    <h2>음식 추천 폼</h2>
+    <form action="/getRecommendation" method="post">
+        <label for="weather_condition">날씨 상태:</label>
+        <select id="weather_condition" name="weather_condition" required>
+            <option value="Clear">맑음</option>
+            <option value="Cloudy">흐림</option>
+            <option value="Rain">비</option>
+            <option value="Snow">눈</option>
+        </select><br><br>
 
-        function closeNav() {
-            document.getElementById("mySidebar").classList.add("closed");
-        }
-	</script>
-	<div id="content">
-		<main>
-			<nav> 대충 날씨 </nav>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-		</main>
-	</div>
-	<footer>
-		<div class="footer_item">
-		
-	</footer>
-=======
-		<div class="header-right">
-	        <span th:if="${user.name != null}" th:text="${user.name} + '님 안녕하세요'"></span>
-			<form action="/logout" method="post" style="display: inline;">
-		        <button type="submit" class="logout-btn">로그아웃</button>
-		    </form>
-	    </div>
-	</header>
-	<div id="mySidebar" class="sidebar closed">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="/index"><i class="fa-solid fa-house"></i> 홈</a>
-        <a href="/calendar"><i class="fa-regular fa-calendar"></i> 달력</a>
-        <a href="/profile"><i class="fa-solid fa-user"></i> 내정보</a>
-    </div>
-	<script>
-		function openNav() {
-            document.getElementById("mySidebar").classList.remove("closed");
-        }
+        <label for="season">계절:</label>
+        <select id="season" name="season" required>
+            <option value="Spring">봄</option>
+            <option value="Summer">여름</option>
+            <option value="Fall">가을</option>
+            <option value="Winter">겨울</option>
+        </select><br><br>
 
-        function closeNav() {
-            document.getElementById("mySidebar").classList.add("closed");
-        }
-	</script>
-	<div id="content">
-		<main>
-			<nav> 대충 날씨 </nav>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-			<div>111</div>
-		</main>
-	</div>
->>>>>>> branch 'kjm' of https://github.com/spaceAndro/Space.git
- </div>
+        <label>알레르기 정보: (선택사항)<br>
+            <input type="checkbox" id="milk" name="allergies" value="우유">
+            <label for="milk">우유</label><br>
+            <input type="checkbox" id="egg" name="allergies" value="달걀">
+            <label for="egg">달걀</label><br>
+            <input type="checkbox" id="peanut" name="allergies" value="땅콩">
+            <label for="peanut">땅콩</label><br>
+            <input type="checkbox" id="nuts" name="allergies" value="견과류">
+            <label for="nuts">견과류</label><br>
+            <input type="checkbox" id="seafood" name="allergies" value="해산물">
+            <label for="seafood">해산물</label><br>
+            <input type="checkbox" id="crustacean" name="allergies" value="갑각류">
+            <label for="crustacean">갑각류</label><br>
+            <input type="checkbox" id="wheat" name="allergies" value="밀">
+            <label for="wheat">밀</label><br>
+            <input type="checkbox" id="soy" name="allergies" value="대두류">
+            <label for="soy">대두류</label><br><br>
+
+        <label for="preferred_ingredient">선호하는 재료: (선택사항)</label>
+        <select id="preferred_ingredient" name="preferred_ingredient">
+            <option value="">없음</option>
+            <option value="밀">밀</option>
+            <option value="쌀">쌀</option>
+            <option value="고기">고기</option>
+            <option value="해산물">해산물</option>
+        </select><br><br>
+
+        <label for="cuisine_type">음식 분류: (선택사항)</label>
+        <select id="cuisine_type" name="cuisine_type">
+            <option value="없음">없음</option>
+            <option value="한식">한식</option>
+            <option value="중식">중식</option>
+            <option value="일식">일식</option>
+            <option value="양식">양식</option>
+        </select><br><br>
+
+        <label for="food_category">음식 종류: (선택사항)</label>
+        <select id="food_category" name="food_category">
+            <option value="없음">없음</option>
+            <option value="국류">국류</option>
+            <option value="밥류">밥류</option>
+            <option value="면류">면류</option>
+            <option value="빵류">빵류</option>
+            <option value="샐러드류">샐러드류</option>
+        </select><br><br>
+
+        <button type="submit">추천받기</button>
+    </form>
+
+    <h3>추천된 음식: <span th:text="${recommendedFood}"></span></h3>
 </body>
 </html>
