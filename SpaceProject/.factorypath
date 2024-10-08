@@ -74,4 +74,5 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/springframework/security/spring-security-core/6.2.3/spring-security-core-6.2.3.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/springframework/security/spring-security-crypto/6.2.3/spring-security-crypto-6.2.3.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/springframework/security/spring-security-web/6.2.3/spring-security-web-6.2.3.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/json/json/20210307/json-20210307.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>

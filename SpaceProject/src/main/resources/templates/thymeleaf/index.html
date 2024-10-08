@@ -1,10 +1,121 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space - 음식 추천</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>SpaceProject</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        /* 추가된 CSS */
+        .dropdown-menu {
+            display: none; /* 기본적으로 숨김 */
+            position: absolute;
+            right: 0; /* 필요에 따라 위치를 조정하세요 */
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* 다른 요소 위에 보이도록 설정 */
+        }
+        .dropdown-menu.show {
+            display: block; /* show 클래스가 있을 때 보이도록 설정 */
+        }
+    </style>
+	<script src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="logo">Space</div>
+        <nav class="nav">
+            <ul>
+                <li><a href="#">#유한대학교</a></li>
+                <li><a href="#">#졸업작품</a></li>
+                <li><a href="#">#3조</a></li>
+            </ul>
+        </nav>
+        <div class="cart-search">
+            <a href="#" onclick="toggleDropdown(event)" class="user-icon"><i class="fa-regular fa-user"></i></a>
+            <ul id="userDropdown" class="dropdown-menu">
+                <li sec:authorize="isAuthenticated()">
+                    <a th:if="${isAuthenticated}" href="/profile">내 정보</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:if="${isAuthenticated}" href="/logout">로그아웃</a>
+                </li>
+                <li sec:authorize="isAnonymous()">
+                    <a th:if="${isAuthenticated == null || !isAuthenticated}" href="/login">로그인</a>
+                </li>
+                <li sec:authorize="isAnonymous()">
+                    <a th:if="${isAuthenticated == null || !isAuthenticated}" href="/signup">회원가입</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 메인 슬라이드 -->
+    <section class="main-slide">
+        <div class="slide-container" id="slideContainer">
+            <div class="slide">
+                <img src="images/foodslide2.jpg" alt="음식 1">
+                <div class="slide-text">
+                    <h1>오늘의 추천</h1>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/foodslide1.jpg" alt="음식 2">
+                <div class="slide-text">
+                    <h1>음식 2</h1>
+                    <p>맛있는 음식 2 설명</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/foodslide3.png" alt="음식 3">
+                <div class="slide-text">
+                    <h1>음식 3</h1>
+                    <p>맛있는 음식 3 설명</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 메뉴 -->
+    <section class="products">
+        <div class="product-grid">
+            <div class="product">
+                <img src="images/clouds.png" alt="weather">
+                <h2>오늘의 날씨</h2>
+            </div>
+            <div class="product">
+                <img src="images/MenuRecommand.png" alt="음식추천">
+                <h2>음식추천</h2>
+            </div>
+            <div class="product">
+                <img src="images/calender.png" alt="달력">
+                <h2>나의 음식 달력</h2>
+            </div>
+            <div class="product">
+                <img src="images/calender.png" alt="달력">
+                <h2>나의 음식 달력</h2>
+            </div>
+            <div class="product">
+                <img src="images/calender.png" alt="달력">
+                <h2>나의 음식 달력</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- 하단 메뉴 -->
+    <footer class="footer">
+        <div class="menu">
+            <a href="#">메뉴</a>
+            <a href="#">혜택</a>
+            <a href="#">나의 정보</a>
+            <a href="#">최근 먹은 음식</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript 슬라이드 동작 -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const links = document.querySelectorAll(".nav-wrapper a");
@@ -41,42 +152,23 @@
                 lastScrollTop = scrollTop;
             });
         });
+
+        // 드롭다운 토글 함수
+        function toggleDropdown(event) {
+            event.stopPropagation();  // 클릭 이벤트가 상위로 전달되지 않도록
+            const dropdown = document.getElementById("userDropdown");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        // 페이지의 다른 곳을 클릭했을 때 드롭다운을 닫는 기능
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-icon')) {
+                const dropdown = document.getElementById("userDropdown");
+                if (dropdown.style.display === "block") {
+                    dropdown.style.display = "none";
+                }
+            }
+        }
     </script>
-</head>
-<body>
-    <header>
-        <div class="date">
-            <span th:text="${date}"></span>
-        </div>
-        <div class="title">Space</div>
-		<div class="logout-button">
-		    <form action="/logout" method="post" style="display: inline;">
-		        <button type="submit">로그아웃</button>
-		    </form>
-		</div>
-    </header>
-    <div class="nav-wrapper">
-        <a href="/index" class="active">음식 추천</a>
-        <a href="/restaurant">식당 추천</a>
-        <a href="/calendar">음식 캘린더</a>
-        <a href="/history">지난 먹은 음식 내역</a>
-        <a href="/profile">내 정보</a>
-    </div>
-    <div class="content">
-        <div class="weather-box">
-            <h2>현재 서울 날씨</h2>
-            <p th:text="${weather}"></p>  <!-- 날씨 정보 출력 -->
-        </div>
-        <div class="nutrition-box">
-            <h2>영양성분 확인</h2>
-        </div>
-        <div class="recommendation-box">
-            <h2>오늘의 음식 추천</h2>
-            <p th:text="${recommendedFood}"></p>  <!-- 추천된 음식 출력 -->
-        </div>
-    </div>
-    <footer class="footer">
-        <p>© 2024 Space. All rights reserved.</p>
-    </footer>
 </body>
 </html>
