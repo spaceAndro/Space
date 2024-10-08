@@ -1,82 +1,154 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" lang="ko">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space - 음식 추천</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const links = document.querySelectorAll(".nav-wrapper a");
+    <title>SpaceProject</title>
+    <link rel="stylesheet" href="css/main.css">
+	<script>
+	        document.addEventListener("DOMContentLoaded", function() {
+	            const links = document.querySelectorAll(".nav-wrapper a");
 
-            links.forEach(link => {
-                link.addEventListener("click", function(event) {
-                    event.preventDefault();
-                    links.forEach(link => link.classList.remove("active"));
-                    this.classList.add("active");
+	            links.forEach(link => {
+	                link.addEventListener("click", function(event) {
+	                    event.preventDefault();
+	                    links.forEach(link => link.classList.remove("active"));
+	                    this.classList.add("active");
 
-                    const href = this.getAttribute("href");
-                    const content = document.querySelector(".content");
-                    content.style.animation = "fadeOut 1s forwards";
+	                    const href = this.getAttribute("href");
+	                    const content = document.querySelector(".content");
+	                    content.style.animation = "fadeOut 1s forwards";
 
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 1000);
-                });
-            });
+	                    setTimeout(() => {
+	                        window.location.href = href;
+	                    }, 1000);
+	                });
+	            });
 
-            // Footer visibility control
-            const footer = document.querySelector("footer");
-            let lastScrollTop = 0;
+	            // Footer visibility control
+	            const footer = document.querySelector("footer");
+	            let lastScrollTop = 0;
 
-            window.addEventListener("scroll", function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                if (scrollTop > lastScrollTop) {
-                    // Scroll down
-                    footer.classList.add("footer-hidden");
-                } else {
-                    // Scroll up
-                    footer.classList.remove("footer-hidden");
-                }
-                lastScrollTop = scrollTop;
-            });
-        });
-    </script>
+	            window.addEventListener("scroll", function() {
+	                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+	                if (scrollTop > lastScrollTop) {
+	                    // Scroll down
+	                    footer.classList.add("footer-hidden");
+	                } else {
+	                    // Scroll up
+	                    footer.classList.remove("footer-hidden");
+	                }
+	                lastScrollTop = scrollTop;
+	            });
+	        });
+	    </script>
+    <script src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <div class="date">
-            <span th:text="${date}"></span>
-        </div>
-        <div class="title">Space</div>
-		<div class="logout-button">
-		    <form action="/logout" method="post" style="display: inline;">
-		        <button type="submit">로그아웃</button>
-		    </form>
-		</div>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="logo">Space</div>
+        <nav class="nav">
+            <ul>
+                <li><a href="#">#유한대학교</a></li>
+                <li><a href="#">#졸업작품</a></li>
+                <li><a href="#">#3조</a></li>
+            </ul>
+        </nav>
+		<div class="cart-search">
+		            <a href="#" onclick="toggleDropdown(event)" class="user-icon"><i class="fa-regular fa-user"></i></a>
+		            <div id="userDropdown" class="dropdown-menu">
+		                    <li><a href="/login">로그인</a></li>
+		                    <li><a href="/signup">회원가입</a></li>
+							<li> <a href="/profile">내 정보</a></li>
+							<li><a href="/logout">로그아웃</a></li>
+		                </ul>
+		            </div>
+		        </div>
     </header>
-    <div class="nav-wrapper">
-        <a href="/index" class="active">음식 추천</a>
-        <a href="/restaurant">식당 추천</a>
-        <a href="/calendar">음식 캘린더</a>
-        <a href="/history">지난 먹은 음식 내역</a>
-        <a href="/profile">내 정보</a>
-    </div>
-    <div class="content">
-        <div class="weather-box">
-            <h2>현재 서울 날씨</h2>
-            <p th:text="${weather}"></p>  <!-- 날씨 정보 출력 -->
+
+    <!-- 메인 슬라이드 -->
+    <section class="main-slide">
+        <div class="slide-container" id="slideContainer">
+            <div class="slide">
+                <img src="images/foodslide2.jpg" alt="음식 1">
+                <div class="slide-text">
+                    <h1>오늘의 추천</h1>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/foodslide1.jpg" alt="음식 2">
+                <div class="slide-text">
+                    <h1>음식 2</h1>
+                    <p>맛있는 음식 2 설명</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/foodslide3.png" alt="음식 3">
+                <div class="slide-text">
+                    <h1>음식 3</h1>
+                    <p>맛있는 음식 3 설명</p>
+                </div>
+            </div>
         </div>
-        <div class="nutrition-box">
-            <h2>영양성분 확인</h2>
+
+    </section>
+
+    <!-- 메뉴 -->
+    <section class="products">
+        <div class="product-grid">
+            <div class="product">
+                <img src="images/clouds.png" alt="weather">
+                <h2>오늘의 날씨</h2>
+            </div>
+            <div class="product">
+                <img src="images/MenuRecommand.png" alt="음식추천">
+                <h2>음식추천</h2>
+            </div>
+            <div class="product">
+                <img src="images/calender.png" alt="달력">
+                <h2>나의 음식 달력</h2>
+            </div>
+			<div class="product">
+			    <img src="images/calender.png" alt="달력">
+			    <h2>나의 음식 달력</h2>
+			</div>
+			<div class="product">
+			    <img src="images/calender.png" alt="달력">
+			    <h2>나의 음식 달력</h2>
+			</div>
         </div>
-        <div class="recommendation-box">
-            <h2>오늘의 음식 추천</h2>
-            <p th:text="${recommendedFood}"></p>  <!-- 추천된 음식 출력 -->
-        </div>
-    </div>
+    </section>
+
+    <!-- 하단 메뉴 -->
     <footer class="footer">
-        <p>© 2024 Space. All rights reserved.</p>
+        <div class="menu">
+            <a href="#">메뉴</a>
+            <a href="#">혜택</a>
+            <a href="#">나의 정보</a>
+            <a href="#">최근 먹은 음식</a>
+        </div>
     </footer>
+
+    <!-- JavaScript 슬라이드 동작 -->
+	<script>
+	    function toggleDropdown(event) {
+	        const dropdown = document.getElementById("userDropdown");
+	        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+	    }
+
+	    // 페이지를 클릭할 때 드롭다운 메뉴 닫기
+	    window.onclick = function(event) {
+	        if (!event.target.matches('.user-icon')) {
+	            const dropdowns = document.getElementsByClassName("dropdown-menu");
+	            for (let i = 0; i < dropdowns.length; i++) {
+	                const openDropdown = dropdowns[i];
+	                if (openDropdown.style.display === "block") {
+	                    openDropdown.style.display = "none";
+	                }
+	            }
+	        }
+	    }
+	</script>
 </body>
 </html>

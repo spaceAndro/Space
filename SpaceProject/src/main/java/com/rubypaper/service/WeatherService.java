@@ -1,8 +1,8 @@
 package com.rubypaper.service;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.json.JSONObject;
 
 @Service
 public class WeatherService {
