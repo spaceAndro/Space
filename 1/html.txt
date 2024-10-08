@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>캘린더 디자인</title>
+  <link rel="stylesheet" href="calendarStyle.css">
+</head>
+<body>
+  <div class="calendar-container">
+    <div class="spring"></div>
+
+    <div class="header">
+      <div>
+        <button id="prevYear">&lt;&lt;</button>
+        <button id="prevMonth">&lt;</button>
+        <span id="monthYear"></span>
+        <button id="nextMonth">&gt;</button>
+        <button id="nextYear">&gt;&gt;</button>
+      </div>
+
+      <div id="selectedDateInfo" class="selected-date-info">
+        <h2>선택한 날짜의 메뉴</h2>
+        <p>날짜: <span id="selectedDate">날짜를 선택하세요</span></p>
+        <p>아침: <span id="selectedBreakfast">---</span></p>
+        <p>점심: <span id="selectedLunch">---</span></p>
+        <p>저녁: <span id="selectedDinner">---</span></p>
+      </div>
+    </div>
+
+    <table id="calendar">
+      <thead>
+        <tr>
+          <th>일</th>
+          <th>월</th>
+          <th>화</th>
+          <th>수</th>
+          <th>목</th>
+          <th>금</th>
+          <th>토</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
