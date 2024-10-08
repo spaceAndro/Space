@@ -21,13 +21,26 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    
+
+    @GetMapping("/index") // 경로 변경
+    public String index(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAuthenticated = authentication != null && authentication.isAuthenticated();
+        model.addAttribute("isAuthenticated", isAuthenticated);
+        
+        return "index"; // Thymeleaf 템플릿 이름
+    }
 
     @GetMapping("/profile")
     public String profile(Model model) {
         // 현재 로그인한 사용자 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName(); // 사용자 이름 (아이디)
-
+        
+        boolean isAuthenticated = authentication != null && authentication.isAuthenticated();
+        model.addAttribute("isAuthenticated", isAuthenticated);
+        
         // 사용자 정보 가져오기
         User user = userService.findByUsername(username);
 
@@ -39,20 +52,6 @@ public class UserController {
         return "profile"; // profile.html 템플릿 반환
     }
     
-    @GetMapping("/index2")
-    public String das(Model model) {
-    	// 현재 로그인한 사용자 정보 가져오기
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); // 사용자 이름 (아이디)
-
-        // 사용자 정보 가져오기
-        User user = userService.findByUsername(username);
-
-        // 모델에 사용자 정보 추가
-        model.addAttribute("user", user);
-        
-    	return "index2";
-    }
     
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
@@ -62,4 +61,7 @@ public class UserController {
         }
         return "login";  // 로그아웃 후 로그인 페이지로 리다이렉트
     }
+    
+
+    
 }

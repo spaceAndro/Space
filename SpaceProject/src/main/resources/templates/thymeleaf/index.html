@@ -1,13 +1,134 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="ko">
+=======
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>>>>>>> branch 'kjm' of https://github.com/spaceAndro/Space.git
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpaceProject</title>
     <link rel="stylesheet" href="css/main.css">
+<<<<<<< HEAD
 	<script>
 	        document.addEventListener("DOMContentLoaded", function() {
 	            const links = document.querySelectorAll(".nav-wrapper a");
+=======
+    <style>
+        /* 추가된 CSS */
+        .dropdown-menu {
+            display: none; /* 기본적으로 숨김 */
+            position: absolute;
+            right: 0; /* 필요에 따라 위치를 조정하세요 */
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* 다른 요소 위에 보이도록 설정 */
+        }
+        .dropdown-menu.show {
+            display: block; /* show 클래스가 있을 때 보이도록 설정 */
+        }
+    </style>
+	<script src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="logo">Space</div>
+        <nav class="nav">
+            <ul>
+                <li><a href="#">#유한대학교</a></li>
+                <li><a href="#">#졸업작품</a></li>
+                <li><a href="#">#3조</a></li>
+            </ul>
+        </nav>
+        <div class="cart-search">
+            <a href="#" onclick="toggleDropdown(event)" class="user-icon"><i class="fa-regular fa-user"></i></a>
+            <ul id="userDropdown" class="dropdown-menu">
+                <li sec:authorize="isAuthenticated()">
+                    <a th:if="${isAuthenticated}" href="/profile">내 정보</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:if="${isAuthenticated}" href="/logout">로그아웃</a>
+                </li>
+                <li sec:authorize="isAnonymous()">
+                    <a th:if="${isAuthenticated == null || !isAuthenticated}" href="/login">로그인</a>
+                </li>
+                <li sec:authorize="isAnonymous()">
+                    <a th:if="${isAuthenticated == null || !isAuthenticated}" href="/signup">회원가입</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 메인 슬라이드 -->
+    <section class="main-slide">
+        <div class="slide-container" id="slideContainer">
+            <div class="slide">
+                <img src="images/foodslide1.jpg" alt="음식 1">
+                <div class="slide-text">
+                    <h1>오늘의 추천</h1>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/foodslide2.jpg" alt="음식 2">
+                <div class="slide-text">
+                    <h1>음식 2</h1>
+                    <p>맛있는 음식 2 설명</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/foodslide3.png" alt="음식 3">
+                <div class="slide-text">
+                    <h1>음식 3</h1>
+                    <p>맛있는 음식 3 설명</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 메뉴 -->
+    <section class="products">
+        <div class="product-grid">
+            <div class="product">
+                <img src="images/clouds.png" alt="weather">
+                <h2>오늘의 날씨</h2>
+            </div>
+            <div class="product">
+                <img src="images/MenuRecommand.png" alt="음식추천">
+                <h2>음식추천 : <span th:text="${recommendedFood}"></h2>
+            </div>
+            <div class="product">
+                <img src="images/calender.png" alt="달력">
+                <h2>나의 음식 달력</h2>
+            </div>
+            <div class="product">
+                <img src="images/calender.png" alt="달력">
+                <h2>나의 음식 달력</h2>
+            </div>
+            <div class="product">
+                <img src="images/calender.png" alt="달력">
+                <h2>나의 음식 달력</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- 하단 메뉴 -->
+    <footer class="footer">
+        <div class="menu">
+            <a href="#">메뉴</a>
+            <a href="#">혜택</a>
+            <a href="#">나의 정보</a>
+            <a href="#">최근 먹은 음식</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript 슬라이드 동작 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const links = document.querySelectorAll(".nav-wrapper a");
+>>>>>>> branch 'kjm' of https://github.com/spaceAndro/Space.git
 
 	            links.forEach(link => {
 	                link.addEventListener("click", function(event) {
@@ -29,6 +150,7 @@
 	            const footer = document.querySelector("footer");
 	            let lastScrollTop = 0;
 
+<<<<<<< HEAD
 	            window.addEventListener("scroll", function() {
 	                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 	                if (scrollTop > lastScrollTop) {
@@ -150,5 +272,37 @@
 	        }
 	    }
 	</script>
+=======
+            window.addEventListener("scroll", function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > lastScrollTop) {
+                    // Scroll down
+                    footer.classList.add("footer-hidden");
+                } else {
+                    // Scroll up
+                    footer.classList.remove("footer-hidden");
+                }
+                lastScrollTop = scrollTop;
+            });
+        });
+
+        // 드롭다운 토글 함수
+        function toggleDropdown(event) {
+            event.stopPropagation();  // 클릭 이벤트가 상위로 전달되지 않도록
+            const dropdown = document.getElementById("userDropdown");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        // 페이지의 다른 곳을 클릭했을 때 드롭다운을 닫는 기능
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-icon')) {
+                const dropdown = document.getElementById("userDropdown");
+                if (dropdown.style.display === "block") {
+                    dropdown.style.display = "none";
+                }
+            }
+        }
+    </script>
+>>>>>>> branch 'kjm' of https://github.com/spaceAndro/Space.git
 </body>
 </html>

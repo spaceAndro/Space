@@ -31,6 +31,11 @@ public class LoginController {
     	return "login.html";
     }
     
+    @GetMapping("/")
+    public String indexPage() {
+        return "index"; // index.html 반환
+    }
+    
 	/*
 	 * @GetMapping("/index") public String index() { return "index.html"; }
 	 */

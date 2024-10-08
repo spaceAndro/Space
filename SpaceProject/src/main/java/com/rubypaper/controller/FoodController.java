@@ -17,6 +17,7 @@ public class FoodController {
 	@Autowired
     private WeatherService weatherService;
 	
+	/*
 	@GetMapping("/index")
     public String home(Model model) {
         // 날짜 추가
@@ -33,6 +34,7 @@ public class FoodController {
 
         return "index";  // index.html 템플릿을 반환
     }
+    */
     
 
     @GetMapping("/restaurant")
@@ -40,13 +42,6 @@ public class FoodController {
         model.addAttribute("date", LocalDate.now().toString().replace("-", "."));
         model.addAttribute("message", "식당 추천 페이지");
         return "restaurant"; // 변경: "thymeleaf/restaurant"에서 "restaurant"로 수정
-    }
-
-    @GetMapping("/calendar")
-    public String calendar(Model model) {
-        model.addAttribute("date", LocalDate.now().toString().replace("-", "."));
-        model.addAttribute("message", "음식 캘린더 페이지");
-        return "calendar"; // 변경: "thymeleaf/calendar"에서 "calendar"로 수정
     }
 
     @GetMapping("/history")

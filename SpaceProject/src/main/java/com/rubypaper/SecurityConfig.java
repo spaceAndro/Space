@@ -24,7 +24,7 @@ public class SecurityConfig {
             .csrf().disable() // CSRF를 비활성화할 경우 사용
             .authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // 정적 리소스 접근 허용
-                .requestMatchers("/login", "/signup").permitAll() // 로그인과 회원가입 페이지는 모두 접근 가능
+                .requestMatchers("/login", "/signup" , "/index" , "/").permitAll() // 로그인과 회원가입 페이지는 모두 접근 가능
                 .anyRequest().authenticated() // 나머지 요청은 인증 필요
             )
             .formLogin((form) -> form
@@ -38,4 +38,5 @@ public class SecurityConfig {
         
         return http.build();
     }
+    
 }

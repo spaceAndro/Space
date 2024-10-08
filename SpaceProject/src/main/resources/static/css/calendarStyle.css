@@ -1,51 +1,90 @@
-.calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-    margin-top: 20px;
-    padding: 20px;
-    border: 2px solid #a0e7e5;
-    border-radius: 15px;
-    background-color: #e0f7fa;
+.calendar-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.day {
-    border: 1px solid #a0e7e5;
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
-    background-color: #b2ebf2;
-    position: relative;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+.header {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 20px;
 }
-.day div {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 5px;
+
+.selected-date-info {
+  margin-left: 20px; 
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: 300px; 
 }
-.day textarea {
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: 1px solid #80deea;
-    padding: 5px;
-    font-size: 1em;
-    background-color: #e0f7fa;
+
+button {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  margin-right: 5px;
 }
-.day .save-button {
-    display: block;
-    margin-top: 5px;
-    padding: 5px;
-    background-color: #4dd0e1;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 0.9em;
+
+button:hover {
+  background-color: #005f73;
 }
-.day .save-button:hover {
-    background-color: #26c6da;
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
-/*.footer-hidden {
-    transform: translateY(100%);
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 0.9em; 
+  height: 80px;
 }
-*/
+
+td.highlight {
+  background-color: #f9c74f;
+  font-weight: bold;
+}
+
+.date {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.meal {
+  font-size: 0.7em;
+  line-height: 1.2;
+  margin: 1px 0;
+}
+
+.spring {
+  width: 100%;
+  height: 20px;
+  position: relative;
+  top: -30px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.spring::before, .spring::after {
+  content: '';
+  width: 200px;
+  height: 5px;
+  border-radius: 50%;
+  background: linear-gradient(to right, #666 25%, transparent 25%);
+  background-size: 20px 5px;
+  background-repeat: repeat-x;
+}
