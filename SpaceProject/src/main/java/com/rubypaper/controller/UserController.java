@@ -37,7 +37,10 @@ public class UserController {
         // 현재 로그인한 사용자 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName(); // 사용자 이름 (아이디)
-
+        
+        boolean isAuthenticated = authentication != null && authentication.isAuthenticated();
+        model.addAttribute("isAuthenticated", isAuthenticated);
+        
         // 사용자 정보 가져오기
         User user = userService.findByUsername(username);
 

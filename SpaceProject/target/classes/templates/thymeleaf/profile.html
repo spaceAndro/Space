@@ -1,23 +1,93 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space - 내 정보</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+    <link rel="stylesheet" href="/css/main.css">
+	<style>
+        /* 추가된 CSS */
+        .dropdown-menu {
+            display: none; /* 기본적으로 숨김 */
+            position: absolute;
+            right: 0; /* 필요에 따라 위치를 조정하세요 */
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* 다른 요소 위에 보이도록 설정 */
+        }
+        .dropdown-menu.show {
+            display: block; /* show 클래스가 있을 때 보이도록 설정 */
+        }
+    </style>
+	<script src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Space</div>
+		<nav class="nav">
+            <ul>
+                <li><a href="#">#유한대학교</a></li>
+                <li><a href="#">#졸업작품</a></li>
+                <li><a href="#">#3조</a></li>
+            </ul>
+        </nav>
+		<div class="cart-search">
+            <a href="#" onclick="toggleDropdown(event)" class="user-icon"><i class="fa-regular fa-user"></i></a>
+            <ul id="userDropdown" class="dropdown-menu">
+                <li sec:authorize="isAuthenticated()">
+                    <a th:if="${isAuthenticated}" href="/profile">내 정보</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:if="${isAuthenticated}" href="/logout">로그아웃</a>
+                </li>
+                <li sec:authorize="isAnonymous()">
+                    <a th:if="${isAuthenticated == null || !isAuthenticated}" href="/login">로그인</a>
+                </li>
+                <li sec:authorize="isAnonymous()">
+                    <a th:if="${isAuthenticated == null || !isAuthenticated}" href="/signup">회원가입</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+	<div class="profile-card">
+        <h2><i class="fa-solid fa-user"></i> 내 정보</h2>
+        <p><i class="fa-solid fa-id-card"></i> 아이디: <span th:text="${user.id}"></span></p>
+        <p><i class="fa-solid fa-user"></i> 이름: <span th:text="${user.name}"></span></p>
+        <p><i class="fa-solid fa-cake-candles"></i> 나이: <span th:text="${user.age}"></span></p>
+        <p><i class="fa-solid fa-venus-mars"></i> 성별: <span th:text="${user.gender}"></span></p>
+        <p><i class="fa-solid fa-map-marker-alt"></i> 주소: <span th:text="${user.addr}"></span></p>
+        <a href="/AllergyForm"><i class="fa-solid fa-notes-medical"></i> 알러지 설문 작성하기</a>
+    </div>
+    <footer class="footer">
+		<div class="menu">
+            <a href="#">메뉴</a>
+            <a href="#">혜택</a>
+            <a href="#">나의 정보</a>
+            <a href="#">최근 먹은 음식</a>
+        </div>
+    </footer>
+	
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
             const links = document.querySelectorAll(".nav-wrapper a");
 
-            function setActiveLink() {
-                const path = window.location.pathname;
-                links.forEach(link => {
-                    link.classList.toggle("active", link.getAttribute("href") === path);
-                });
-            }
+            links.forEach(link => {
+                link.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    links.forEach(link => link.classList.remove("active"));
+                    this.classList.add("active");
 
-            // Set active link on page load
-            setActiveLink();
+                    const href = this.getAttribute("href");
+                    const content = document.querySelector(".content");
+                    content.style.animation = "fadeOut 1s forwards";
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 1000);
+                });
+            });
 
             // Footer visibility control
             const footer = document.querySelector("footer");
@@ -35,41 +105,21 @@
                 lastScrollTop = scrollTop;
             });
         });
+				
+        function toggleDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById("userDropdown");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-icon')) {
+                const dropdown = document.getElementById("userDropdown");
+                if (dropdown.style.display === "block") {
+                    dropdown.style.display = "none";
+                }
+            }
+        };
     </script>
-</head>
-<body>
-    <header>
-        <div class="date">
-            <span th:text="${date}"></span>
-        </div>
-        <div class="title">Space</div>
-		<div class="logout-button">
-		    <form action="/logout" method="post" style="display: inline;">
-		        <button type="submit">로그아웃</button>
-		    </form>
-		</div>
-    </header>
-    <div class="nav-wrapper">
-        <a href="/index">음식 추천</a>
-        <a href="/restaurant">식당 추천</a>
-        <a href="/calendar">음식 캘린더</a>
-        <a href="/history">지난 먹은 음식 내역</a>
-        <a href="/profile" class="active">내 정보</a>
-    </div>
-	<div class="recommendation-box">
-	    <h2>내 정보</h2>
-	    <p th:if="${user != null}">
-	        아이디: <span th:text="${user.id}"></span><br>
-	        이름: <span th:text="${user.name}"></span><br>
-	        나이: <span th:text="${user.age}"></span><br>
-	        성별: <span th:text="${user.gender}"></span><br>
-	        주소: <span th:text="${user.addr}"></span><br>
-	    </p>
-	    <p th:if="${user == null}">사용자 정보를 찾을 수 없습니다.</p>
-	    <a href="/AllergyForm">알러지 설문</a>
-	</div>
-    <footer class="footer">
-        <p>© 2024 Space. All rights reserved.</p>
-    </footer>
 </body>
 </html>
