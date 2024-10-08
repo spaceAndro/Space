@@ -15,6 +15,7 @@
 	<header>
 		<button class="openbtn" onclick="openNav()">&#9776;</button>
 		Space
+<<<<<<< HEAD
 	</header>
 	<div id="mySidebar" class="sidebar closed">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -68,6 +69,63 @@
 		<div class="footer_item">
 		
 	</footer>
+=======
+		<div class="header-right">
+	        <span th:if="${user.name != null}" th:text="${user.name} + '님 안녕하세요'"></span>
+			<form action="/logout" method="post" style="display: inline;">
+		        <button type="submit" class="logout-btn">로그아웃</button>
+		    </form>
+	    </div>
+	</header>
+	<div id="mySidebar" class="sidebar closed">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="/index"><i class="fa-solid fa-house"></i> 홈</a>
+        <a href="/calendar"><i class="fa-regular fa-calendar"></i> 달력</a>
+        <a href="/profile"><i class="fa-solid fa-user"></i> 내정보</a>
+    </div>
+	<script>
+		function openNav() {
+            document.getElementById("mySidebar").classList.remove("closed");
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").classList.add("closed");
+        }
+	</script>
+	<div id="content">
+		<main>
+			<nav> 대충 날씨 </nav>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+			<div>111</div>
+		</main>
+	</div>
+>>>>>>> branch 'kjm' of https://github.com/spaceAndro/Space.git
  </div>
 </body>
 </html>
