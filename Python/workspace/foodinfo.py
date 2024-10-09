@@ -674,7 +674,7 @@ data = {
     "main_ingredient_1": [],
     "main_ingredient_2": [],
     "food_category": [],
-    "cuisine_type": [],  # 'cuisine_type' 키 추가
+    "cuisine_type": [],
     "season": []
 }
 
@@ -682,7 +682,7 @@ for i in range(1, num_samples + 1):
     food_name, ingredients = random.choice(meal_food_names)
     weather_condition = random.choice(['Clear', 'Cloudy', 'Rain', 'Snow'])
     allergies = get_allergy_info(ingredients)
-    allergy_info = ','.join(map(str, allergies))  # 알레르기 정보를 숫자로 변환
+    allergy_info = ','.join(map(str, allergies))
     main_ingredient_1 = ingredients[0] if len(ingredients) > 0 else ''
     main_ingredient_2 = ingredients[1] if len(ingredients) > 1 else ''
 
