@@ -1,4 +1,4 @@
-INSERT INTO food (f_seq, f_name, kcal, carbohydrates, protein, fat) VALUES
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES
 (1, '김치찌개', 60, 3, 4, 4),
 (2, '된장찌개', 41, 4, 3, 1),
 (3, '비빔밥', 145, 21, 5, 4),
