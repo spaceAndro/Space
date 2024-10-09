@@ -44,6 +44,8 @@ public class FoodController {
         return "restaurant"; // 변경: "thymeleaf/restaurant"에서 "restaurant"로 수정
     }
 
+    
+
     @GetMapping("/history")
     public String history(Model model) {
         model.addAttribute("date", LocalDate.now().toString().replace("-", "."));

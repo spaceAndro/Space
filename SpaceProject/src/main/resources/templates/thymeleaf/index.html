@@ -1,19 +1,10 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html lang="ko">
-=======
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
->>>>>>> branch 'kjm' of https://github.com/spaceAndro/Space.git
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpaceProject</title>
     <link rel="stylesheet" href="css/main.css">
-<<<<<<< HEAD
-	<script>
-	        document.addEventListener("DOMContentLoaded", function() {
-	            const links = document.querySelectorAll(".nav-wrapper a");
-=======
     <style>
         /* 추가된 CSS */
         .dropdown-menu {
@@ -66,13 +57,13 @@
     <section class="main-slide">
         <div class="slide-container" id="slideContainer">
             <div class="slide">
-                <img src="images/foodslide1.jpg" alt="음식 1">
+                <img src="images/foodslide2.jpg" alt="음식 1">
                 <div class="slide-text">
                     <h1>오늘의 추천</h1>
                 </div>
             </div>
             <div class="slide">
-                <img src="images/foodslide2.jpg" alt="음식 2">
+                <img src="images/foodslide1.jpg" alt="음식 2">
                 <div class="slide-text">
                     <h1>음식 2</h1>
                     <p>맛있는 음식 2 설명</p>
@@ -128,151 +119,27 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const links = document.querySelectorAll(".nav-wrapper a");
->>>>>>> branch 'kjm' of https://github.com/spaceAndro/Space.git
 
-	            links.forEach(link => {
-	                link.addEventListener("click", function(event) {
-	                    event.preventDefault();
-	                    links.forEach(link => link.classList.remove("active"));
-	                    this.classList.add("active");
+            links.forEach(link => {
+                link.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    links.forEach(link => link.classList.remove("active"));
+                    this.classList.add("active");
 
-	                    const href = this.getAttribute("href");
-	                    const content = document.querySelector(".content");
-	                    content.style.animation = "fadeOut 1s forwards";
+                    const href = this.getAttribute("href");
+                    const content = document.querySelector(".content");
+                    content.style.animation = "fadeOut 1s forwards";
 
-	                    setTimeout(() => {
-	                        window.location.href = href;
-	                    }, 1000);
-	                });
-	            });
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 1000);
+                });
+            });
 
-	            // Footer visibility control
-	            const footer = document.querySelector("footer");
-	            let lastScrollTop = 0;
+            // Footer visibility control
+            const footer = document.querySelector("footer");
+            let lastScrollTop = 0;
 
-<<<<<<< HEAD
-	            window.addEventListener("scroll", function() {
-	                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-	                if (scrollTop > lastScrollTop) {
-	                    // Scroll down
-	                    footer.classList.add("footer-hidden");
-	                } else {
-	                    // Scroll up
-	                    footer.classList.remove("footer-hidden");
-	                }
-	                lastScrollTop = scrollTop;
-	            });
-	        });
-	    </script>
-    <script src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <!-- 헤더 -->
-    <header class="header">
-        <div class="logo">Space</div>
-        <nav class="nav">
-            <ul>
-                <li><a href="#">#유한대학교</a></li>
-                <li><a href="#">#졸업작품</a></li>
-                <li><a href="#">#3조</a></li>
-            </ul>
-        </nav>
-		<div class="cart-search">
-		            <a href="#" onclick="toggleDropdown(event)" class="user-icon"><i class="fa-regular fa-user"></i></a>
-		            <div id="userDropdown" class="dropdown-menu">
-		                    <li><a href="/login">로그인</a></li>
-		                    <li><a href="/signup">회원가입</a></li>
-							<li> <a href="/profile">내 정보</a></li>
-							<li><a href="/logout">로그아웃</a></li>
-		                </ul>
-		            </div>
-		        </div>
-    </header>
-
-    <!-- 메인 슬라이드 -->
-    <section class="main-slide">
-        <div class="slide-container" id="slideContainer">
-            <div class="slide">
-                <img src="images/foodslide2.jpg" alt="음식 1">
-                <div class="slide-text">
-                    <h1>오늘의 추천</h1>
-                </div>
-            </div>
-            <div class="slide">
-                <img src="images/foodslide1.jpg" alt="음식 2">
-                <div class="slide-text">
-                    <h1>음식 2</h1>
-                    <p>맛있는 음식 2 설명</p>
-                </div>
-            </div>
-            <div class="slide">
-                <img src="images/foodslide3.png" alt="음식 3">
-                <div class="slide-text">
-                    <h1>음식 3</h1>
-                    <p>맛있는 음식 3 설명</p>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- 메뉴 -->
-    <section class="products">
-        <div class="product-grid">
-            <div class="product">
-                <img src="images/clouds.png" alt="weather">
-                <h2>오늘의 날씨</h2>
-            </div>
-            <div class="product">
-                <img src="images/MenuRecommand.png" alt="음식추천">
-                <h2>음식추천</h2>
-            </div>
-            <div class="product">
-                <img src="images/calender.png" alt="달력">
-                <h2>나의 음식 달력</h2>
-            </div>
-			<div class="product">
-			    <img src="images/calender.png" alt="달력">
-			    <h2>나의 음식 달력</h2>
-			</div>
-			<div class="product">
-			    <img src="images/calender.png" alt="달력">
-			    <h2>나의 음식 달력</h2>
-			</div>
-        </div>
-    </section>
-
-    <!-- 하단 메뉴 -->
-    <footer class="footer">
-        <div class="menu">
-            <a href="#">메뉴</a>
-            <a href="#">혜택</a>
-            <a href="#">나의 정보</a>
-            <a href="#">최근 먹은 음식</a>
-        </div>
-    </footer>
-
-    <!-- JavaScript 슬라이드 동작 -->
-	<script>
-	    function toggleDropdown(event) {
-	        const dropdown = document.getElementById("userDropdown");
-	        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-	    }
-
-	    // 페이지를 클릭할 때 드롭다운 메뉴 닫기
-	    window.onclick = function(event) {
-	        if (!event.target.matches('.user-icon')) {
-	            const dropdowns = document.getElementsByClassName("dropdown-menu");
-	            for (let i = 0; i < dropdowns.length; i++) {
-	                const openDropdown = dropdowns[i];
-	                if (openDropdown.style.display === "block") {
-	                    openDropdown.style.display = "none";
-	                }
-	            }
-	        }
-	    }
-	</script>
-=======
             window.addEventListener("scroll", function() {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 if (scrollTop > lastScrollTop) {
@@ -303,6 +170,5 @@
             }
         }
     </script>
->>>>>>> branch 'kjm' of https://github.com/spaceAndro/Space.git
 </body>
 </html>

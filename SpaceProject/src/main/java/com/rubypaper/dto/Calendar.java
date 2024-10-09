@@ -1,5 +1,6 @@
 package com.rubypaper.dto;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
