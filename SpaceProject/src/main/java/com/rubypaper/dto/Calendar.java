@@ -1,6 +1,6 @@
 package com.rubypaper.dto;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ public class Calendar {
 	public int cSeq;
 	
 	public String userId;
-	public Date saveDate;
+	public LocalDateTime saveDate;
 	
 	@ManyToOne
 	@JoinColumn(name="f_seq")

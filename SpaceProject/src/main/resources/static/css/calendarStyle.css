@@ -1,38 +1,76 @@
-.calendar-container {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f4f4f4;
 }
 
-.header {
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  margin-bottom: 20px;
+.calendar-container {
+  text-align: center;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  position: relative;
+  width: 90vw;
+  max-width: 1200px;
+  height: 800px;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
 .selected-date-info {
-  margin-left: 20px; 
+  text-align: left;
+  padding: 10px;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  width: 300px; 
+  border-radius: 5px;
+  width: 300px;
+}
+
+.centered-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.year-control, .month-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.month-control span {
+  font-size: 2.5em;
+  margin: 0 10px;
+}
+
+.year-control span {
+  font-size: 1.5em;
+  margin: 0 10px;
 }
 
 button {
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 8px 16px;
   background-color: #008CBA;
   color: white;
   border: none;
   border-radius: 5px;
   font-size: 1em;
-  margin-right: 5px;
+  margin: 5px;
 }
 
 button:hover {
@@ -49,42 +87,58 @@ th, td {
   padding: 10px;
   text-align: center;
   border: 1px solid #ddd;
-  font-size: 0.9em; 
-  height: 80px;
+  font-size: 1.2em;
+  vertical-align: top;
+}
+
+td .date {
+  font-size: 0.7em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+td .meal::before {
+  content: '●'; 
+  font-size: 1em;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+td .meal.breakfast::before {
+  color: #ff6b6b; 
+}
+
+td .meal.lunch::before {
+  color: #f9c74f; 
+}
+
+td .meal.dinner::before {
+  color: #4daf50; 
+}
+
+td .meal {
+  font-size: 0.4em;
+  margin-top: 5px;
+}
+
+td:hover {
+  background-color: #e0e0e0;
 }
 
 td.highlight {
   background-color: #f9c74f;
   font-weight: bold;
-}
-
-.date {
-  font-size: 1.2em;
-  margin-bottom: 5px;
-}
-
-.meal {
-  font-size: 0.7em;
-  line-height: 1.2;
-  margin: 1px 0;
+  color: white;
 }
 
 .spring {
   width: 100%;
-  height: 20px;
-  position: relative;
-  top: -30px;
+  height: 40px;
+  position: absolute;
+  top: -40px;
   left: 0;
   display: flex;
   justify-content: center;
-}
-
-.spring::before, .spring::after {
-  content: '';
-  width: 200px;
-  height: 5px;
-  border-radius: 50%;
-  background: linear-gradient(to right, #666 25%, transparent 25%);
-  background-size: 20px 5px;
-  background-repeat: repeat-x;
 }

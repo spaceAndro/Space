@@ -46,8 +46,6 @@ public class UserController {
 
         // 모델에 사용자 정보 추가
         model.addAttribute("user", user);
-        model.addAttribute("date", LocalDate.now().toString().replace("-", "."));
-        model.addAttribute("message", "내 정보 페이지");
         
         return "profile"; // profile.html 템플릿 반환
     }
