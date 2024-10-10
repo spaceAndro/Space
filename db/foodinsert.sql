@@ -1,371 +1,531 @@
-INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES
-(1, '김치찌개', 60, 3, 4, 4),
-(2, '된장찌개', 41, 4, 3, 1),
-(3, '비빔밥', 145, 21, 5, 4),
-(4, '불고기', 263, 6, 22, 16),
-(5, '삼겹살', 466, 1, 22, 41),
-(6, '칼국수', 77, 15, 3, 1),
-(7, '잡채', 132, 19, 5, 4),
-(8, '떡볶이', 147, 28, 4, 2),
-(9, '전', 200, 30, 7, 12),
-(10, '김밥', 148, 24, 4, 4),
-(11, '도토리묵', 46, 10, 1, 1),
-(12, '잡채밥', 142, 25, 4, 3),
-(13, '냉면', 69, 14, 2, 1),
-(14, '탕수육', 203, 19, 11, 9),
-(15, '깐풍기', 262, 18, 13, 15),
-(16, '팟타이', 170, 23, 6, 6),
-(17, '짜장면', 104, 18, 3, 3),
-(18, '짬뽕', 63, 9, 3, 2),
-(19, '불닭볶음면', 378, 60, 8, 11),
-(20, '새우튀김', 286, 19, 17, 16),
-(21, '양장피', 112, 10, 7, 5),
-(22, '마파두부', 111, 5, 7, 7),
-(23, '꿔바로우', 192, 17, 11, 9),
-(24, '동파육', 463, 3, 9, 46),
-(25, '고추잡채', 128, 13, 6, 6),
-(26, '초밥', 152, 24, 9, 2),
-(27, '라면', 81, 14, 2, 2),
-(28, '돈부리', 163, 24, 7, 4),
-(29, '가라아게', 276, 7, 21, 18),
-(30, '오니기리', 223, 30, 4, 8),
-(31, '미소시루', 188, 26, 11, 6),
-(32, '텐동', 223, 30, 11, 6),
-(33, '규동', 138, 19, 8, 4),
-(34, '타코야키', 116, 20, 5, 2),
-(35, '오코노미야키', 218, 26, 9, 9),
-(36, '규카츠', 232, 6, 22, 13),
-(37, '스파게티', 157, 31, 6, 1),
-(38, '피자', 254, 29, 10, 11),
-(39, '햄버거', 263, 22, 13, 14),
-(40, '파스타', 363, 77, 11, 12),
-(41, '스테이크', 173, 7, 12, 11),
-(42, '샐러드', 122, 7, 1, 11),
-(43, '리조또', 194, 23, 8, 8),
-(44, '라자냐', 163, 17, 10, 6),
-(45, '그리스 샐러드', 101, 3, 7, 7),
-(46, '퀘사디아', 150, 11, 9, 8),
-(47, '브리또', 174, 28, 6, 4),
-(48, '미트볼 파스타', 353, 35, 20, 15),
-(49, '샌드위치', 304, 33, 10, 15),
-(50, '순두부찌개', 46, 2, 4, 2),
-(51, '콩나물국', 6, 1, 1, 1),
-(52, '떡국', 84, 16, 3, 1),
-(53, '김치볶음밥', 158, 19, 5, 6),
-(54, '순대', 183, 27, 4, 6),
-(55, '제육볶음', 194, 4, 12, 14),
-(56, '오징어볶음', 127, 7, 9, 6),
-(57, '열무김치', 25, 2, 1, 1),
-(58, '아귀찜', 75, 7, 6, 3),
-(59, '삼계탕', 96, 4, 11, 4),
-(60, '김치전', 132, 19, 5, 4),
-(61, '해물파전', 170, 18, 5, 8),
-(62, '중화비빔면', 403, 61, 6, 14),
-(63, '해물탕', 44, 2, 6, 1),
-(64, '오징어국', 18, 1, 2, 1),
-(65, '설렁탕', 23, 1, 4, 1),
-(66, '육개장', 29, 1, 3, 1),
-(67, '우거지국', 52, 2, 10, 1),
-(68, '김치국', 19, 2, 1, 1),
-(69, '북엇국', 27, 1, 3, 1),
-(70, '시래기국', 44, 5, 4, 1),
-(71, '배추국', 21, 3, 1, 1),
-(72, '황태국', 89, 7, 10, 2),
-(73, '피쉬 앤 칩스', 254, 20, 10, 14),
-(74, '닭갈비', 167, 9, 13, 8),
-(75, '감자탕', 70, 2, 6, 4),
-(76, '육회', 141, 9, 12, 6),
-(77, '족발', 232, 2, 26, 13),
-(78, '오삼불고기', 181, 10, 12, 9),
-(79, '꼬막비빔밥', 123, 19, 7, 2),
-(80, '황태해장국', 30, 1, 4, 1),
-(81, '김치볶음면', 363, 44, 6, 17),
-(82, '곰탕', 56, 2, 6, 2),
-(83, '청국장', 211, 15, 16, 10),
-(84, '매운갈비찜', 172, 7, 20, 6),
-(85, '보리밥', 160, 36, 2, 1),
-(86, '콩비지찌개', 68, 5, 6, 3),
-(87, '떡만두국', 89, 15, 2, 1),
-(88, '오징어순대', 133, 16, 13, 1),
-(89, '삼합', 142, 7, 14, 8),
-(90, '부대찌개', 94, 8, 4, 4),
-(91, '해물라면', 455, 68, 10, 15),
-(92, '쭈꾸미볶음', 132, 17, 10, 2),
-(93, '꽁치구이', 302, 4, 24, 21),
-(94, '멘보샤', 308, 22, 11, 19),
-(95, '양꼬치', 230, 2, 15, 18),
-(96, '고추기름 닭고기', 279, 1, 28, 17),
-(97, '마라탕', 256, 17, 6, 17),
-(98, '마라샹궈', 170, 18, 9, 6),
-(99, '소룡포', 252, 33, 7, 9),
-(100, '북경오리', 318, 4, 17, 25),
-(101, '짜장밥', 135, 19, 3, 4),
-(102, '유니짜장', 191, 38, 4, 2),
-(103, '마파면', 231, 42, 5, 4),
-(104, '훈툰', 62, 6, 3, 2),
-(105, '깐쇼새우덮밥', 144, 21, 4, 4),
-(106, '사천식 돼지고기 볶음', 174, 9, 11, 10),
-(107, '라조기', 198, 13, 10, 11),
-(108, '탄탄면', 272, 58, 7, 1),
-(109, '꿔바로우 샐러드', 210, 19, 12, 8),
-(110, '삼선짬뽕밥', 71, 11, 3, 1),
-(111, '건두부볶음', 252, 6, 24, 16),
-(112, '마라양념탕수육', 305, 28, 16, 13),
-(113, '해물볶음우동', 170, 24, 4, 6),
-(114, '우동', 60, 10, 1, 1),
-(115, '덴푸라', 286, 19, 17, 15),
-(116, '카츠돈', 231, 11, 16, 13),
-(117, '라멘', 367, 46, 10, 14),
-(118, '소바', 105, 23, 3, 1),
-(119, '규카츠 덮밥', 232, 5, 22, 12),
-(120, '하이라이스', 111, 21, 4, 1),
-(121, '오차즈케', 95, 16, 3, 1),
-(122, '장어덮밥', 179, 24, 7, 5),
-(123, '니쿠자가', 285, 5, 17, 22),
-(124, '가이센동', 152, 2, 1, 1),
-(125, '타마고야키', 154, 1, 13, 10),
-(126, '오야코동', 155, 23, 5, 5),
-(127, '시메사바', 275, 1, 23, 20),
-(128, '카마메시', 182, 36, 3, 2),
-(129, '이카메시', 133, 16, 13, 1),
-(130, '나가사키 짬뽕', 413, 69, 8, 11),
-(131, '우나기', 107, 1, 19, 2),
-(132, '샤케동', 143, 18, 9, 3),
-(133, '에비텐동', 223, 30, 11, 6),
-(134, '가츠샌드', 231, 13, 23, 9),
-(135, '메밀국수 샐러드', 63, 12, 3, 1),
-(136, '치킨 알프레도', 174, 24, 11, 2),
-(137, '크림수프', 112, 7, 1, 8),
-(138, '부리또', 264, 31, 11, 10),
-(139, '타코', 217, 15, 12, 12),
-(140, '블랙빈 수프', 80, 15, 5, 1),
-(141, '시저 샐러드', 170, 6, 5, 14),
-(142, '미트로프', 149, 4, 17, 6),
-(143, '라따뚜이', 86, 10, 1, 4),
-(144, '비프 브루기뇽', 105, 13, 8, 3),
-(145, '치킨 팟파이', 252, 4, 15, 7),
-(146, '치즈버거', 313, 31, 14, 14),
-(147, '클럽 샌드위치', 233, 19, 12, 10),
-(148, '비지찌개', 46, 3, 4, 1),
-(149, '코코넛 치킨', 117, 11, 6, 5),
-(150, '타이 새우 볶음', 166, 11, 19, 4),
-(151, '바질페스토 라비올리', 462, 9, 4, 46),
-(152, '토마토 모차렐라 피자', 196, 21, 11, 7),
-(153, '브로콜리 샐러드', 80, 2, 1, 7),
-(154, '참치 카나페', 209, 17, 16, 8),
-(155, '연어 머핀', 170, 24, 6, 5),
-(156, '오징어채무침', 257, 28, 23, 5),
-(157, '계란말이', 192, 1, 17, 13),
-(158, '낙지볶음', 91, 10, 5, 3),
-(159, '닭볶음탕', 110, 8, 11, 3),
-(160, '순두부국', 46, 2, 4, 2),
-(161, '애호박전', 120, 6, 4, 8),
-(162, '돼지갈비', 190, 10, 14, 11),
-(163, '소갈비찜', 197, 5, 19, 10),
-(164, '닭강정', 225, 22, 11, 9),
-(165, '불고기 덮밥', 158, 23, 6, 4),
-(166, '비빔국수', 107, 20, 3, 1),
-(167, '콩나물무침', 66, 3, 3, 4),
-(168, '호박죽', 61, 10, 1, 1),
-(169, '계란국', 13, 1, 1, 1),
-(170, '콩국수', 82, 11, 3, 2),
-(171, '미역국', 11, 1, 1, 1),
-(172, '두부조림', 142, 4, 9, 9),
-(173, '카레', 85, 11, 2, 3),
-(174, '버섯볶음', 52, 6, 3, 2),
-(175, '미나리무침', 43, 5, 1, 2),
-(176, '새우구이', 144, 2, 23, 4),
-(177, '고등어조림', 140, 5, 11, 8),
-(178, '장어구이', 224, 6, 19, 13),
-(179, '소불고기', 163, 5, 18, 6),
-(180, '낙지전골', 51, 3, 6, 1),
-(181, '전복죽', 76, 12, 1, 2),
-(182, '갈치조림', 100, 8, 12, 2),
-(183, '두부김치', 115, 5, 7, 6),
-(184, '닭칼국수', 73, 10, 4, 1),
-(185, '부추전', 167, 27, 4, 4),
-(186, '떡갈비', 201, 2, 21, 11),
-(187, '무국', 60, 6, 1, 3),
-(188, '만두국', 62, 6, 3, 2),
-(189, '새우완자', 26, 4, 2, 1),
-(190, '해물찜', 80, 7, 8, 2),
-(191, '매운탕', 71, 2, 11, 1),
-(192, '동태찌개', 44, 1, 6, 1),
-(193, '매운돼지갈비', 178, 12, 20, 5),
-(194, '치즈계란말이', 183, 2, 12, 13),
-(195, '오이무침', 43, 7, 1, 1),
-(196, '제육덮밥', 179, 20, 7, 7),
-(197, '무생채', 48, 7, 2, 1),
-(198, '홍합탕', 24, 1, 1, 2),
-(199, '고구마전', 227, 36, 2, 8),
-(200, '한치물회', 75, 7, 4, 2),
-(201, '샐러드롤', 87, 9, 3, 4),
-(202, '유부 초밥', 180, 30, 5, 4),
-(203, '닭봉구이', 256, 7, 26, 13),
-(204, '갈치구이', 147, 1, 12, 9),
-(205, '삼치구이', 177, 1, 21, 9),
-(206, '임연수구이', 197, 1, 21, 11),
-(207, '쫄면', 130, 23, 3, 2),
-(208, '시금치나물', 67, 7, 3, 3),
-(209, '짬짜면', 156, 29, 5, 2),
-(210, '대파무침', 70, 11, 2, 2),
-(211, '꽁치조림', 242, 7, 15, 17),
-(212, '갈비탕', 47, 1, 6, 1),
-(213, '순대국', 57, 3, 5, 4),
-(214, '돼지고기묵은지찜', 98, 2, 7, 7),
-(215, '찜닭', 192, 15, 13, 7),
-(216, '굴전', 194, 14, 10, 10),
-(217, '갈비구이', 293, 6, 28, 18),
-(218, '도토리묵무침', 72, 10, 1, 2),
-(219, '청포묵', 36, 9, 1, 1),
-(220, '팥죽', 82, 16, 3, 1),
-(221, '야채튀김', 210, 35, 2, 7),
-(222, '피자 토스트', 242, 5, 11, 5),
-(223, '감자전', 131, 16, 1, 6),
-(224, '시래기된장국', 22, 2, 1, 1),
-(225, '고추장찌개', 102, 13, 6, 2),
-(226, '조기구이', 176, 1, 19, 10),
-(227, '게장', 62, 6, 7, 1),
-(228, '고추짬뽕', 413, 60, 9, 14),
-(229, '백김치', 15, 2, 1, 1),
-(230, '돼지고기볶음', 174, 9, 11, 10),
-(231, '산적', 193, 12, 12, 10),
-(232, '물김치', 20, 4, 1, 1),
-(233, '우렁강된장', 110, 8, 6, 6),
-(234, '배추겉절이', 53, 6, 2, 2),
-(235, '생채', 24, 3, 1, 1),
-(236, '새우젓 무침', 40, 1, 8, 1),
-(237, '우엉조림', 185, 34, 4, 3),
-(238, '어묵탕', 62, 6, 6, 1),
-(239, '어묵볶음', 196, 24, 8, 7),
-(240, '곤약조림', 35, 6, 1, 1),
-(241, '해물순두부찌개', 100, 4, 8, 5),
-(242, '고등어구이', 275, 1, 23, 20),
-(243, '굴밥', 134, 16, 6, 4),
-(244, '낙지탕탕이', 91, 10, 5, 3),
-(245, '멍게무침', 36, 8, 1, 1),
-(246, '백숙', 111, 1, 10, 7),
-(247, '가자미구이', 122, 1, 18, 5),
-(248, '도미구이', 158, 2, 24, 6),
-(249, '붕장어구이', 296, 11, 26, 16),
-(250, '전어구이', 169, 2, 16, 10),
-(251, '명태구이', 90, 1, 22, 1),
-(252, '방어구이', 275, 1, 23, 20),
-(253, '도라지무침', 93, 16, 2, 2),
-(254, '미역무침', 64, 14, 2, 1),
-(255, '청국장찌개', 57, 2, 5, 3),
-(256, '차돌박이 된장찌개', 60, 6, 1, 3),
-(257, '감자찌개', 40, 6, 2, 1),
-(258, '애호박찌개', 54, 5, 5, 1),
-(259, '매운 갈비찜 찌개', 172, 7, 20, 6),
-(260, '황태찌개', 30, 1, 4, 1),
-(261, '오삼불고기 찌개', 44, 3, 10, 6),
-(262, '초계국수', 137, 21, 6, 2),
-(263, '초계비빔국수', 89, 15, 3, 1),
-(264, '잔치국수', 44, 8, 1, 1),
-(265, '군만두', 253, 30, 7, 11),
-(266, '튀김만두', 190, 21, 9, 6),
-(267, '두부전골', 63, 3, 5, 3),
-(268, '물냉면', 69, 14, 2, 1),
-(269, '비빔냉면', 106, 17, 4, 1),
-(270, '철판 볶음밥', 164, 26, 6, 4),
-(271, '수제비', 58, 11, 2, 1),
-(272, '해물 수제비', 265, 57, 6, 1),
-(273, '마라짬뽕', 199, 35, 7, 3),
-(274, '마파두부밥', 136, 20, 5, 3),
-(275, '투움바 파스타', 203, 33, 6, 6),
-(276, '푸실리 파스타', 330, 73, 15, 1),
-(277, '불닭', 420, 64, 8, 16),
-(278, '파김치장어전골', 51, 3, 6, 1),
-(279, '명란 크림파스타', 242, 37, 5, 8),
-(280, '샐러드 피자', 205, 22, 10, 8),
-(281, '바지락 칼국수', 82, 16, 3, 1),
-(282, '백합탕', 60, 10, 1, 1),
-(283, '곱창볶음', 176, 10, 8, 13),
-(284, '순대국밥', 74, 10, 3, 2),
-(285, '소곱창', 230, 1, 12, 20),
-(286, '소대창', 158, 1, 12, 11),
-(287, '소막창', 301, 2, 14, 25),
-(288, '곱창전골', 166, 10, 7, 11),
-(289, '물막국수', 137, 28, 2, 1),
-(290, '마르게리타 피자', 274, 46, 9, 5),
-(291, '디아블로 피자', 235, 30, 13, 6),
-(292, '포테이토베이컨 피자', 255, 31, 11, 9),
-(293, '시금치 피자', 309, 38, 12, 12),
-(294, '알리오 올리오', 155, 19, 3, 6),
-(295, '로제쉬림프', 126, 17, 4, 4),
-(296, '야채 김밥', 127, 25, 2, 1),
-(297, '참치 김밥', 172, 22, 6, 6),
-(298, '소고기 김밥', 160, 25, 6, 3),
-(299, '계란 김밥', 132, 23, 3, 2),
-(300, '멸치 김밥', 182, 23, 10, 5),
-(301, '새우 김밥', 150, 30, 4, 1),
-(302, '돈가스 김밥', 329, 48, 10, 10),
-(303, '날치알 김밥', 177, 28, 6, 4),
-(304, '베이컨 김밥', 161, 18, 4, 7),
-(305, '깻잎 김밥', 148, 24, 4, 3),
-(306, '고추참치 김밥', 157, 25, 4, 4),
-(307, '연어 김밥', 134, 8, 8, 7),
-(308, '유부 김밥', 139, 21, 6, 2),
-(309, '꽃목살', 260, 20, 20, 10),
-(310, '회냉면', 131, 22, 4, 2),
-(311, '양갈비', 314, 1, 22, 24),
-(312, '항정살', 209, 1, 28, 9),
-(313, '소갈비살', 258, 1, 19, 19),
-(314, '우렁 된장찌개', 40, 7, 2, 1),
-(315, '숙성지 김치찌개', 60, 3, 3, 3),
-(316, '무채 비빔국수', 107, 20, 3, 1),
-(317, '날치알 주먹밥', 187, 28, 7, 6),
-(318, '연어 사시미', 146, 1, 21, 5),
-(319, '광어 사시미', 110, 1, 20, 2),
-(320, '참치 사시미', 127, 1, 25, 1),
-(321, '회덮밥', 136, 20, 6, 3),
-(322, '해물된장찌개', 91, 7, 9, 2),
-(323, '파삼겹', 466, 1, 22, 41),
-(324, '초벌 막창', 222, 1, 8, 20),
-(325, '아부라소바', 143, 20, 5, 4),
-(326, '돈코츠라멘', 124, 20, 3, 2),
-(327, '카라이라멘', 250, 43, 10, 4),
-(328, '교카이라멘', 56, 9, 2, 1),
-(329, '바질소바', 105, 23, 3, 1),
-(330, '부타동', 165, 26, 6, 3),
-(331, '조개찜', 92, 4, 15, 1),
-(332, '장어정식', 197, 27, 7, 6),
-(333, '모듬카츠', 174, 19, 8, 6),
-(334, '로스카츠', 311, 19, 16, 18),
-(335, '히레카츠', 325, 17, 16, 21),
-(336, '치즈카츠', 302, 16, 16, 18),
-(337, '고구마치즈카츠', 273, 18, 12, 16),
-(338, '매콤로제파스타', 150, 23, 2, 5),
-(339, '돈카츠 회오리 오므라이스', 167, 22, 5, 6),
-(340, '가츠동', 216, 30, 8, 6),
-(341, '새우가츠동', 216, 30, 8, 6),
-(342, '가라아게가츠동', 204, 27, 11, 5),
-(343, '갈매기살', 150, 11, 12, 6),
-(344, '월남쌈', 117, 12, 5, 5),
-(345, '크림통새우', 390, 32, 2, 29),
-(346, '상하이볶음면', 152, 28, 4, 2),
-(347, '연어구이', 171, 1, 24, 7),
-(348, '아란치니', 256, 30, 7, 11),
-(349, '시저 치킨랩', 223, 22, 8, 11),
-(350, '감바스 알 아히요', 304, 2, 17, 25),
-(351, '크로켓', 305, 29, 6, 18),
-(352, '필라프', 124, 21, 2, 3),
-(353, '채소전', 118, 15, 3, 4),
-(354, '김치전', 132, 19, 5, 4),
-(355, '호박전', 138, 10, 4, 8),
-(356, '애호박전', 120, 6, 4, 8),
-(357, '부추전', 167, 27, 4, 4),
-(358, '깻잎전', 240, 9, 11, 17),
-(359, '부추전', 167, 27, 4, 4),
-(360, '파전', 194, 23, 4, 9),
-(361, '부추전', 167, 27, 4, 4),
-(362, '아구찜', 80, 7, 8, 2),
-(363, '뇨끼', 355, 72, 13, 1),
-(364, '파인애플 볶음밥', 108, 21, 4, 1),
-(365, '트러플 리소토', 122, 17, 2, 5),
-(366, '닭가슴살 스테이크', 129, 4, 18, 3),
-(367, '포크 롤', 307, 33, 3, 3),
-(368, '바질페스토 파스타', 187, 28, 3, 6),
-(369, '양송이 크림파스타', 118, 13, 3, 5)
-;
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (1, '김치찌개', 250, 10, 15, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (2, '된장찌개', 200, 12, 10, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (3, '순두부찌개', 300, 8, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (4, '콩나물국', 150, 5, 8, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (5, '떡국', 350, 60, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (6, '감자탕', 700, 30, 50, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (7, '북엇국', 180, 5, 15, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (8, '삼계탕', 800, 10, 60, 50);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (9, '설렁탕', 600, 20, 40, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (10, '시래기국', 150, 5, 8, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (11, '오징어국', 200, 5, 20, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (12, '해물탕', 300, 10, 40, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (13, '육개장', 400, 10, 30, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (14, '배추국', 130, 6, 6, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (15, '김치국', 200, 8, 10, 7);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (16, '곰탕', 600, 10, 50, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (17, '떡만두국', 450, 60, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (18, '황태해장국', 180, 5, 25, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (19, '해물 수제비', 400, 70, 20, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (20, '황태국', 200, 5, 25, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (21, '부대찌개', 700, 30, 30, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (22, '우거지국', 150, 5, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (23, '비지찌개', 350, 10, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (24, '콩비지찌개', 350, 15, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (25, '감자찌개', 300, 40, 10, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (26, '갈비탕', 550, 15, 45, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (27, '매운탕', 300, 20, 25, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (28, '동태찌개', 300, 10, 25, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (29, '미역국', 50, 7, 3, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (30, '순대국', 400, 25, 30, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (31, '홍합탕', 150, 10, 20, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (32, '두부전골', 350, 15, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (33, '계란국', 80, 5, 5, 4);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (34, '무국', 50, 10, 2, 0);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (35, '낙지국', 120, 15, 15, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (36, '애호박찌개', 250, 20, 8, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (37, '참치국', 180, 5, 20, 7);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (38, '사골국', 300, 10, 25, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (39, '버섯국', 150, 6, 8, 4);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (40, '고추장찌개', 280, 15, 18, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (41, '수제비', 300, 60, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (42, '청국장', 300, 20, 25, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (43, '매운갈비찜', 800, 30, 60, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (44, '해물순두부찌개', 250, 20, 15, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (45, '만두국', 220, 30, 12, 7);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (46, '순두부국', 150, 12, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (47, '시래기된장국', 90, 12, 5, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (48, '우렁강된장', 200, 10, 20, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (49, '낙지탕탕이', 200, 5, 25, 6);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (50, '어묵탕', 250, 10, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (51, '미소 된장국', 50, 5, 5, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (52, '차돌박이 된장찌개', 450, 15, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (53, '매운 갈비찜 찌개', 700, 30, 50, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (54, '황태찌개', 200, 12, 18, 6);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (55, '오삼불고기 찌개', 500, 25, 30, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (56, '파김치장어전골', 500, 15, 45, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (57, '곱창전골', 600, 20, 35, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (58, '우렁 된장찌개', 250, 12, 20, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (59, '숙성지 김치찌개', 300, 12, 18, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (60, '해물된장찌개', 280, 15, 22, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (61, '필라프', 550, 85, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (62, '니쿠자가', 500, 20, 40, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (63, '시메사바', 300, 5, 25, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (64, '카츠돈', 700, 80, 30, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (65, '짜장밥', 600, 90, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (66, '연어 김밥', 350, 55, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (67, '삼선짬뽕밥', 600, 80, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (68, '전주비빔밥', 550, 80, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (69, '리조또', 600, 85, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (70, '잡채밥', 600, 90, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (71, '돈부리', 650, 85, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (72, '마파두부밥', 550, 75, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (73, '베이컨 김밥', 350, 55, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (74, '규동', 500, 60, 30, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (75, '오니기리', 350, 70, 8, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (76, '굴밥', 400, 60, 25, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (77, '가마솥밥', 550, 85, 10, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (78, '소고기덮밥', 700, 90, 30, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (79, '참치마요덮밥', 550, 85, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (80, '참치볶음밥', 500, 80, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (81, '깻잎 김밥', 320, 50, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (82, '꼬막비빔밥', 500, 80, 20, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (83, '규카츠 덮밥', 700, 80, 30, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (84, '장어덮밥', 650, 80, 30, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (85, '카마메시', 550, 80, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (86, '이카메시', 400, 60, 20, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (87, '야채 김밥', 300, 60, 5, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (88, '깐쇼새우덮밥', 500, 70, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (89, '유니짜장', 550, 80, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (90, '오차즈케', 300, 60, 10, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (91, '하이라이스', 550, 70, 15, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (92, '규카츠', 600, 15, 30, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (93, '참치 김밥', 350, 55, 15, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (94, '가이센동', 400, 70, 15, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (95, '샤케동', 500, 80, 20, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (96, '오야코동', 600, 80, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (97, '보리밥', 200, 45, 6, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (98, '쭈꾸미볶음', 350, 10, 30, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (99, '소고기 김밥', 350, 55, 12, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (100, '버섯 리소토', 550, 75, 15, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (101, '로코모코', 650, 85, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (102, '참치 비빔밥', 500, 75, 20, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (103, '새우볶음밥', 500, 80, 20, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (104, '트러플 리소토', 600, 85, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (105, '계란 김밥', 300, 55, 8, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (106, '토마토 리소토', 500, 75, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (107, '감바스 리조또', 600, 85, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (108, '새우 크림 리조또', 550, 70, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (109, '멸치 김밥', 320, 55, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (110, '새우 김밥', 350, 55, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (111, '유부 초밥', 300, 65, 6, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (112, '불고기 덮밥', 600, 85, 25, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (113, '제육덮밥', 650, 80, 30, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (114, '김치볶음밥', 550, 85, 12, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (115, '돈가스 김밥', 450, 55, 20, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (116, '초밥', 400, 60, 15, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (117, '날치알 김밥', 320, 50, 10, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (118, '카레', 600, 90, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (119, '치킨 필라프', 550, 85, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (120, '타이 그린 카레', 600, 80, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (121, '버섯 볶음밥', 450, 80, 10, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (122, '파인애플 볶음밥', 600, 85, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (123, '닭갈비 덮밥', 650, 80, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (124, '새우 카레라이스', 550, 80, 15, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (125, '철판 볶음밥', 600, 80, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (126, '고추참치 김밥', 350, 55, 12, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (127, '유부 김밥', 300, 55, 6, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (128, '날치알 주먹밥', 350, 55, 8, 6);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (129, '회덮밥', 400, 70, 30, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (130, '부타동', 650, 85, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (131, '가츠동', 700, 80, 30, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (132, '새우가츠동', 750, 85, 30, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (133, '가라아게가츠동', 700, 80, 30, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (134, '월남쌈', 300, 60, 10, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (135, '중화비빔면', 600, 90, 15, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (136, '바질페스토 파스타', 650, 75, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (137, '짬짜면', 700, 100, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (138, '회냉면', 450, 70, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (139, '무채 비빔국수', 400, 70, 10, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (140, '트러플 파스타', 750, 95, 20, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (141, '양송이 크림파스타', 700, 80, 15, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (142, '우동', 450, 70, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (143, '라멘', 550, 85, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (144, '칼국수', 500, 70, 25, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (145, '잡채', 600, 90, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (146, '비빔냉면', 450, 70, 12, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (147, '아부라소바', 600, 75, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (148, '라면', 500, 70, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (149, '파스타', 500, 75, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (150, '짜장면', 600, 80, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (151, '짬뽕', 650, 90, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (152, '불닭볶음면', 600, 85, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (153, '물냉면', 400, 90, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (154, '연어 파스타', 550, 75, 25, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (155, '카라이라멘', 650, 90, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (156, '새우튀김', 350, 30, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (157, '유산슬', 500, 30, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (158, '초계비빔국수', 450, 65, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (159, '돈코츠라멘', 600, 90, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (160, '교카이라멘', 600, 85, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (161, '고추짬뽕', 700, 95, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (162, '야끼소바', 650, 90, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (163, '소바', 300, 50, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (164, '비빔국수', 450, 80, 12, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (165, '쌀국수', 500, 80, 15, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (166, '라볶이', 550, 90, 10, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (167, '초계국수', 350, 60, 15, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (168, '바지락 칼국수', 450, 70, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (169, '푸실리 파스타', 600, 85, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (170, '떡볶이', 400, 80, 8, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (171, '김치볶음면', 600, 90, 15, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (172, '마파면', 650, 90, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (173, '나가사키 짬뽕', 550, 80, 20, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (174, '물막국수', 400, 70, 12, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (175, '해물볶음우동', 550, 85, 20, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (176, '메밀국수 샐러드', 300, 50, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (177, '미소시루', 50, 5, 5, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (178, '우나기', 400, 10, 30, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (179, '새우 스캄피 파스타', 650, 85, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (180, '명란 크림파스타', 750, 90, 20, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (181, '토마토 갈릭 파스타', 650, 85, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (182, '탄탄멘', 650, 80, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (183, '차슈 라멘', 700, 90, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (184, '훈툰', 300, 35, 10, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (185, '블랙 올리브 파스타', 650, 85, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (186, '투움바 파스타', 800, 90, 25, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (187, '바질소바', 500, 75, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (188, '갈릭 새우 파스타', 650, 80, 20, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (189, '크림 시금치 파스타', 700, 90, 20, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (190, '바질페스토 라비올리', 650, 85, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (191, '해물라면', 550, 80, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (192, '마라짬뽕', 700, 90, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (193, '알리오 올리오', 600, 85, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (194, '쫄면', 500, 80, 12, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (195, '바질 파스타', 650, 90, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (196, '트러플 마카로니', 700, 85, 15, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (197, '크림치즈 파스타', 750, 85, 20, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (198, '치킨 크림파스타', 700, 90, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (199, '미트볼 파스타', 700, 85, 25, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (200, '잔치국수', 400, 70, 10, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (201, '닭칼국수', 450, 65, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (202, '맥 앤 치즈', 700, 75, 20, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (203, '시저 파스타 샐러드', 400, 60, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (204, '살몬 크림 파스타', 650, 85, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (205, '콩국수', 400, 60, 10, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (206, '까르보나라 불닭볶음면', 800, 90, 20, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (207, '매콤로제파스타', 700, 85, 20, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (208, '상하이볶음면', 750, 90, 25, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (209, '퀘사디아', 550, 65, 20, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (210, '부리또', 600, 80, 25, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (211, '포크 롤', 550, 60, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (212, '아란치니', 400, 60, 10, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (213, '에그 베네딕트', 300, 25, 15, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (214, '베이컨 에그 베네딕트', 400, 30, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (215, '크로와상 샌드위치', 350, 35, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (216, '햄 치즈 파니니', 500, 50, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (217, '피자', 800, 100, 25, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (218, '햄버거', 600, 50, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (219, '샐러드 피자', 600, 70, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (220, '감자 피자', 700, 90, 20, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (221, '브리또', 600, 70, 25, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (222, '샌드위치', 300, 40, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (223, '라자냐', 700, 80, 20, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (224, '시금치 피자', 650, 80, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (225, '찐빵', 250, 50, 6, 4);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (226, '타코', 350, 40, 15, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (227, '멘보샤', 450, 30, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (228, '소룡포', 300, 25, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (229, '가츠샌드', 550, 80, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (230, '애호박 라자냐', 400, 45, 15, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (231, '치킨 팟파이', 500, 50, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (232, '클럽 샌드위치', 550, 60, 25, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (233, '치즈버거', 750, 45, 30, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (234, '참치 샌드위치', 450, 50, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (235, '프렌치 토스트', 450, 60, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (236, '디아블로 피자', 800, 90, 25, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (237, '포테이토베이컨 피자', 750, 85, 30, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (238, '와플 샌드위치', 500, 60, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (239, '페스토 샌드위치', 450, 50, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (240, '크림치즈 베이글', 450, 50, 10, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (241, '마르게리타 피자', 700, 85, 20, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (242, '버팔로 치킨 샌드위치', 500, 50, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (243, '갈릭 토스트', 400, 50, 8, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (244, '코코아 머핀', 350, 50, 5, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (245, '크림 치즈 베이글', 400, 55, 8, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (246, '마늘빵', 400, 50, 8, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (247, '베이글 샌드위치', 400, 40, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (248, '시나몬 롤', 400, 70, 5, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (249, '치킨 시저랩', 500, 45, 25, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (250, '페퍼로니 피자', 850, 90, 30, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (251, '햄 치즈 토스트', 400, 45, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (252, '샐러드롤', 300, 35, 8, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (253, '바질 페스토 샌드위치', 500, 60, 10, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (254, '바나나 브레드', 350, 60, 5, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (255, '연어 머핀', 300, 40, 20, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (256, '연어 샌드위치', 450, 50, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (257, '까르보나라 파스타', 800, 90, 20, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (258, '그릴드 치즈 샌드위치', 450, 40, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (259, '바베큐 치킨 피자', 900, 85, 35, 45);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (260, '치즈 퀘사디아', 550, 65, 20, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (261, '브루스케타', 250, 30, 5, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (262, '참치 카나페', 200, 20, 10, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (263, '피자 토스트', 400, 50, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (264, '미니 햄버거', 350, 35, 15, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (265, '토마토 모차렐라 피자', 700, 90, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (266, '크로크무슈', 450, 40, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (267, '랍스터 롤', 500, 60, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (268, '크림 바질 피자', 800, 85, 25, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (269, '바질페스토 피자', 750, 90, 20, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (270, '토마토 브루스케타', 200, 30, 5, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (271, '시저 치킨랩', 450, 50, 25, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (272, '프레즐', 300, 60, 5, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (273, '토마토 치즈 타르트', 400, 50, 10, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (274, '쉬림프 타코', 400, 50, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (275, '베지터블 라자냐', 450, 50, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (276, '아보카도 토스트', 350, 40, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (277, '비건 버거', 500, 60, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (278, '브런치 세트', 600, 70, 25, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (279, '살사 치킨 타코', 400, 50, 15, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (280, '열무김치', 50, 5, 2, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (281, '청포묵', 50, 10, 1, 0);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (282, '도토리묵무침', 150, 20, 5, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (283, '미나리무침', 30, 5, 2, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (284, '도라지무침', 60, 10, 3, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (285, '시금치나물', 80, 10, 5, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (286, '오이무침', 50, 10, 1, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (287, '무생채', 40, 8, 1, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (288, '배추겉절이', 50, 5, 2, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (289, '물김치', 20, 5, 1, 0);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (290, '생채', 40, 8, 1, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (291, '라따뚜이', 150, 15, 3, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (292, '미역무침', 50, 10, 2, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (293, '우엉조림', 100, 20, 2, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (294, '콩나물무침', 80, 10, 5, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (295, '오징어채무침', 150, 15, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (296, '대파무침', 50, 8, 2, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (297, '백김치', 30, 6, 1, 0);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (298, '레몬 허니 샐러드', 120, 25, 1, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (299, '버팔로 치킨 샐러드', 300, 15, 20, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (300, '사우전 아일랜드 샐러드', 180, 20, 2, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (301, '새우젓 무침', 60, 3, 5, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (302, '훈제 연어 샐러드', 300, 5, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (303, '브로콜리 샐러드', 80, 15, 3, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (304, '토마토 달걀 볶음', 200, 10, 10, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (305, '치즈 옥수수', 250, 30, 10, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (306, '시저 샐러드', 200, 10, 6, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (307, '살몬 아보카도 샐러드', 350, 10, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (308, '버섯볶음', 100, 15, 5, 4);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (309, '트로피컬 샐러드', 150, 30, 2, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (310, '오리엔탈 드레싱 샐러드', 120, 10, 2, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (311, '두부조림', 150, 10, 12, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (312, '로메인 샐러드', 20, 4, 1, 0);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (313, '두부김치', 150, 10, 12, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (314, '파파야 샐러드', 100, 25, 2, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (315, '샐러드', 50, 10, 1, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (316, '새우 토스트', 350, 30, 15, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (317, '수박 샐러드', 100, 25, 2, 0);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (318, '비트 샐러드', 60, 12, 2, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (319, '오이 샐러드', 50, 10, 1, 1);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (320, '렌틸콩 샐러드', 200, 30, 10, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (321, '포테이토 샐러드', 200, 30, 3, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (322, '참치 니스와 샐러드', 350, 25, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (323, '곤약조림', 100, 15, 5, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (324, '꿔바로우', 800, 60, 30, 50);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (325, '마라양념탕수육', 750, 50, 35, 45);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (326, '푸아그라', 450, 3, 13, 43);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (327, '양고기 스테이크', 300, 0, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (328, '오리 로스트', 350, 0, 30, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (329, '한우구이', 400, 1, 20, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (330, '양고기 찹스', 300, 0, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (331, '닭가슴살 스테이크', 250, 0, 40, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (332, '닭다리 구이', 210, 0, 28, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (333, '버팔로윙', 200, 5, 15, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (334, '제육볶음', 500, 20, 35, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (335, '닭갈비', 600, 20, 35, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (336, '스테이크', 700, 5, 60, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (337, '불고기', 400, 20, 30, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (338, '삼겹살', 600, 0, 20, 50);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (339, '갈비찜', 500, 15, 35, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (340, '보쌈', 550, 10, 40, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (341, '마파두부', 300, 20, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (342, '탕수육', 450, 50, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (343, '유린기', 400, 30, 25, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (344, '군만두', 300, 40, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (345, '꽃목살', 380, 0, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (346, '깐풍기', 500, 40, 30, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (347, '동파육', 600, 30, 40, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (348, '깐쇼새우', 400, 30, 25, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (349, '양갈비', 350, 0, 30, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (350, '오향장육', 500, 10, 40, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (351, '미트로프', 320, 15, 25, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (352, '돼지갈비', 500, 15, 35, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (353, '닭볶음탕', 450, 25, 30, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (354, '불닭', 700, 30, 40, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (355, '안동찜닭', 400, 35, 25, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (356, '치킨 알프레도', 700, 85, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (357, '족발', 800, 10, 50, 60);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (358, '양꼬치', 350, 5, 30, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (359, '닭강정', 550, 40, 30, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (360, '비프 브루기뇽', 600, 10, 50, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (361, '고추기름 닭고기', 500, 20, 35, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (362, '북경오리', 900, 10, 60, 70);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (363, '사천식 돼지고기 볶음', 600, 15, 40, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (364, '소막창', 450, 0, 30, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (365, '라조기', 700, 20, 45, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (366, '삼합', 600, 20, 50, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (367, '닭가슴살 샐러드', 200, 10, 25, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (368, '소대창', 400, 0, 30, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (369, '바베큐 폭립', 600, 30, 45, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (370, '레몬 치킨', 350, 5, 35, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (371, '사과 소스 포크', 350, 20, 25, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (372, '불고기 타코', 450, 55, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (373, '토마호크 스테이크', 600, 0, 60, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (374, '바베큐 치킨', 400, 15, 35, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (375, '치킨 파마산', 350, 20, 40, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (376, '비프 타르타르', 250, 0, 20, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (377, '닭가슴살 튀김', 280, 10, 35, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (378, '갈비구이', 450, 5, 40, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (379, '오렌지 치킨', 400, 30, 25, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (380, '돼지고기묵은지찜', 300, 15, 20, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (381, '연어 타르타르', 220, 0, 25, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (382, '코코넛 치킨', 300, 15, 20, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (383, '치킨 너겟', 400, 20, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (384, '닭봉구이', 180, 0, 22, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (385, '산적', 250, 5, 30, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (386, '타이 새우 볶음', 280, 25, 20, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (387, '소이 글레이즈드 연어', 350, 20, 30, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (388, '치킨 카레', 500, 40, 35, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (389, '매운돼지갈비', 450, 10, 35, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (390, '냉채족발', 300, 5, 25, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (391, '순대국밥', 450, 30, 35, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (392, '후라이드 치킨', 600, 30, 35, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (393, '치즈계란말이', 250, 5, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (394, '순대', 400, 10, 18, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (395, '오삼불고기', 550, 20, 35, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (396, '곱창볶음', 600, 20, 40, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (397, '소곱창', 350, 0, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (398, '육회', 300, 5, 30, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (399, '소갈비찜', 500, 15, 40, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (400, '라임 치킨', 350, 5, 35, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (401, '떡갈비', 450, 20, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (402, '찜닭', 500, 35, 40, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (403, '소불고기', 450, 20, 35, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (404, '백숙', 300, 5, 40, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (405, '사천식 양꼬치', 400, 5, 35, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (406, '돼지갈비 스튜', 500, 25, 30, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (407, '소시지 그라탱', 450, 25, 20, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (408, '스테이크 타르타르', 450, 0, 35, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (409, '돼지고기볶음', 300, 10, 25, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (410, '항정살', 400, 0, 25, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (411, '소갈비살', 450, 0, 30, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (412, '파삼겹', 550, 5, 30, 45);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (413, '초벌 막창', 450, 5, 30, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (414, '모듬카츠', 700, 60, 30, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (415, '로스카츠', 550, 20, 30, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (416, '히레카츠', 600, 50, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (417, '치즈카츠', 600, 25, 35, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (418, '고구마치즈카츠', 650, 30, 30, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (419, '돈카츠 회오리 오므라이스', 700, 50, 25, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (420, '갈매기살', 350, 0, 30, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (421, '덴푸라', 600, 40, 15, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (422, '튀김만두', 450, 50, 10, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (423, '고구마튀김', 350, 80, 2, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (424, '닭튀김', 500, 20, 35, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (425, '단호박튀김', 300, 60, 2, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (426, '크로켓', 300, 35, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (427, '에비텐동', 600, 70, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (428, '피쉬 앤 칩스', 800, 60, 40, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (429, '치즈 감자튀김', 400, 40, 10, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (430, '할라피뇨 팝퍼', 300, 30, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (431, '스윗 칠리 새우', 500, 45, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (432, '오징어 튀김', 400, 30, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (433, '꿔바로우 샐러드', 700, 50, 20, 40);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (434, '감자튀김', 350, 50, 5, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (435, '치즈스틱', 350, 20, 10, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (436, '가라아게', 300, 15, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (437, '양파 링', 400, 50, 5, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (438, '고로케', 500, 60, 10, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (439, '튀김우동', 400, 55, 8, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (440, '타코야키', 350, 45, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (441, '토마토 수프', 180, 30, 5, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (442, '칠리 치즈 감자튀김', 600, 60, 10, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (443, '야채튀김', 300, 40, 5, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (444, '트러플 감자튀김', 550, 60, 5, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (445, '마라샹궈', 550, 15, 35, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (446, '비스크 수프', 400, 30, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (447, '클램 차우더', 500, 40, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (448, '크림수프', 400, 30, 10, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (449, '블랙빈 수프', 350, 50, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (450, '랍스터 비스크', 450, 20, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (451, '마라탕', 600, 20, 30, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (452, '건두부볶음', 400, 15, 20, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (453, '토마토 바질 스프', 200, 30, 5, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (454, '타마고야키', 150, 5, 6, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (455, '양송이 수프', 300, 25, 5, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (456, '아스파라거스 수프', 250, 20, 5, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (457, '브로콜리 체다 수프', 400, 30, 15, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (458, '감자크림수프', 350, 35, 5, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (459, '시금치 수프', 200, 25, 5, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (460, '호박 수프', 180, 35, 3, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (461, '프렌치 어니언 수프', 300, 40, 5, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (462, '호박죽', 300, 60, 5, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (463, '계란말이', 250, 5, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (464, '랍스터 크림 스프', 450, 20, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (465, '비트 수프', 180, 35, 5, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (466, '팥죽', 300, 60, 5, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (467, '전복죽', 400, 50, 15, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (468, '계란찜', 150, 2, 10, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (469, '김치전', 400, 40, 10, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (470, '해물파전', 500, 40, 20, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (471, '채소전', 350, 35, 8, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (472, '고구마전', 300, 60, 5, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (473, '깻잎전', 200, 20, 5, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (474, '호박전', 300, 40, 10, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (475, '파전', 450, 45, 12, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (476, '부추전', 220, 40, 5, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (477, '감자전', 250, 50, 5, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (478, '애호박전', 150, 10, 5, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (479, '굴전', 180, 15, 12, 7);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (480, '오코노미야키', 600, 60, 20, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (481, '뇨끼', 250, 45, 8, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (482, '감자 샐러드', 250, 30, 5, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (483, '감자그라탕', 350, 25, 10, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (484, '체다 치즈 튀김', 400, 30, 10, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (485, '체다 치즈 칩', 500, 45, 7, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (486, '허니 버터 칩', 550, 50, 5, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (487, '체다 감자 크림', 350, 40, 6, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (488, '베이컨 감자 샐러드', 300, 25, 10, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (489, '구운 감자 샐러드', 250, 30, 5, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (490, '한치물회', 150, 10, 25, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (491, '갈치구이', 350, 5, 30, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (492, '낙지볶음', 200, 10, 30, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (493, '새우구이', 150, 0, 20, 8);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (494, '고등어구이', 500, 20, 35, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (495, '새우완자', 300, 15, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (496, '해물찜', 350, 20, 30, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (497, '오징어볶음', 300, 15, 30, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (498, '멍게무침', 80, 5, 10, 2);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (499, '갈치조림', 250, 10, 20, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (500, '낙지전골', 300, 20, 25, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (501, '게장', 200, 10, 20, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (502, '꽁치조림', 350, 10, 30, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (503, '장어구이', 400, 5, 35, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (504, '레몬 버터 새우', 250, 5, 20, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (505, '홍합찜', 180, 6, 25, 7);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (506, '조기구이', 300, 0, 35, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (507, '꽁치구이', 300, 5, 25, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (508, '감바스 알 아히요', 400, 5, 25, 30);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (509, '광어 사시미', 120, 0, 25, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (510, '코코넛 쉬림프', 350, 30, 15, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (511, '어묵볶음', 200, 15, 10, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (512, '고등어조림', 400, 5, 35, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (513, '아귀찜', 450, 12, 40, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (514, '그릴드 연어', 350, 5, 40, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (515, '오징어순대', 300, 12, 25, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (516, '삼치구이', 300, 0, 35, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (517, '임연수구이', 300, 0, 30, 18);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (518, '가자미구이', 250, 0, 25, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (519, '도미구이', 350, 5, 30, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (520, '붕장어구이', 500, 5, 40, 35);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (521, '전어구이', 300, 5, 25, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (522, '조개찜', 150, 5, 20, 3);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (523, '명태구이', 200, 0, 25, 5);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (524, '방어구이', 400, 5, 35, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (525, '연어구이', 350, 5, 30, 20);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (526, '백합탕', 250, 8, 30, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (527, '로제쉬림프', 400, 20, 25, 25);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (528, '연어 사시미', 200, 0, 30, 10);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (529, '참치 사시미', 220, 0, 30, 12);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (530, '장어정식', 600, 80, 35, 15);
+INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES (531, '크림통새우', 450, 20, 25, 30);
