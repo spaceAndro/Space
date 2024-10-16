@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="/css/calendarStyle.css">
 </head>
 <body>
+	<ul>
+	    <li th:each="calendarItem : ${calendarList}">
+	        날짜: <span th:text="${calendarItem.saveDate}"></span><br>
+	        음식: <span th:text="${calendarItem.food.fName}">음식명</span><br>
+	    </li>
+	</ul>
   <div class="calendar-container">
     <div class="spring"></div>
 
@@ -49,7 +55,16 @@
       </tbody>
     </table>
   </div>
+  
+  <script type="text/javascript">
+      const calendarData = /*[[${#objects.toJson(calendarList)}]]*/ [];
+      console.log("Calendar Data:", calendarData);
 
+      // 데이터 출력 확인
+      calendarData.forEach(item => {
+          console.log(`날짜: ${item.saveDate}, 음식: ${item.food.fName}`);
+      });
+  </script>
   <script src="/js/script.js"></script>
 </body>
 </html>

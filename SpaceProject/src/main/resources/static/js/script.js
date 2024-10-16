@@ -9,6 +9,12 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentMonth = currentDate.getMonth();
   let currentYear = currentDate.getFullYear();
 
+  // 서버에서 받아온 데이터
+  const calendarData = /*[[${calendarList}]]*/ [];
+  
+  // 받아온 데이터 로그에 출력
+  console.log("받아온 데이터:", calendarData);
+  
   function generateCalendar(year, month) {
     calendarBody.innerHTML = "";
     const firstDay = new Date(year, month, 1).getDay();
@@ -32,21 +38,47 @@ document.addEventListener("DOMContentLoaded", function () {
           }
 
           // 날짜 및 각 메뉴에 맞는 클래스 추가
-          cell.innerHTML = `
-            <div class="date">${date}</div>
-            <div class="meal breakfast">아침 메뉴</div>
-            <div class="meal lunch">점심 메뉴</div>
-            <div class="meal dinner">저녁 메뉴</div>
-          `;
+          cell.innerHTML = `<div class="date">${date}</div>`;
           
+		  const clickedDate = date;
           // 날짜 클릭 시 상단에 날짜와 메뉴 정보 표시
-          const clickedDate = date; // 이 변수를 별도로 저장
-          cell.addEventListener("click", function() {
-            selectedDateInfo.textContent = `${year}년 ${month + 1}월 ${clickedDate}일`; // 선택된 날짜 표시
-            selectedBreakfast.textContent = "아침: 아침 메뉴";
-            selectedLunch.textContent = "점심: 점심 메뉴";
-            selectedDinner.textContent = "저녁: 저녁 메뉴";
-          });
+		  cell.addEventListener("click", function() {
+              // 클릭된 날짜와 calendarData 내 항목의 날짜를 비교하여 필터링
+              const selectedCalendarItem = calendarData.filter(item => {
+                const itemDate = new Date(item.saveDate);
+                return itemDate.getDate() === clickedDate &&
+                       itemDate.getMonth() === month &&
+                       itemDate.getFullYear() === year;
+              });
+			  consol.log("가져온 거 : 	", selectedCalendarItem);
+			  selectedDateInfo.textContent = `${year}년 ${month + 1}월 ${clickedDate}일`;
+
+              if (selectedCalendarItems.length > 0) {
+                let breakfastList = [];
+                let lunchList = [];
+                let dinnerList = [];
+
+                // 각 항목을 시간대에 따라 구분
+                selectedCalendarItems.forEach(item => {
+                  const itemHour = new Date(item.saveDate).getHours();
+                  if (itemHour < 12) {
+                    breakfastList.push(item.food.fName);
+                  } else if (itemHour < 18) {
+                    lunchList.push(item.food.fName);
+                  } else {
+                    dinnerList.push(item.food.fName);
+                  }
+                });
+
+                selectedBreakfast.textContent = `아침: ${breakfastList.join(', ') || '메뉴 없음'}`;
+                selectedLunch.textContent = `점심: ${lunchList.join(', ') || '메뉴 없음'}`;
+                selectedDinner.textContent = `저녁: ${dinnerList.join(', ') || '메뉴 없음'}`;
+              } else {
+                selectedBreakfast.textContent = "아침: 메뉴 없음";
+                selectedLunch.textContent = "점심: 메뉴 없음";
+                selectedDinner.textContent = "저녁: 메뉴 없음";
+              }
+            });
 
           date++; // date를 나중에 증가시킴
         }
