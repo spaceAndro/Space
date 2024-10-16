@@ -1,5 +1,4 @@
 import random
-
 import pandas as pd
 
 meal_food_names = [
@@ -683,7 +682,7 @@ cuisine_types = {
 }
 
 weather_weights = {
-    "Clear": ["볶음밥", "김치찌개", "김치전"],  # 맑은 날에 나오는 음식 리스트
+    "Clear": ["볶음밥", "김치찌개"],  # 맑은 날에 나오는 음식 리스트
     "Cloudy": ["제육볶음", "삼계탕", "비빔밥"],  # 흐린 날에 나오는 음식 리스트
     "Rain": ["파전", "감자탕", "해물파전", "김치전"],  # 비오는 날에 더 자주 나오는 음식들
     "Snow": ["떡국", "설렁탕", "감자탕"]  # 눈 오는 날에 나오는 음식들
@@ -760,12 +759,13 @@ for i in range(1, num_samples + 1):
         if random.random() < 0.5:  # 50% 확률로 날씨와 관련된 음식을 선택
             weighted_food = random.choice(weighted_foods)
             # weighted_food가 실제 음식 데이터에 존재하는지 확인하고 가져오기
-            for name, ingr in meal_food_names:
-                if name == weighted_food:
-                    food_name, ingredients = name, ingr
-                    break
-            food_category = next((key for key, values in food_categories.items() if food_name in values), "기타")
-            cuisine_type = next((key for key, values in cuisine_types.items() if food_name in values), "기타")
+            weighted_food_data = next(((name, ingr) for name, ingr in meal_food_names if name == weighted_food), None)
+            if weighted_food_data:
+                food_name, ingredients = weighted_food_data
+                food_category = next((key for key, values in food_categories.items() if food_name in values), "기타")
+                cuisine_type = next((key for key, values in cuisine_types.items() if food_name in values), "기타")
+                main_ingredient_1 = ingredients[0] if len(ingredients) > 0 else ''
+                main_ingredient_2 = ingredients[1] if len(ingredients) > 1 else ''
 
     data['food_id'].append(i)
     data['food_name'].append(food_name)
