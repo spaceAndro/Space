@@ -1,38 +1,59 @@
-.calendar-container {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f4f4f4;
 }
 
-.header {
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
+.calendar-container {
+  text-align: center;
+  padding: 20px;
+  width: 90vw;
+  max-width: 1200px;
+  background-color: white;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 20px;
 }
 
 .selected-date-info {
-  margin-left: 20px; 
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  width: 300px; 
+  text-align: left;
+}
+
+.date-navigation {
+  text-align: right;
+}
+
+.year-navigation,
+.month-navigation {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+#yearDisplay,
+#monthDisplay {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0 10px;
 }
 
 button {
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 8px 16px;
   background-color: #008CBA;
   color: white;
   border: none;
   border-radius: 5px;
   font-size: 1em;
-  margin-right: 5px;
 }
 
 button:hover {
@@ -49,42 +70,29 @@ th, td {
   padding: 10px;
   text-align: center;
   border: 1px solid #ddd;
-  font-size: 0.9em; 
-  height: 80px;
-}
-
-td.highlight {
-  background-color: #f9c74f;
-  font-weight: bold;
-}
-
-.date {
   font-size: 1.2em;
-  margin-bottom: 5px;
+  vertical-align: top;
 }
 
-.meal {
-  font-size: 0.7em;
-  line-height: 1.2;
-  margin: 1px 0;
+td .date {
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.spring {
-  width: 100%;
-  height: 20px;
-  position: relative;
-  top: -30px;
-  left: 0;
-  display: flex;
-  justify-content: center;
+td img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin: 5px 0;
 }
 
-.spring::before, .spring::after {
-  content: '';
-  width: 200px;
-  height: 5px;
-  border-radius: 50%;
-  background: linear-gradient(to right, #666 25%, transparent 25%);
-  background-size: 20px 5px;
-  background-repeat: repeat-x;
+td:hover {
+  background-color: #e0e0e0;
+}
+
+td.today {
+  background-color: #ff9800;
+  font-weight: bold;
+  color: white;
 }
