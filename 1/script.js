@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const yearDisplay = document.getElementById("yearDisplay");
   const monthDisplay = document.getElementById("monthDisplay");
 
-  const currentDate = new Date();
-  let currentMonth = currentDate.getMonth();
-  let currentYear = currentDate.getFullYear();
-  let todayDate = currentDate.getDate();
+  const today = new Date(); // 오늘 날짜를 기준으로 저장
+  let currentMonth = today.getMonth();
+  let currentYear = today.getFullYear();
+  let todayDate = today.getDate();
 
   // 월과 년도 표시를 업데이트하는 함수
   function updateYearMonthDisplay() {
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 오늘 날짜 정보 자동 표시
   function displayTodayInfo() {
-    selectedDateInfo.textContent = `${currentYear}년 ${currentMonth + 1}월 ${todayDate}일`;
+    selectedDateInfo.textContent = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${todayDate}일`;
     selectedBreakfast.textContent = "아침: 오늘의 아침 메뉴";
     selectedLunch.textContent = "점심: 오늘의 점심 메뉴";
     selectedDinner.textContent = "저녁: 오늘의 저녁 메뉴";
@@ -52,8 +52,9 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="date">${date}</div>
             <img src="${images[date % images.length]}" alt="Meal">
           `;
-          
-          if (date === todayDate && year === currentYear && month === currentMonth) {
+
+          // 오늘 날짜 셀 강조 (주황색) - 오늘 날짜가 속한 현재 년도와 월에서만 강조
+          if (date === todayDate && year === today.getFullYear() && month === today.getMonth()) {
             cell.classList.add("today");
           }
 
