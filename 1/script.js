@@ -52,8 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="date">${date}</div>
             <img src="${images[date % images.length]}" alt="Meal">
           `;
-
-          // 오늘 날짜 셀 강조 (주황색)
+          
           if (date === todayDate && year === currentYear && month === currentMonth) {
             cell.classList.add("today");
           }
