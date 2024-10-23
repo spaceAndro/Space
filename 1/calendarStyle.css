@@ -13,9 +13,12 @@ body {
   padding: 20px;
   width: 90vw;
   max-width: 1200px;
-  background-color: white;
+  background-color: #87CEEB; /* 캘린더 배경을 하늘색으로 설정 */
+  border-radius: 10px; /* 둥근 모서리 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 살짝 그림자 효과 */
 }
 
+/* 상단 레이아웃을 좌우로 나누기 */
 .top-section {
   display: flex;
   justify-content: space-between;
@@ -23,10 +26,12 @@ body {
   margin-bottom: 20px;
 }
 
+/* 날짜 정보 (좌측 상단) */
 .selected-date-info {
   text-align: left;
 }
 
+/* 년도와 월 조정 버튼 (우측 상단) */
 .date-navigation {
   text-align: right;
 }
@@ -74,6 +79,25 @@ th, td {
   vertical-align: top;
 }
 
+/* "일" 요일의 글자만 빨간색으로 설정 */
+th.sunday {
+  color: red;
+}
+
+/* 토요일의 요일과 일자 글자를 파란색으로 설정 */
+th.saturday {
+  color: blue;
+}
+
+td.saturday .date {
+  color: blue;
+}
+
+/* 일요일의 날짜도 빨간색으로 */
+td.sunday .date {
+  color: red;
+}
+
 td .date {
   font-size: 0.8em;
   font-weight: bold;
@@ -91,8 +115,9 @@ td:hover {
   background-color: #e0e0e0;
 }
 
+/* 오늘 날짜 셀 강조 (남색 배경) */
 td.today {
-  background-color: #ff9800;
+  background-color: #000080; /* 남색으로 설정 */
   font-weight: bold;
   color: white;
 }
