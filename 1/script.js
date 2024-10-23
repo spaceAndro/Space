@@ -43,6 +43,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
       for (let j = 0; j < 7; j++) {
         let cell = document.createElement("td");
+
+        // 일요일인 경우 셀에 sunday 클래스를 추가
+        if (j === 0) {
+          cell.classList.add("sunday");
+        }
+
+        // 토요일인 경우 셀에 saturday 클래스를 추가
+        if (j === 6) {
+          cell.classList.add("saturday");
+        }
+
         if (i === 0 && j < firstDay) {
           cell.textContent = "";
         } else if (date > lastDate) {
@@ -53,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <img src="${images[date % images.length]}" alt="Meal">
           `;
 
-          // 오늘 날짜 셀 강조 (주황색) - 오늘 날짜가 속한 현재 년도와 월에서만 강조
+          // 오늘 날짜 셀 강조 (남색) - 오늘 날짜가 속한 현재 년도와 월에서만 강조
           if (date === todayDate && year === today.getFullYear() && month === today.getMonth()) {
             cell.classList.add("today");
           }
