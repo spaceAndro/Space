@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Calendar</title>
+  <link rel="stylesheet" href="/css/calendarStyle.css">
+</head>
+<body>
+  <div class="calendar-container">
+    <!-- 날짜와 메뉴 정보 표시 (좌측 상단) -->
+    <div class="top-section">
+      <div id="selectedDateInfo" class="selected-date-info">
+        <p><span id="selectedDate">날짜를 선택하세요</span></p>
+        <p><span id="selectedBreakfast">---</span></p>
+        <p><span id="selectedLunch">---</span></p>
+        <p><span id="selectedDinner">---</span></p>
+      </div>
+
+      <!-- 년도와 월을 조정할 수 있는 UI (우측 상단) -->
+      <div class="date-navigation">
+        <div class="year-navigation">
+          <button id="prevYear">&lt; 이전년도</button>
+          <span id="yearDisplay"></span>
+          <button id="nextYear">다음년도 &gt;</button>
+        </div>
+
+        <div class="month-navigation">
+          <button id="prevMonth">&lt; 이전달</button>
+          <span id="monthDisplay"></span>
+          <button id="nextMonth">다음달 &gt;</button>
+        </div>
+      </div>
+    </div>
+
+    <table id="calendar">
+      <thead>
+        <tr>
+          <th>일</th>
+          <th>월</th>
+          <th>화</th>
+          <th>수</th>
+          <th>목</th>
+          <th>금</th>
+          <th>토</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>
