@@ -1,0 +1,152 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+.calendar-container {
+  text-align: center;
+  padding: 20px;
+  width: 90vw;
+  max-width: 1200px;
+  background-color: #FFFFFF; 
+  border-radius: 10px; /* 둥근 모서리 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0; /* 위아래 간격 */
+}
+
+.calendar-icon {
+  width: 100px; /* 아이콘 크기 */
+  height: auto;
+}
+
+/* 날짜 정보 (좌측) */
+.selected-date-info {
+  text-align: left;
+  background-color: #5FA9CE; /* 진한 하늘색 */
+  padding: 15px;
+  border-radius: 10px; /* 둥근 모서리 */
+  color: white; /* 텍스트를 흰색으로 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 */
+}
+
+/* 년도와 월 조정 버튼 (우측) */
+.date-navigation {
+  text-align: right;
+}
+
+.year-navigation,
+.month-navigation {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+#yearDisplay,
+#monthDisplay {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+button {
+  cursor: pointer;
+  padding: 8px 16px;
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+button:hover {
+  background-color: #005f73;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 1.2em;
+  vertical-align: top;
+}
+
+/* 요일 셀 기본 스타일 */
+thead th {
+  background-color: #87CEEB; /* 기본 하늘색 배경 */
+  color: white; /* 기본 글씨는 흰색 */
+  padding: 10px;
+  font-weight: bold;
+}
+
+/* 일요일은 빨간색 */
+thead th.sunday {
+  color: red;
+}
+
+/* 토요일은 파란색 */
+thead th.saturday {
+  color: blue;
+}
+
+/* 공휴일에 빨간색으로 강조 */
+.holiday .date {
+  color: red;
+}
+
+/* 달력 셀: 일요일 날짜는 빨간색 */
+td.sunday .date {
+  color: red;
+}
+
+/* 달력 셀: 토요일 날짜는 파란색 */
+td.saturday .date {
+  color: blue;
+}
+
+td .date {
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+td img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin: 5px 0;
+}
+
+td:hover {
+  background-color: #e0e0e0;
+}
+
+/* 오늘 날짜 셀 강조 (남색 배경) */
+td.today {
+  background-color: #000080; /* 남색으로 설정 */
+  font-weight: bold;
+  color: white;
+}
