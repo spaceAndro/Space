@@ -1,81 +1,56 @@
 package com.rubypaper.controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.rubypaper.dto.Calendar;
+import com.rubypaper.dto.Meal;
+import com.rubypaper.dto.User;
 import com.rubypaper.service.CalendarService;
+import com.rubypaper.service.MealService;
+import com.rubypaper.service.UserService;
 
-@Controller
+@RestController
+@RequestMapping("/api/calendars")
 public class CalendarController {
+
 	@Autowired
+	private UserService userService;
+	
+    @Autowired
     private CalendarService calendarService;
+
+    @GetMapping("/calendar")
+    public String calendarPage(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    String username = authentication.getName(); // 사용자 이름 (아이디)
+	    
+	    // 사용자 정보 가져오기
+        User user = userService.findByUsername(username);
+        model.addAttribute("user", user);
+        
+    	return "calendar";
+    }
     
-	@GetMapping("/calendar")
-    public String calendar(@RequestParam(required = false) Integer year, 
-                           @RequestParam(required = false) Integer month, Model model) {
-        // 현재 연도와 월을 기본값으로 설정
-        LocalDate today = LocalDate.now();
-        int currentYear = (year == null) ? today.getYear() : year;
-        int currentMonth = (month == null) ? today.getMonthValue() : month;
+    // 특정 월의 모든 식사 데이터를 반환하는 API
+    @GetMapping("/month")
+    public List<Calendar> getMealsByMonth(@RequestParam String userId, @RequestParam int year, @RequestParam int month) {
+        return calendarService.getCalendarsByMonth(userId, year, month);
+    }
 
-        // 월이 1보다 작거나 12보다 클 때, 연도를 변경
-        if (currentMonth < 1) {
-            currentMonth = 12;
-            currentYear -= 1;
-        } else if (currentMonth > 12) {
-            currentMonth = 1;
-            currentYear += 1;
-        }
-
-        // 선택된 달의 첫째 날과 마지막 날 계산
-        LocalDate firstDayOfMonth = LocalDate.of(currentYear, currentMonth, 1);
-        LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
-
-        // 첫째 날의 요일 (1:월, 7:일)
-        int startDayOfWeek = firstDayOfMonth.getDayOfWeek().getValue();
-        startDayOfWeek = (startDayOfWeek == 7) ? 0 : startDayOfWeek; // 일요일을 0으로 설정
-
-        // 날짜들을 주별로 나누기 위한 리스트
-        List<List<Integer>> weeks = new ArrayList<>();
-        List<Integer> week = new ArrayList<>();
-
-        // 첫째 주 빈 칸 채우기
-        for (int i = 0; i < startDayOfWeek; i++) {
-            week.add(null);  // 빈 칸을 위해 null 삽입
-        }
-
-        // 해당 달의 날짜를 채움
-        for (int day = 1; day <= lastDayOfMonth.getDayOfMonth(); day++) {
-            week.add(day);
-            if (week.size() == 7) {
-                weeks.add(week);
-                week = new ArrayList<>();
-            }
-        }
-
-        // 마지막 주가 다 차지 않았을 때 빈 칸 채우기
-        if (!week.isEmpty()) {
-            while (week.size() < 7) {
-                week.add(null);  // 빈 칸을 위해 null 삽입
-            }
-            weeks.add(week);
-        }
-
-        // 모델에 필요한 정보 추가
-        model.addAttribute("weeks", weeks);
-        model.addAttribute("currentYear", currentYear);
-        model.addAttribute("currentMonth", currentMonth);
-
-        return "calendar";  // calendar.html 템플릿 렌더링
+    // 특정 날짜의 식사 데이터를 반환하는 API
+    @GetMapping("/date")
+    public Calendar getMealByDate(@RequestParam String userId, @RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return calendarService.getCalendarsByUserIdAndSaveDate(userId, localDate);
     }
 }

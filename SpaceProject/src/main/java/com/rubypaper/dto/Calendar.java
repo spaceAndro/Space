@@ -1,6 +1,7 @@
 package com.rubypaper.dto;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -21,9 +22,11 @@ public class Calendar {
 	public int cSeq;
 	
 	public String userId;
-	public LocalDateTime saveDate;
 	
-	@ManyToOne
-	@JoinColumn(name="f_seq")
-	private Food food;
+	@Column(nullable = false)
+	public LocalDate saveDate;
+	
+	private String breakfast;   // 아침 메뉴
+    private String lunch;       // 점심 메뉴
+    private String dinner;      // 저녁 메뉴
 }

@@ -6,25 +6,29 @@
   <title>캘린더 디자인</title>
   <link rel="stylesheet" href="/css/calendarStyle.css">
 </head>
-<body>
-
+<body user-id="${user.userId}">
   <div class="calendar-container">
+    <div class="spring"></div>
+
     <div class="top-section">
+      <div id="selectedDateInfo" class="selected-date-info">
+        <p><span id="selectedDate">날짜를 선택하세요</span></p>
+        <p><span id="selectedBreakfast">---</span></p>
+        <p><span id="selectedLunch">---</span></p>
+        <p><span id="selectedDinner">---</span></p>
+      </div>
+
       <div class="centered-controls">
         <div class="year-control">
-          <!-- 이전 연도 이동 버튼 -->
-          <a th:href="@{/calendar(year=${currentYear - 1}, month=${currentMonth})}">&lt;&lt;</a>
-          <span th:text="${currentYear}"></span>
-          <!-- 다음 연도 이동 버튼 -->
-          <a th:href="@{/calendar(year=${currentYear + 1}, month=${currentMonth})}">&gt;&gt;</a>
+          <button id="prevYear">&lt;&lt;</button>
+          <span id="yearDisplay">2024</span>
+          <button id="nextYear">&gt;&gt;</button>
         </div>
 
         <div class="month-control">
-          <!-- 이전 달 이동 버튼 -->
-          <a th:href="@{/calendar(year=${currentYear}, month=${currentMonth - 1})}">&lt;</a>
-          <span th:text="${currentMonth} + '월'"></span>
-          <!-- 다음 달 이동 버튼 -->
-          <a th:href="@{/calendar(year=${currentYear}, month=${currentMonth + 1})}">&gt;</a>
+          <button id="prevMonth">&lt;</button>
+          <span id="monthDisplay">10월</span>
+          <button id="nextMonth">&gt;</button>
         </div>
       </div>
     </div>
@@ -42,16 +46,10 @@
         </tr>
       </thead>
       <tbody>
-        <!-- 주 단위로 날짜를 렌더링 -->
-        <tr th:each="week : ${weeks}">
-          <td th:each="day : ${week}">
-            <!-- 비어있는 칸은 null로 처리 -->
-            <span th:if="${day != null}" th:text="${day}"></span>
-          </td>
-        </tr>
       </tbody>
     </table>
   </div>
 
+  <script src="/js/script.js"></script>
 </body>
 </html>
