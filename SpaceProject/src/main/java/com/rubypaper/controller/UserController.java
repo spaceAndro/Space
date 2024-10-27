@@ -49,6 +49,21 @@ public class UserController {
         return "profile"; // profile.html 템플릿 반환
     }
     
+    @GetMapping("/calendar")
+    public String calendarPage(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    String username = authentication.getName(); // 사용자 이름 (아이디)
+	    
+	    // 사용자 정보 가져오기
+        User user = userService.findByUsername(username);
+        String userId = user.getId();
+        model.addAttribute("userId", userId);
+        
+        System.out.println(userId);
+        
+    	return "calendar";
+    }
+    
     
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {

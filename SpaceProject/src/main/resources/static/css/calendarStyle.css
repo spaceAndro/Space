@@ -1,6 +1,6 @@
 .calendar-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
   background-color: white;
@@ -15,7 +15,29 @@
   margin-bottom: 20px;
 }
 
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.centered-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .selected-date-info {
+  margin-left: 20px; 
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: 300px; 
+}
+
+.selected-meal-info {
   margin-left: 20px; 
   background-color: #f0f0f0;
   border: 1px solid #ddd;

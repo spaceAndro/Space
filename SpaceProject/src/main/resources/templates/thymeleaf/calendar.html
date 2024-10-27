@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>캘린더 디자인</title>
   <link rel="stylesheet" href="/css/calendarStyle.css">
 </head>
-<body user-id="${user.userId}">
-  <div class="calendar-container">
+<body>
+  <div class="calendar-container" th:data-user-id="${userId}">
     <div class="spring"></div>
 
     <div class="top-section">
@@ -17,6 +17,7 @@
         <p><span id="selectedLunch">---</span></p>
         <p><span id="selectedDinner">---</span></p>
       </div>
+
 
       <div class="centered-controls">
         <div class="year-control">
@@ -31,6 +32,13 @@
           <button id="nextMonth">&gt;</button>
         </div>
       </div>
+	  
+	  <div id="selectedMealInfo" class="selected-meal-info">
+	    <p><span id="sumKcal">---</span></p>
+	    <p><span id="sumCarbohydrate">---</span></p>
+	    <p><span id="sumProtein">---</span></p>
+	    <p><span id="sumFat">---</span></p>
+	  </div>
     </div>
 
     <table id="calendar">

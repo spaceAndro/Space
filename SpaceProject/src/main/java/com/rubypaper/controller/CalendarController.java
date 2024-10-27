@@ -21,25 +21,9 @@ import com.rubypaper.service.UserService;
 
 @RestController
 @RequestMapping("/api/calendars")
-public class CalendarController {
-
-	@Autowired
-	private UserService userService;
-	
+public class CalendarController {	
     @Autowired
     private CalendarService calendarService;
-
-    @GetMapping("/calendar")
-    public String calendarPage(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    String username = authentication.getName(); // 사용자 이름 (아이디)
-	    
-	    // 사용자 정보 가져오기
-        User user = userService.findByUsername(username);
-        model.addAttribute("user", user);
-        
-    	return "calendar";
-    }
     
     // 특정 월의 모든 식사 데이터를 반환하는 API
     @GetMapping("/month")

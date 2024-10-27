@@ -7,8 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const yearDisplay = document.getElementById("yearDisplay");
   const monthDisplay = document.getElementById("monthDisplay");
+  
+  const userId = document.querySelector(".calendar-container").dataset.userId; // userId 가져오기
+  console.log("User ID:", userId); // 확인용 로그
 
-	
   let selectedCell = null; // 선택된 셀을 추적하기 위한 변수
   const currentDate = new Date();
   let currentMonth = currentDate.getMonth();
@@ -31,15 +33,18 @@ document.addEventListener("DOMContentLoaded", function () {
     calendarBody.innerHTML = ""; // 기존 캘린더 내용을 초기화
     const firstDay = new Date(year, month, 1).getDay();
     const lastDate = new Date(year, month + 1, 0).getDate();
-    const userId = document.body.getAttribute("user-id");
+    
     let date = 1;
 
-    fetch(`/api/calendars/month?userId=${userid}&year=${year}&month=${month + 1}`)
+    fetch(`/api/calendars/month?userId=${userId}&year=${year}&month=${month + 1}`)
       .then(response => response.json())
       .then(calendarData => {
+		console.log("캘린더 데이터:", calendarData);
+		calendarData.forEach(item => {
+		    console.log(`Data item: ${item.saveDate}`);
+		});
         for (let i = 0; i < 6; i++) {
-          let row = document.createElement("tr");
-
+		  let row = document.createElement("tr");
           for (let j = 0; j < 7; j++) {
             let cell = document.createElement("td");
 
@@ -48,8 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (date > lastDate) {
               break;
             } else {
-              const calendar = calendarData.find(calendar => calendar.calendarDate === `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`);
-
+              const calendar = calendarData.find(calendar => calendar.saveDate === `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`);
+			  console.log("찾은 데이터:", calendar);
               cell.innerHTML = `
                 <div class="date">${date}</div>
                 <div class="calendar breakfast">${calendar ? calendar.breakfast : '아침 메뉴 없음'}</div>
