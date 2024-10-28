@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const selectedBreakfast = document.getElementById("selectedBreakfast");
   const selectedLunch = document.getElementById("selectedLunch");
   const selectedDinner = document.getElementById("selectedDinner");
+  
+  const sumKcal = document.getElementById("sumKcal");
+  const sumCarbohydrate = document.getElementById("sumCarbohydrate");
+  const sumProtein = document.getElementById("sumProtein");
+  const sumFat = document.getElementById("sumFat");
 
   const yearDisplay = document.getElementById("yearDisplay");
   const monthDisplay = document.getElementById("monthDisplay");
@@ -35,6 +40,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const lastDate = new Date(year, month + 1, 0).getDate();
     
     let date = 1;
+	
+	let kcal = 0;
+	let carbohydrate = 0;
+	let protein = 0;
+	let fat = 0;
 
     fetch(`/api/calendars/month?userId=${userId}&year=${year}&month=${month + 1}`)
       .then(response => response.json())
@@ -42,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		console.log("캘린더 데이터:", calendarData);
 		calendarData.forEach(item => {
 		    console.log(`Data item: ${item.saveDate}`);
-		});
+			});
         for (let i = 0; i < 6; i++) {
 		  let row = document.createElement("tr");
           for (let j = 0; j < 7; j++) {
@@ -55,6 +65,43 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
               const calendar = calendarData.find(calendar => calendar.saveDate === `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`);
 			  console.log("찾은 데이터:", calendar);
+			  
+			  fetch(`/api/meal/food?fName=${calendar.breakfast}`)
+			  	.then(response => response.json())
+				.then(foodData => {
+					console.log("음식 데이터 : ", foodData);
+					kcal += foodData.kcal;
+					carbohydrate += foodData.carbohydrate;
+					protein += foodData.protein;
+					fat += foodData.fat;
+				})
+				.catch(error => console.error('Fetch error:', error));
+			  fetch(`/api/meal/food?fName=${calendar.lunch}`)
+			  	.then(response => response.json())
+				.then(foodData => {
+					console.log("음식 데이터 : ", foodData);
+					kcal += foodData.kcal;
+					carbohydrate += foodData.carbohydrate;
+					protein += foodData.protein;
+					fat += foodData.fat;
+				})
+				.catch(error => console.error('Fetch error:', error));
+			  fetch(`/api/meal/food?fName=${calendar.dinner}`)
+			  	.then(response => response.json())
+				.then(foodData => {
+					console.log("음식 데이터 : ", foodData);
+					kcal += foodData.kcal;
+					carbohydrate += foodData.carbohydrate;
+					protein += foodData.protein;
+					fat += foodData.fat;
+				})
+				.catch(error => console.error('Fetch error:', error));
+				
+			  sumKcal.textContent = `${kcal}`;
+			  sumCarbohydrate.textContent = `${carbohydrate}`;
+			  sumProtein.textContent = `${protein}`;
+			  sumFat.textContent = `${fat}`;
+			  
               cell.innerHTML = `
                 <div class="date">${date}</div>
                 <div class="calendar breakfast">${calendar ? calendar.breakfast : '아침 메뉴 없음'}</div>

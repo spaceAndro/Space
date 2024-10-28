@@ -16,7 +16,7 @@ import com.rubypaper.dto.Calendar;
 import com.rubypaper.dto.Meal;
 import com.rubypaper.dto.User;
 import com.rubypaper.service.CalendarService;
-import com.rubypaper.service.MealService;
+import com.rubypaper.service.FoodService;
 import com.rubypaper.service.UserService;
 
 @RestController
