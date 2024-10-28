@@ -1,0 +1,6 @@
+cmd 명령어 실행 순서
+pip install torch torchvision
+pip install certifi --upgrade
+pip install pandas
+pip install scikit-learn
+pip install mysql-connector-python

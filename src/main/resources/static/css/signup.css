@@ -1,0 +1,143 @@
+
+/* 회원가입 폼 컨테이너 스타일 */
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px; /* 폼의 너비 */
+    padding: 30px; /* 내부 여백 */
+    background-color: #ffffff; /* 배경 색상 */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    border-radius: 10px; /* 둥근 모서리 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+/* 제목 스타일 */
+.signup-container h2 {
+    margin-bottom: 20px; /* 하단 여백 */
+    color: #333; /* 글자 색상 */
+}
+
+/* 레이블 스타일 */
+.signup-container label {
+    display: block;
+    text-align: left; /* 왼쪽 정렬 */
+    margin-bottom: 5px; /* 하단 여백 */
+}
+
+/* 입력 필드 스타일 */
+.signup-container input,
+.signup-container select {
+    width: 100%; /* 너비 100% */
+    padding: 12px; /* 내부 여백 */
+    margin-bottom: 15px; /* 하단 여백 */
+    border: 1px solid #ccc; /* 테두리 색상 */
+    border-radius: 5px; /* 둥근 모서리 */
+    font-size: 16px; /* 글자 크기 */
+}
+
+/* 버튼 스타일 */
+.signup-container button {
+    width: 100%; /* 버튼 너비 100% */
+    padding: 12px; /* 내부 여백 */
+    background-color: #4CAF50; /* 버튼 배경 색상 */
+    color: white; /* 글자 색상 */
+    border: none; /* 테두리 없음 */
+    border-radius: 5px; /* 둥근 모서리 */
+    cursor: pointer; /* 포인터 모양 변경 */
+    font-size: 16px; /* 글자 크기 */
+}
+
+/* 버튼 호버 효과 */
+.signup-container button:hover {
+    background-color: #45a049; /* 호버 시 배경 색상 */
+}
+
+/* 성별 옵션 스타일 */
+.gender-options {
+    display: flex; /* 수평 정렬 */
+    justify-content: space-between; /* 공간을 균등하게 배분 */
+    margin-bottom: 15px; /* 하단 여백 */
+}
+
+/* 성별 입력 스타일 */
+.gender-input {
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 세로 중앙 정렬 */
+}
+
+/* 라디오 버튼 숨기기 */
+.gender-input input {
+    display: none; /* 기본 라디오 버튼 숨기기 */
+}
+
+/* 사용자 정의 라디오 버튼 스타일 */
+.gender-input label {
+    position: relative; /* 상대 위치 설정 */
+    padding-left: 30px; /* 텍스트와 원 사이의 여백 */
+    cursor: pointer; /* 커서 포인터로 변경 */
+    color: #333; /* 글자 색상 */
+    font-size: 16px; /* 글자 크기 */
+    margin-right: 20px; /* 오른쪽 여백 */
+}
+
+/* 사용자 정의 원 스타일 */
+.gender-input label::before {
+    content: ''; /* 빈 콘텐츠 생성 */
+    position: absolute; /* 절대 위치 설정 */
+    left: 0; /* 왼쪽 위치 */
+    top: 50%; /* 세로 중앙 정렬 */
+    transform: translateY(-50%); /* 수직 중앙 정렬 */
+    width: 20px; /* 원의 너비 */
+    height: 20px; /* 원의 높이 */
+    border-radius: 50%; /* 둥근 모양 */
+    border: 2px solid #4CAF50; /* 테두리 색상 */
+    background-color: white; /* 배경 색상 */
+    transition: background-color 0.3s; /* 호버 시 배경 색상 전환 효과 */
+}
+
+/* 선택된 라디오 버튼의 사용자 정의 원 스타일 */
+.gender-input input:checked + label::before {
+    background-color: #4CAF50; /* 선택된 경우 배경 색상 */
+}
+
+
+
+/* 주소 입력 필드 스타일 */
+#addr {
+    width: 100%; /* 부모 요소 너비에 맞춤 */
+    padding: 10px; /* 내부 여백 */
+    margin-bottom: 15px; /* 하단 여백 */
+    border: 1px solid #ccc; /* 테두리 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    font-size: 16px; /* 글자 크기 */
+}
+
+/* 가입하기 버튼 스타일 */
+button {
+    width: 100%; /* 부모 요소 너비에 맞춤 */
+    padding: 10px; /* 내부 여백 */
+    background-color: #4CAF50; /* 배경 색상 */
+    color: white; /* 글자 색상 */
+    border: none; /* 테두리 없음 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    cursor: pointer; /* 커서 포인터로 변경 */
+    font-size: 16px; /* 글자 크기 */
+}
+
+/* 버튼 호버 스타일 */
+button:hover {
+    background-color: #45a049; /* 호버 시 배경 색상 */
+}
+
+/* 반응형 디자인을 위한 미디어 쿼리 */
+@media (max-width: 768px) {
+    .signup-container {
+        width: 90%; /* 모바일에서 너비를 90%로 설정 */
+    }
+}
+
+
+
+

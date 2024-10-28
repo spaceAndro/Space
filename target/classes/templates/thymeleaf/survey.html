@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설문조사</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header, footer {
+            background-color: #333;
+            color: white;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header {
+            position: relative;
+        }
+        header .title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5em;
+            font-family: 'Dancing Script', cursive;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 100%);
+            -webkit-background-clip: text;
+            color: transparent;
+            background-clip: text;
+        }
+        header .date {
+            font-size: 1em;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 100%);
+            padding: 0.2em 0.5em;
+            border-radius: 10px;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            justify-content: center;
+        }
+        .menu-bar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .menu-bar button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #888;
+            color: white;
+            cursor: pointer;
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .menu-bar button:hover {
+            background-color: #777;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .menu-bar button:active {
+            background-color: #666;
+            transform: translateY(0);
+        }
+        .login-button button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #0066cc;
+            color: white;
+            cursor: pointer;
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .login-button button:hover {
+            background-color: #005bb5;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        .login-button button:active {
+            background-color: #004999;
+            transform: translateY(0);
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .recommendation-box {
+            border: 2px solid #333;
+            padding: 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        .survey-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .survey-container h2 {
+            margin-bottom: 20px;
+        }
+        .survey-question {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .survey-question label {
+            display: inline-block;
+            margin-right: 15px;
+        }
+        .survey-container button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #5cb85c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .survey-container button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="title">Space</h1>
+        <span class="date">2024-05-30</span>
+    </header>
+    <div class="content">
+			<body>
+			    <div class="survey-container">
+			        <h2>설문조사</h2>
+			        <div class="survey-question">
+			            <label for="question1">질문 1: 선호하는 음식을 선택하세요</label>
+						<br>
+			            <input type="checkbox" id="question1-hansik" name="question1" value="한식">
+			            <label for="question1-hansik">한식</label>
+			            <input type="checkbox" id="question1-jungsik" name="question1" value="중식">
+			            <label for="question1-jungsik">중식</label>
+			            <input type="checkbox" id="question1-yangsik" name="question1" value="양식">
+			            <label for="question1-yangsik">양식</label>
+			        </div>
+			        <div class="survey-question">
+			            <label for="question2">질문 2: 주로 어디에서 음식을 섭취하시나요?</label>
+						<br>
+			            <input type="checkbox" id="question2-home" name="question2" value="집">
+			            <label for="question2-home">집</label>
+			            <input type="checkbox" id="question2-restaurant" name="question2" value="식당">
+			            <label for="question2-restaurant">식당</label>
+			            <input type="checkbox" id="question2-dining-out" name="question2" value="외식">
+			            <label for="question2-dining-out">외식</label>
+			        </div>
+			        <div class="survey-question">
+			            <label for="question3">질문 3: 알러지가 있나요? (있을 경우 선택해주세요)</label>
+			            <input type="checkbox" id="question3-sesame" name="question3" value="참깨">
+			            <label for="question3-sesame">참깨</label>
+			            <input type="checkbox" id="question3-shellfish" name="question3" value="갑각류">
+			            <label for="question3-shellfish">갑각류</label>
+			            <input type="checkbox" id="question3-soy" name="question3" value="대두">
+			            <label for="question3-soy">대두</label>
+			            <input type="checkbox" id="question3-milk" name="question3" value="우유">
+			            <label for="question3-milk">우유</label>
+						<br>
+						<input type="checkbox" id="question3-milk" name="question3" value="쌀">
+						<label for="question3-milk">쌀</label>
+						<input type="checkbox" id="question3-milk" name="question3" value="잣">
+						<label for="question3-milk">잣</label>
+						<input type="checkbox" id="question3-milk" name="question3" value="복숭아">
+						<label for="question3-milk">복숭아</label>
+						<input type="checkbox" id="question3-milk" name="question3" value="토마토">
+						<label for="question3-milk">토마토</label>
+						<input type="checkbox" id="question3-milk" name="question3" value="난류">
+						<label for="question3-milk">난류</label>
+						<br>
+						<input type="checkbox" id="question3-milk" name="question3" value="오징어">
+						<label for="question3-milk">오징어</label>
+						<input type="checkbox" id="question3-milk" name="question3" value="게">
+						<label for="question3-milk">게</label>
+			        </div>
+			        <button type="submit">제출하기</button>
+			    </div>
+				<footer>
+				</footer>
+			</body>
+			</html>
+

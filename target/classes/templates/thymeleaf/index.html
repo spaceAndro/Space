@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <title>SpaceProject</title>
+    <link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/modal.css">
+    <style>
+        
+    </style>
+	<script src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="logo">Space</div>
+        <nav class="nav">
+            <ul>
+                <li><a href="#">#유한대학교</a></li>
+                <li><a href="#">#졸업작품</a></li>
+                <li><a href="#">#3조</a></li>
+            </ul>
+        </nav>
+        <div class="cart-search">
+            <a href="#" onclick="toggleDropdown(event)" class="user-icon"><i class="fa-regular fa-user"></i></a>
+			<ul id="userDropdown" class="dropdown-menu">
+				<li sec:authorize="hasRole('USER')">
+				    <a href="/profile">내 정보</a>
+				</li>
+			    <li sec:authorize="isAuthenticated()">
+			        <a id="logoutBtn" href="#">로그아웃</a>
+			    </li>
+			    <li sec:authorize="isAnonymous()">
+			        <a id="loginBtn" href="#">로그인</a>
+			    </li>
+			    <li sec:authorize="isAnonymous()">
+			        <a id="signupBtn" href="#">회원가입</a>
+			    </li>
+			</ul>
+        </div>
+    </header>
+	
+	<!-- 로그인 모달-->
+	<div id="loginModal" class="modal-bg">
+	    <div class="modal">
+	        <span class="modal-close" id="closeModal">&times;</span> <!-- 닫기 버튼 -->
+	        <div id="modalContent"></div> <!-- 여기 login.html 내용이 들어감 -->
+	    </div>
+	</div>
+	
+	<!-- 회원가입 모달 -->
+	<div id="signupModal" class="modal-bg">
+	    <div class="modal">
+	        <span class="modal-close" id="closeSignupModal">&times;</span> <!-- 닫기 버튼 -->
+	        <div id="signupModalContent">
+				<!-- 여기에 나이 선택 드롭다운 추가 -->
+				           <label for="age">나이</label>
+				           <select id="age" name="age" size="5">
+				               <option value="">선택하세요</option>
+				           </select>
+			</div> <!-- 여기 signup.html 내용이 들어감 -->
+	    </div>
+	</div>
+	
+	
+    <!-- 메인 슬라이드 -->
+    <section class="main-slide">
+        <div class="slide-container" id="slideContainer">
+            <div class="slide">
+                <img src="images/foodslide2.jpg" alt="음식 1">
+                <div class="slide-text">
+                    <h1>오늘의 추천</h1>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/foodslide1.jpg" alt="음식 2">
+                <div class="slide-text">
+                    <h1>음식 2</h1>
+                    <p>맛있는 음식 2 설명</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/foodslide3.png" alt="음식 3">
+                <div class="slide-text">
+                    <h1>음식 3</h1>
+                    <p>맛있는 음식 3 설명</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 메뉴 -->
+    <section class="products">
+        <div class="product-grid">
+			<div class="product weather-box" onmouseover="showWeatherDetails()" onmouseout="hideWeatherDetails()">
+			    <!-- 날씨 이미지 -->
+			    <img th:if="${weather_condition == 'Clear'}" src="images/weather/Clear.png" alt="Clear Weather">
+			    <img th:if="${weather_condition == 'Clouds'}" src="images/weather/clouds.png" alt="Cloudy Weather">
+			    <img th:if="${weather_condition == 'Rain'}" src="images/weather/rain.png" alt="Rainy Weather">
+			    <img th:if="${weather_condition == 'Snow'}" src="images/weather/snow.png" alt="Snowy Weather">
+			    
+			    <!-- 날씨 텍스트 -->
+			    <h2 class="weather-text">오늘의 날씨: <span th:text="${weather_condition}"></span></h2>
+			    
+			    <!-- 추가 정보 (온도와 습도) -->
+			    <div class="weather-details">
+			        <p>온도: <span th:text="${temperature}"></span>°C</p>
+			        <p>습도: <span th:text="${humidity}"></span>%</p>
+			    </div>
+			</div>
+            <div class="product" onclick="location.href='/index2';">
+                <img src="images/MenuRecommand.png" alt="음식추천">
+                <h2>음식추천 : <span th:text="${recommendedFood}"></h2>
+            </div>
+            <div class="product" onclick="location.href='/calendar';">
+                <img src="images/calender.png" alt="달력">
+                <h2>나의 음식 달력</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- 하단 메뉴 -->
+    <footer class="footer">
+        <div class="menu">
+            <a href="#">메뉴</a>
+            <a href="#">혜택</a>
+            <a href="#">나의 정보</a>
+            <a href="#">최근 먹은 음식</a>
+        </div>
+    </footer>
+
+    <!-- 지도 박스 추가 -->
+    <section class="map-box">
+        <div id="map"></div>
+    </section>
+
+	<!-- JavaScript 연결 -->
+	<script src="/js/mainScript.js"></script>
+    <!-- Google Maps API 추가 (geometry 라이브러리 추가) -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=(api키)&libraries=places,geometry&callback=initMap"></script>
+</body>
+</html>

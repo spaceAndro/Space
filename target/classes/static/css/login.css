@@ -1,0 +1,59 @@
+/* 회원가입 폼 컨테이너 스타일 */
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px; /* 폼의 너비 */
+    padding: 30px; /* 내부 여백 */
+    background-color: #ffffff; /* 배경 색상 */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    border-radius: 10px; /* 둥근 모서리 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.signup-container h1 {
+    margin-bottom: 20px;
+}
+
+.signup-container label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.signup-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.signup-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.signup-container button:hover {
+    background-color: #45a049;
+}
+
+.signup-container a {
+    display: block;
+    margin-top: 10px;
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.signup-container a:hover {
+    text-decoration: underline;
+}
+
+
+
