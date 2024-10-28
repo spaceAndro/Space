@@ -20,7 +20,6 @@ public class Food {
 	@Column(name = "f_seq")
 	public int fSeq;
 	
-	@Column(name = "f_name")
 	public String fName;
 	public int kcal;
 	public int carbohydrate;

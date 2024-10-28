@@ -52,7 +52,68 @@ document.addEventListener("DOMContentLoaded", function () {
 		console.log("캘린더 데이터:", calendarData);
 		calendarData.forEach(item => {
 		    console.log(`Data item: ${item.saveDate}`);
-			});
+		});
+		
+		const fetchPromises = calendarData.flatMap(calendar => {
+            const mealPromises = [];
+
+            if (calendar.breakfast) {
+                mealPromises.push(
+                    fetch(`/api/meal/food?fName=${calendar.breakfast}`)
+                        .then(response => response.json())
+                        .then(foodData => {
+                            kcal += foodData.kcal || 0;
+                            carbohydrate += foodData.carbohydrate || 0;
+                            protein += foodData.protein || 0;
+                            fat += foodData.fat || 0;
+                        })
+                        .catch(error => console.error('Fetch error for breakfast:', error))
+                );
+            }
+
+            if (calendar.lunch) {
+                mealPromises.push(
+                    fetch(`/api/meal/food?fName=${calendar.lunch}`)
+                        .then(response => response.json())
+                        .then(foodData => {
+                            kcal += foodData.kcal || 0;
+                            carbohydrate += foodData.carbohydrate || 0;
+                            protein += foodData.protein || 0;
+                            fat += foodData.fat || 0;
+                        })
+                        .catch(error => console.error('Fetch error for lunch:', error))
+                );
+            }
+
+            if (calendar.dinner) {
+                mealPromises.push(
+                    fetch(`/api/meal/food?fName=${calendar.dinner}`)
+                        .then(response => response.json())
+                        .then(foodData => {
+                            kcal += foodData.kcal || 0;
+                            carbohydrate += foodData.carbohydrate || 0;
+                            protein += foodData.protein || 0;
+                            fat += foodData.fat || 0;
+                        })
+                        .catch(error => console.error('Fetch error for dinner:', error))
+                );
+            }
+
+            return mealPromises;
+        });
+
+        Promise.all(fetchPromises)
+            .then(() => {
+                // 모든 fetch 요청이 완료된 후에 총합을 업데이트
+                sumKcal.textContent = `${month + 1}월 총 칼로리 : ${kcal}`;
+                sumCarbohydrate.textContent = `탄수화물 : ${carbohydrate}`;
+                sumProtein.textContent = `단백질 : ${protein}`;
+                sumFat.textContent = `지방 : ${fat} (100g 기준)`;
+            })
+            .catch(error => console.error('Fetch error:', error));
+
+        // 캘린더 화면을 렌더링하는 부분
+		
         for (let i = 0; i < 6; i++) {
 		  let row = document.createElement("tr");
           for (let j = 0; j < 7; j++) {
@@ -66,16 +127,22 @@ document.addEventListener("DOMContentLoaded", function () {
               const calendar = calendarData.find(calendar => calendar.saveDate === `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`);
 			  console.log("찾은 데이터:", calendar);
 			  
-			  fetch(`/api/meal/food?fName=${calendar.breakfast}`)
-			  	.then(response => response.json())
-				.then(foodData => {
-					console.log("음식 데이터 : ", foodData);
-					kcal += foodData.kcal;
-					carbohydrate += foodData.carbohydrate;
-					protein += foodData.protein;
-					fat += foodData.fat;
-				})
-				.catch(error => console.error('Fetch error:', error));
+			  /*
+			  if (calendar && calendar.breakfast) {  // calendar와 breakfast가 존재하는지 확인
+				fetch(`/api/meal/food?fName=${calendar.breakfast}`)
+				  .then(response => response.json())
+				  .then(foodData => {
+				    console.log("음식 데이터 : ", foodData);
+				    kcal += foodData.kcal || 0;
+				    carbohydrate += foodData.carbohydrate || 0;
+				    protein += foodData.protein || 0;
+				    fat += foodData.fat || 0;
+				  })
+				  .catch(error => console.error('Fetch error:', error));
+				} else {
+				  console.warn("breakfast 데이터가 없어서 fetch를 생략합니다.");
+				}
+				/*
 			  fetch(`/api/meal/food?fName=${calendar.lunch}`)
 			  	.then(response => response.json())
 				.then(foodData => {
@@ -96,11 +163,12 @@ document.addEventListener("DOMContentLoaded", function () {
 					fat += foodData.fat;
 				})
 				.catch(error => console.error('Fetch error:', error));
+				*/
 				
-			  sumKcal.textContent = `${kcal}`;
-			  sumCarbohydrate.textContent = `${carbohydrate}`;
-			  sumProtein.textContent = `${protein}`;
-			  sumFat.textContent = `${fat}`;
+			  sumKcal.textContent = `${month + 1}월 총 칼로리 : ${kcal}`;
+			  sumCarbohydrate.textContent = `탄수화물 : ${carbohydrate}`;
+			  sumProtein.textContent = `단백질 : ${protein}`;
+			  sumFat.textContent = `지방 : ${fat}    (100g 기준)`;
 			  
               cell.innerHTML = `
                 <div class="date">${date}</div>

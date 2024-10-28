@@ -20,7 +20,7 @@ public class MealController {
     @Autowired
     private FoodService foodService;
 
-    // 특정 월의 모든 식사 데이터를 반환하는 API
+    // 해당 이름의 음식 정보 데이터를 반환하는 API
     @GetMapping("/food")
     public Food getFoodByFName(@RequestParam String fName) {
         return foodService.getFoodByFName(fName);

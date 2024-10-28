@@ -19,7 +19,7 @@ public class FoodService {
 
     // 특정 날짜의 식사 데이터를 반환
     public Food getFoodByFName(String fName) {
-        return foodRepository.findByFName(fName).orElse(null);
+        return foodRepository.findByfName(fName).orElse(null);
     }
 }
 
