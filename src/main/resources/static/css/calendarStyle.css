@@ -13,9 +13,9 @@ body {
   padding: 20px;
   width: 90vw;
   max-width: 1200px;
-  background-color: #FFFFFF; 
-  border-radius: 10px; /* 둥근 모서리 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .top-section {
@@ -28,25 +28,23 @@ body {
 .icon-container {
   display: flex;
   justify-content: center;
-  margin: 10px 0; /* 위아래 간격 */
+  margin: 10px 0;
 }
 
 .calendar-icon {
-  width: 100px; /* 아이콘 크기 */
+  width: 100px;
   height: auto;
 }
 
-/* 날짜 정보 (좌측) */
 .selected-date-info {
   text-align: left;
-  background-color: #5FA9CE; /* 진한 하늘색 */
+  background-color: #5FA9CE;
   padding: 15px;
-  border-radius: 10px; /* 둥근 모서리 */
-  color: white; /* 텍스트를 흰색으로 */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 */
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 년도와 월 조정 버튼 (우측) */
 .date-navigation {
   text-align: right;
 }
@@ -94,35 +92,29 @@ th, td {
   vertical-align: top;
 }
 
-/* 요일 셀 기본 스타일 */
 thead th {
-  background-color: #87CEEB; /* 기본 하늘색 배경 */
-  color: white; /* 기본 글씨는 흰색 */
+  background-color: #87CEEB;
+  color: white;
   padding: 10px;
   font-weight: bold;
 }
 
-/* 일요일은 빨간색 */
 thead th.sunday {
   color: red;
 }
 
-/* 토요일은 파란색 */
 thead th.saturday {
   color: blue;
 }
 
-/* 공휴일에 빨간색으로 강조 */
 .holiday .date {
   color: red;
 }
 
-/* 달력 셀: 일요일 날짜는 빨간색 */
 td.sunday .date {
   color: red;
 }
 
-/* 달력 셀: 토요일 날짜는 파란색 */
 td.saturday .date {
   color: blue;
 }
@@ -133,23 +125,16 @@ td .date {
   margin-bottom: 10px;
 }
 
-td img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  margin: 5px 0;
-}
-
 td:hover {
   background-color: #e0e0e0;
 }
 
-/* 오늘 날짜 셀 강조 (남색 배경) */
 td.today {
-  background-color: #000080; /* 남색으로 설정 */
+  background-color: #000080;
   font-weight: bold;
   color: white;
 }
+
 .centered-controls {
   display: flex;
   flex-direction: column;
@@ -157,49 +142,60 @@ td.today {
 }
 
 .selected-meal-info {
-  margin-left: 20px; 
+  margin-left: 20px;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  width: 300px; 
+  width: 300px;
 }
 
 button {
   margin-right: 5px;
 }
 
-table {
-  margin-top: 20px;
-}
-
 .date {
   font-size: 1.2em;
   margin-bottom: 5px;
 }
-
-.meal {
-  font-size: 0.7em;
-  line-height: 1.2;
-  margin: 1px 0;
+.selected {
+  background-color: rgb(128, 255, 128); /* 예시: 노란색 배경 */
+  color: black;
+  font-weight: bold;
 }
-
-.spring {
-  width: 100%;
-  height: 20px;
+.high-calorie-info {
+  font-size: 0.8em;
+  color: red;
+  margin-top: 5px;
+}
+#calendar tbody td {
+  width: 100px; /* 원하는 너비 */
+  height: 100px; /* 원하는 높이 */
+  vertical-align: top;
   position: relative;
-  top: -30px;
-  left: 0;
-  display: flex;
-  justify-content: center;
 }
 
-.spring::before, .spring::after {
-  content: '';
-  width: 200px;
-  height: 5px;
-  border-radius: 50%;
-  background: linear-gradient(to right, #666 25%, transparent 25%);
-  background-size: 20px 5px;
-  background-repeat: repeat-x;
+/* 날짜 숫자와 최고 칼로리 정보에 대한 스타일 */
+#calendar tbody .date {
+  font-weight: bold;
+  margin-bottom: 5px;
 }
+
+#calendar tbody .high-calorie-info {
+  font-size: 0.9em;
+  color: #333;
+  margin-top: 5px;
+  word-break: break-all;
+}
+
+/* 공휴일 표시 스타일 */
+#calendar tbody td.holiday {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+/* 선택된 셀 하이라이트 */
+#calendar tbody td.selected {
+  border: 2px solid #007bff;
+}
+
+
