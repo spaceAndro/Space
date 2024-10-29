@@ -1,0 +1,279 @@
+/* 기본 설정 */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+#container {
+    position: fixed; /* 화면 위쪽에 고정 */
+    top: 0;
+    width: 100%;
+    max-width: 800px;
+    background-color: #c0c0c0;
+    padding: 20px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+    z-index: 10; /* 다른 요소와 겹치지 않도록 위에 표시 */
+    margin-top: 10px;
+}
+
+
+#handle-left, #handle-right {
+    position: absolute;
+    width: 30px;
+    height: 15px;
+    background-color: #8b5a2b;
+    top: 0;
+}
+
+#handle-left {
+    left: -35px;
+}
+
+#handle-right {
+    right: -35px;
+}
+
+/* 추가된 섹션 클래스 */
+.section {
+    margin-bottom: 20px;
+}
+
+.button-container button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
+}
+
+.button-container button:hover {
+    transform: scale(1.05);
+}
+
+/* 클릭 시 섹션 숨기기 */
+.hidden {
+    display: none;
+}
+
+#submit-container {
+    margin-top: 20px;
+}
+
+/* 캠프파이어 애니메이션 스타일 */
+#campfire-container {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pot {
+    width: 360px;
+    height: 240px;
+    background-color: #222;
+    border-radius: 60% 60% 30% 30% / 50% 50% 20% 20%;
+    position: relative;
+    bottom: 60px;
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    border: 2px solid #444;
+}
+
+.inner-surface {
+    width: 310px;
+    height: 140px;
+    background-color: #87ceeb;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.bubble {
+    width: 20px;
+    height: 20px;
+    background-color: #add8e6;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bubble-rise 2s infinite ease-in-out;
+    opacity: 0.8;
+}
+
+.bubble:nth-child(1) {
+    left: 40%;
+    animation-delay: 0s;
+}
+
+.bubble:nth-child(2) {
+    left: 60%;
+    animation-delay: 0.5s;
+}
+
+.bubble:nth-child(3) {
+    left: 50%;
+    animation-delay: 1s;
+}
+
+@keyframes bubble-rise {
+    0% {
+        transform: translateX(-50%) translateY(0) scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-60px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+.pot-handle {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border: 3px solid #333;
+    border-radius: 50%;
+    background-color: #222;
+    top: 5px;
+}
+
+.pot-handle.left {
+    left: -50px;
+}
+
+.pot-handle.right {
+    right: -50px;
+}
+
+.flame-container {
+    position: absolute;
+    bottom: 35px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    transform: translateX(140px);
+}
+
+.flame {
+    width: 20px;
+    height: 40px;
+    background-color: #ff4500;
+    border-radius: 50% 50% 0 0;
+    position: relative;
+    animation: flame-flicker 0.8s infinite alternate ease-in-out;
+}
+
+.inner-flame {
+    width: 12px;
+    height: 20px;
+    background-color: #ffae42;
+    border-radius: 50% 50% 0 0;
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+}
+
+@keyframes flame-flicker {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-5px);
+    }
+}
+
+/* 통나무 */
+.log1, .log2, .log3 {
+    background-color: #8b5a2b;
+    border-radius: 15px;
+    position: absolute;
+    box-shadow: inset 0px 0px 0px 3px #5e3d22;
+    overflow: hidden;
+}
+
+.log1 {
+    width: 200px;
+    height: 40px;
+    bottom: 0;
+    transform: translateX(80px);
+    z-index: 2;
+}
+
+.log2 {
+    width: 100px;
+    height: 40px;
+    bottom: 0;
+    transform: translate(180px, -30px) rotate(30deg);
+}
+
+.log3 {
+    width: 100px;
+    height: 40px;
+    bottom: 0;
+    transform: translate(80px, -30px) rotate(-30deg);
+}
+
+.log1::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 95%;
+    width: 20px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    box-shadow:
+        inset 0 0 0 2px rgba(255, 255, 255, 0.2),
+        inset 0 0 0 6px rgba(255, 255, 255, 0.15),
+        inset 0 0 0 10px rgba(255, 255, 255, 0.1),
+        inset 0 0 0 14px rgba(255, 255, 255, 0.05);
+    transform: translate(-50%, -50%);
+}
+
+.log3::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    box-shadow:
+        inset 0 0 0 2px rgba(255, 255, 255, 0.2),
+        inset 0 0 0 6px rgba(255, 255, 255, 0.15),
+        inset 0 0 0 10px rgba(255, 255, 255, 0.1),
+        inset 0 0 0 14px rgba(255, 255, 255, 0.05);
+    transform: translate(-50%, -50%);
+}
+
+.log2::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 90%;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    box-shadow:
+        inset 0 0 0 2px rgba(255, 255, 255, 0.2),
+        inset 0 0 0 6px rgba(255, 255, 255, 0.15),
+        inset 0 0 0 10px rgba(255, 255, 255, 0.1),
+        inset 0 0 0 14px rgba(255, 255, 255, 0.05);
+    transform: translate(-50%, -50%);
+}

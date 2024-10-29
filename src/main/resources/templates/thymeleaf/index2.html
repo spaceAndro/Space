@@ -3,304 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="_csrf" th:content="${_csrf.token}" />
-	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <title>음식 추천</title>
+    <link rel="stylesheet" href="/css/recommendStyle.css">
     <style>
-         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        #container {
-            position: relative;
-            width: 80%;
-            max-width: 800px;
-            height: 90%;
-            background-color: #c0c0c0;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-        }
-        #handle-left, #handle-right {
-            position: absolute;
-            width: 30px;
-            height: 15px;
-            background-color: #8b5a2b;
-            top: 0;
-        }
-        #handle-left {
-            left: -35px;
-        }
-        #handle-right {
-            right: -35px;
-        }
-        .step {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-        .step.active {
-            display: block;
-            opacity: 1;
-        }
-        .button-container button {
-            padding: 10px;
-            margin: 5px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s;
-        }
-        .button-container button:hover {
-            transform: scale(1.05);
-        }
-        #submit-container {
-            display: none;
-        }
-
-/* 모닥불 컨테이너 */
-#campfire-container {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-/* 솥 모양 */
-.pot {
-    width: 360px;
-    height: 240px;
-    background-color: #222;
-    border-radius: 60% 60% 30% 30% / 50% 50% 20% 20%;
-    position: relative;
-    bottom: 60px;
-    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-    border: 2px solid #444;
-}
-
-/* 솥 내부 하늘색 타원 */
-.inner-surface {
-    width: 310px;
-    height: 140px;
-    background-color: #87ceeb;
-    border-radius: 50%;
-    position: absolute;
-    top: 10px;
-    z-index: 1;
-    overflow: hidden;
-}
-
-/* 진한 하늘색 원 (내부 원) */
-.inner-surface::before {
-    content: '';
-    position: absolute;
-    bottom: 0px; /* 아래쪽에 위치 */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 245px; /* 하늘색 원보다 작게 설정 */
-    height: 60px;
-    background-color: #6ca6cd; /* 진한 하늘색 */
-    border-radius: 50%;
-    z-index: -1;
-}
-
-/* 물방울 애니메이션 */
-.bubble {
-    width: 20px;
-    height: 20px;
-    background-color: #add8e6;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: bubble-rise 2s infinite ease-in-out;
-    opacity: 0.8;
-}
-
-/* 물방울 위치와 크기 랜덤화 */
-.bubble:nth-child(1) {
-    left: 40%;
-    animation-delay: 0s;
-}
-
-.bubble:nth-child(2) {
-    left: 60%;
-    animation-delay: 0.5s;
-}
-
-.bubble:nth-child(3) {
-    left: 50%;
-    animation-delay: 1s;
-}
-
-/* 물방울 터지는 애니메이션 */
-@keyframes bubble-rise {
-    0% {
-        transform: translateX(-50%) translateY(0) scale(1);
-        opacity: 0.8;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(-50%) translateY(-60px) scale(1.5);
-        opacity: 0;
-    }
-}
-
-/* 솥 손잡이 */
-.pot-handle {
-    position: absolute;
-    width: 45px;
-    height: 45px;
-    border: 3px solid #333;
-    border-radius: 50%;
-    background-color: #222;
-    top: 5px;
-}
-
-.pot-handle.left {
-    left: -50px;
-}
-
-.pot-handle.right {
-    right: -50px;
-}
-
-
-/* 불꽃 컨테이너 */
-.flame-container {
-    position: absolute;
-    bottom: 35px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    transform: translateX(140px);
-}
-
-/* 큰 불꽃 (물방울 모양) */
-.flame {
-    width: 20px;
-    height: 40px;
-    background-color: #ff4500;
-    border-radius: 50% 50% 0 0;
-    position: relative;
-    animation: flame-flicker 0.8s infinite alternate ease-in-out;
-}
-
-/* 작은 불꽃 (노란색 물방울 모양, 불꽃의 맨 아래에 고정) */
-.inner-flame {
-    width: 12px;
-    height: 20px;
-    background-color: #ffae42;
-    border-radius: 50% 50% 0 0;
-    position: absolute;
-    bottom: 0;
-    left: 4px;
-}
-
-/* 불꽃 애니메이션 */
-@keyframes flame-flicker {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-5px);
-    }
-}
-/* 통나무 */
-.log1, .log2, .log3 {
-    background-color: #8b5a2b;
-    border-radius: 15px;
-    position: absolute;
-    box-shadow: inset 0px 0px 0px 3px #5e3d22; /* 테두리 */
-    overflow: hidden;
-}
-
-/* 첫 번째 통나무 */
-.log1 {
-    width: 200px;
-    height: 40px;
-    bottom: 0;
-    transform: translateX(80px);
-    z-index: 2;
-}
-
-/* 두 번째 통나무 */
-.log2 {
-    width: 100px;
-    height: 40px;
-    bottom: 0;
-    transform: translate(180px, -30px) rotate(30deg);
-}
-
-/* 세 번째 통나무 */
-.log3 {
-    width: 100px;
-    height: 40px;
-    bottom: 0;
-    transform: translate(80px, -30px) rotate(-30deg);
-}
-
-/* 통나무 나이테 (오른쪽 끝에 위치) */
-.log1::before{
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 95%; /* 오른쪽 끝으로 이동 */
-    width: 20px;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    box-shadow:
-        inset 0 0 0 2px rgba(255, 255, 255, 0.2),
-        inset 0 0 0 6px rgba(255, 255, 255, 0.15),
-        inset 0 0 0 10px rgba(255, 255, 255, 0.1),
-        inset 0 0 0 14px rgba(255, 255, 255, 0.05);
-    transform: translate(-50%, -50%);
-}
-.log3::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 50%; /* 오른쪽 끝으로 이동 */
-    width: 40px;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    box-shadow:
-        inset 0 0 0 2px rgba(255, 255, 255, 0.2),
-        inset 0 0 0 6px rgba(255, 255, 255, 0.15),
-        inset 0 0 0 10px rgba(255, 255, 255, 0.1),
-        inset 0 0 0 14px rgba(255, 255, 255, 0.05);
-    transform: translate(-50%, -50%);
-}
-.log2::before{
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 90%; /* 오른쪽 끝으로 이동 */
-    width: 40px;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    box-shadow:
-        inset 0 0 0 2px rgba(255, 255, 255, 0.2),
-        inset 0 0 0 6px rgba(255, 255, 255, 0.15),
-        inset 0 0 0 10px rgba(255, 255, 255, 0.1),
-        inset 0 0 0 14px rgba(255, 255, 255, 0.05);
-    transform: translate(-50%, -50%);
-}
+        .section { margin-bottom: 20px; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -308,83 +17,41 @@
         <div id="handle-left"></div>
         <div id="handle-right"></div>
         <h2>음식 추천 폼</h2>
-		<form action="#" th:action="@{/getRecommendation}" method="post">
-            <div id="step1" class="step active">
-				<h2>날씨 상태: <span th:text="${weather_condition}">날씨 상태 정보</span></h2>
-				<h2>계절: <span th:text="${season}">계절 정보</span></h2>
-
-                <label for="weather_condition">날씨 상태:</label>
-                <div class="button-container">
-                    <button type="button" onclick="nextStep('weather_condition', 'Clear')">맑음</button>
-                    <button type="button" onclick="nextStep('weather_condition', 'Cloudy')">흐림</button>
-                    <button type="button" onclick="nextStep('weather_condition', 'Rain')">비</button>
-                    <button type="button" onclick="nextStep('weather_condition', 'Snow')">눈</button>
-                </div>
-            </div>
-			
-            <div id="step2" class="step">
-                <label for="season">계절:</label>
-                <div class="button-container">
-                    <button type="button" onclick="nextStep('season', 'Spring')">봄</button>
-                    <button type="button" onclick="nextStep('season', 'Summer')">여름</button>
-                    <button type="button" onclick="nextStep('season', 'Fall')">가을</button>
-                    <button type="button" onclick="nextStep('season', 'Winter')">겨울</button>
-                </div>
-            </div>
-
-            <div id="step3" class="step">
+        <form action="#" th:action="@{/getRecommendation}" method="post">
+            <div id="preferred_ingredient_container" class="section">
                 <label for="preferred_ingredient">선호하는 재료:</label>
                 <div class="button-container">
-                    <button type="button" onclick="nextStep('preferred_ingredient', '밀')">밀</button>
-                    <button type="button" onclick="nextStep('preferred_ingredient', '쌀')">쌀</button>
-                    <button type="button" onclick="nextStep('preferred_ingredient', '고기')">고기</button>
-                    <button type="button" onclick="nextStep('preferred_ingredient', '해산물')">해산물</button>
-                    <button type="button" onclick="nextStep('preferred_ingredient', '')">없음</button>
+                    <button type="button" onclick="selectOption('preferred_ingredient', '고기')">고기</button>
+                    <button type="button" onclick="selectOption('preferred_ingredient', '채소')">채소</button>
+                    <button type="button" onclick="selectOption('preferred_ingredient', '쌀')">쌀</button>
+                    <button type="button" onclick="selectOption('preferred_ingredient', '해산물')">해산물</button>
+                    <button type="button" onclick="selectOption('preferred_ingredient', '밀')">밀</button>
+                    <button type="button" onclick="selectOption('preferred_ingredient', '유제품')">유제품</button>
                 </div>
             </div>
 
-            <div id="step4" class="step">
+            <div id="cuisine_type_container" class="section">
                 <label for="cuisine_type">음식 분류:</label>
                 <div class="button-container">
-                    <button type="button" onclick="nextStep('cuisine_type', '한식')">한식</button>
-                    <button type="button" onclick="nextStep('cuisine_type', '중식')">중식</button>
-                    <button type="button" onclick="nextStep('cuisine_type', '일식')">일식</button>
-                    <button type="button" onclick="nextStep('cuisine_type', '양식')">양식</button>
-                    <button type="button" onclick="nextStep('cuisine_type', '없음')">없음</button>
+                    <button type="button" onclick="selectOption('cuisine_type', '한식')">한식</button>
+                    <button type="button" onclick="selectOption('cuisine_type', '중식')">중식</button>
+                    <button type="button" onclick="selectOption('cuisine_type', '일식')">일식</button>
+                    <button type="button" onclick="selectOption('cuisine_type', '양식')">양식</button>
                 </div>
             </div>
 
-            <div id="step5" class="step">
+            <div id="food_category_container" class="section">
                 <label for="food_category">음식 종류:</label>
                 <div class="button-container">
-                    <button type="button" onclick="nextStep('food_category', '국류')">국류</button>
-                    <button type="button" onclick="nextStep('food_category', '밥류')">밥류</button>
-                    <button type="button" onclick="nextStep('food_category', '면류')">면류</button>
-                    <button type="button" onclick="nextStep('food_category', '빵류')">빵류</button>
-                    <button type="button" onclick="nextStep('food_category', '샐러드류')">샐러드류</button>
-                    <button type="button" onclick="nextStep('food_category', '없음')">없음</button>
+                    <button type="button" onclick="selectOption('food_category', '국류')">국류</button>
+                    <button type="button" onclick="selectOption('food_category', '밥류')">밥류</button>
+                    <button type="button" onclick="selectOption('food_category', '면류')">면류</button>
+                    <button type="button" onclick="selectOption('food_category', '빵류')">빵류</button>
+                    <button type="button" onclick="selectOption('food_category', '채소류')">채소류</button>
+                    <button type="button" onclick="selectOption('food_category', '육류')">육류</button>
+                    <button type="button" onclick="selectOption('food_category', '튀김류')">튀김류</button>
+                    <button type="button" onclick="selectOption('food_category', '해산물류')">해산물류</button>
                 </div>
-            </div>
-
-            <div id="step6" class="step">
-                <label>알레르기 정보: (선택사항)<br>
-                    <input type="checkbox" id="milk" name="allergies" value="우유">
-                    <label for="milk">우유</label><br>
-                    <input type="checkbox" id="egg" name="allergies" value="달걀">
-                    <label for="egg">달걀</label><br>
-                    <input type="checkbox" id="peanut" name="allergies" value="땅콩">
-                    <label for="peanut">땅콩</label><br>
-                    <input type="checkbox" id="nuts" name="allergies" value="견과류">
-                    <label for="nuts">견과류</label><br>
-                    <input type="checkbox" id="seafood" name="allergies" value="해산물">
-                    <label for="seafood">해산물</label><br>
-                    <input type="checkbox" id="crustacean" name="allergies" value="갑각류">
-                    <label for="crustacean">갑각류</label><br>
-                    <input type="checkbox" id="wheat" name="allergies" value="밀">
-                    <label for="wheat">밀</label><br>
-                    <input type="checkbox" id="soy" name="allergies" value="대두류">
-                    <label for="soy">대두류</label><br><br>
-                <button type="button" onclick="showSubmit()">다음</button>
             </div>
 
             <div id="submit-container">
@@ -394,61 +61,54 @@
 
         <h3>추천된 음식: <span th:text="${recommendedFood}"></span></h3>
     </div>
-       <div id="campfire-container">
-        <div id="campfire">
-            <!-- 통나무 -->
-            <div class="log1"></div>
-            <div class="log2"></div>
-            <div class="log3"></div>
-            <!-- 솥 -->
-            <div class="pot">
-                <!-- 솥 내부 하늘색 원 -->
-                <div class="inner-surface">
-                    <!-- 물방울 애니메이션 원 -->
-                    <div class="bubble"></div>
-                    <div class="bubble"></div>
-                    <div class="bubble"></div>
-                </div>
-                <div class="pot-handle left"></div>
-                <div class="pot-handle right"></div>
-                <div class="leg left"></div>
-                <div class="leg right"></div>
-            </div>
-            <!-- 불꽃 -->
-            <div class="flame-container">
-                <div class="flame">
-                    <div class="inner-flame"></div>
-                </div>
-                <div class="flame">
-                    <div class="inner-flame"></div>
-                </div>
-                <div class="flame">
-                    <div class="inner-flame"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-      <script>
-          let currentStep = 1;
-
-        function nextStep(inputName, value) {
+    
+	<div id="campfire-container">
+	        <div id="campfire">
+	            <!-- 통나무 -->
+	            <div class="log1"></div>
+	            <div class="log2"></div>
+	            <div class="log3"></div>
+	            <!-- 솥 -->
+	            <div class="pot">
+	                <!-- 솥 내부 하늘색 원 -->
+	                <div class="inner-surface">
+	                    <!-- 물방울 애니메이션 원 -->
+	                    <div class="bubble"></div>
+	                    <div class="bubble"></div>
+	                    <div class="bubble"></div>
+	                </div>
+	                <div class="pot-handle left"></div>
+	                <div class="pot-handle right"></div>
+	                <div class="leg left"></div>
+	                <div class="leg right"></div>
+	            </div>
+	            <!-- 불꽃 -->
+	            <div class="flame-container">
+	                <div class="flame">
+	                    <div class="inner-flame"></div>
+	                </div>
+	                <div class="flame">
+	                    <div class="inner-flame"></div>
+	                </div>
+	                <div class="flame">
+	                    <div class="inner-flame"></div>
+	                </div>
+	            </div>
+	        </div>
+    
+    <script src="/js/recommend.js"></script>
+    <script>
+        function selectOption(inputName, value) {
+            // 선택한 값을 숨겨진 필드로 폼에 추가
             const input = document.createElement('input');
             input.type = 'hidden';
             input.name = inputName;
             input.value = value;
             document.querySelector('form').appendChild(input);
 
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            currentStep++;
-            document.getElementById(`step${currentStep}`).classList.add('active');
+            // 해당 섹션 숨기기
+            document.getElementById(`${inputName}_container`).classList.add('hidden');
         }
-
-        function showSubmit() {
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            document.getElementById('submit-container').style.display = 'block';
-        }
-  </script>
-      
+    </script>
 </body>
 </html>
