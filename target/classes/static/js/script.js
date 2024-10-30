@@ -21,6 +21,12 @@ document.addEventListener("DOMContentLoaded", function () {
   let nowMonth = currentDate.getMonth();
   let nowYear = currentDate.getFullYear();
 
+  // 모달 관련 변수
+  const updateButton = document.getElementById("updateButton");
+  const foodModalContent = document.getElementById("foodModalContent");
+  const updateModal = document.getElementById("updateModal");
+  const closeUpdateModal = document.getElementById("closeUpdateModal");
+
   const holidays = {
     '1-1': '새해 첫날',
     '3-1': '삼일절',
@@ -251,6 +257,60 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("폼을 찾을 수 없습니다.");
     }
   });
+  
+  updateButton.addEventListener("click", function (event) {
+	event.preventDefault();  // 기본 폼 제출 동작 방지
+	
+	const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/foodUpdate", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            foodModalContent.innerHTML = xhr.responseText;
+            updateModal.style.display = "flex";
+            document.body.style.overflow = "hidden";
+            
+            // 모달이 열린 후 update.js의 로직을 호출
+            initializeUpdateModal();
+        } else if (xhr.readyState === 4) {
+            console.error("AJAX 요청 실패: " + xhr.status);
+        }
+    };
+    xhr.send();
+  });
+  
+  // 모달 닫기
+  closeUpdateModal.addEventListener("click", function () {
+      updateModal.style.display = "none";
+      document.body.style.overflow = "auto"; // 모달 닫을 때 스크롤 복구
+  });
 
+  // 모달 외부 클릭 시 닫기
+  window.addEventListener("click", function (event) {
+      if (event.target === updateModal) {
+          updateModal.style.display = "none";
+          document.body.style.overflow = "auto";
+      }
+  });
+  
+  function initializeUpdateModal() {
+    const userId = document.querySelector(".calendar-container").dataset.userId;
+    const savedDate = localStorage.getItem("date");
+    const breakfastInput = document.getElementById("breakfastInput");
+    const lunchInput = document.getElementById("lunchInput");
+    const dinnerInput = document.getElementById("dinnerInput");
+    const savedDateInput = document.getElementById("savedDateInput");
+
+    savedDateInput.value = savedDate;
+
+    fetch(`/api/calendars/date?userId=${userId}&date=${savedDate}`)
+        .then(response => response.json())
+        .then(calendarData => {
+            breakfastInput.value = calendarData.breakfast || "";
+            lunchInput.value = calendarData.lunch || "";
+            dinnerInput.value = calendarData.dinner || "";
+        })
+        .catch(error => console.log("에러 발생: ", error));
+  }
+  
   generateCalendar(currentYear, currentMonth);
 });

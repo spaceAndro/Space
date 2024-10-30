@@ -6,55 +6,27 @@
 	<meta name="_csrf" th:content="${_csrf.token}" />
 	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
   	<title>음식 수정</title>
-	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/modal.css">
-  	<link rel="stylesheet" href="/css/calendarStyle.css">
+  	<link rel="stylesheet" href="/css/food.css">
 </head>
 <body>
-	<div class="calendar-container" th:data-user-id="${userId}">
-	<!-- 헤더 -->
-    <header class="header">
-        <div class="logo">Space</div>
-        <nav class="nav">
-            <ul>
-                <li><a href="#">#유한대학교</a></li>
-                <li><a href="#">#졸업작품</a></li>
-                <li><a href="#">#3조</a></li>
-            </ul>
-        </nav>
-        <div class="cart-search">
-            <a href="#" onclick="toggleDropdown(event)" class="user-icon"><i class="fa-regular fa-user"></i></a>
-			<ul id="userDropdown" class="dropdown-menu">
-				<li sec:authorize="hasRole('USER')">
-				    <a href="/profile">내 정보</a>
-				</li>
-			    <li sec:authorize="isAuthenticated()">
-			        <a id="logoutBtn" href="#">로그아웃</a>
-			    </li>
-			    <li sec:authorize="isAnonymous()">
-			        <a id="loginBtn" href="#">로그인</a>
-			    </li>
-			    <li sec:authorize="isAnonymous()">
-			        <a id="signupBtn" href="#">회원가입</a>
-			    </li>
-			</ul>
-        </div>
-    </header>
-	<form action="/changeFood" method="post">
-		<input type="hidden" name="_csrf" th:value="${_csrf.token}">
-		
-        <label for="breakfastInput">아침 : </label>
-        <input type="text" id="breakfastInput" name="foods">
-        <label for="lunchInput">점심 : </label>
-        <input type="text" id="lunchInput" name="foods">
-        <label for="dinnerInput">저녁 : </label>
-        <input type="text" id="dinnerInput" name="foods">
-		
-		<!-- 숨겨진 input 필드로 savedDate 추가 -->
-		<input type="hidden" id="savedDateInput" name="savedDate">
-        
-        <button type="submit">저장</button>
-    </form>
+	<div class="foodUpdate-container" th:data-user-id="${userId}">
+		<form th:action="@{/changeFood}" method="post">
+			<input type="hidden" name="_csrf" th:value="${_csrf.token}">
+			
+	        <label for="breakfastInput">아침 : </label>
+	        <input type="text" id="breakfastInput" name="foods"><br>
+	        <label for="lunchInput">점심 : </label>
+	        <input type="text" id="lunchInput" name="foods"><br>
+	        <label for="dinnerInput">저녁 : </label>
+	        <input type="text" id="dinnerInput" name="foods">
+			
+			<!-- 숨겨진 input 필드로 savedDate 추가 -->
+			<input type="hidden" id="savedDateInput" name="savedDate">
+	        
+	        <button type="submit">저장</button>
+	    </form>
+	</div>
 	<script src="/js/update.js"></script>
 </body>
 </html>
