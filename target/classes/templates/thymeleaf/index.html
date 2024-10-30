@@ -13,27 +13,6 @@
         
     </style>
 	<script src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous"></script>
-	<script th:inline="javascript">
-	    window.onload = function() {
-	        /* 컨트롤러에서 loginError가 true로 설정되었는지 확인 */
-	       	var loginError = /*[[${loginError}]]*/ false;// loginError 모델을 불러옴
-			console.log("로그인 에러 상태:", loginError); // 로그인 에러 상태를 콘솔에 출력
-	        if (loginError) {
-	            alert("로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
-	        }
-	    };
-		function handleProductClick(link) {
-		    fetch(link)
-		        .then(response => {
-		            if (response.status === 401) {
-		                alert("로그인 후 이용 가능합니다."); // 인증 필요 시 알림
-		            } else {
-		                window.location.href = link; // 정상적으로 리다이렉트
-		            }
-		        })
-		        .catch(error => console.error("인증 오류:", error));
-		}
-	</script>
 </head>
 <body>
     <!-- 헤더 -->
@@ -133,16 +112,15 @@
 			        <p>습도: <span th:text="${humidity}"></span>%</p>
 			    </div>
 			</div>
-			<div class="product" onclick="handleProductClick('/index2')"> <!-- handleProductClick 사용 -->
-						    <img src="images/MenuRecommand.png" class="auth-required" alt="음식추천">
-						    <h2>음식추천 : <span th:text="${recommendedFood}"></span></h2> <!-- span 종료 태그 추가 -->
-						</div>
-
-						<div class="product" onclick="handleProductClick('/calendar')"> <!-- handleProductClick 사용 -->
-						    <img src="images/calender.png" class="auth-required" alt="달력">
-						    <h2>나의 음식 달력</h2>
-						</div>
-			        </div>
+            <div class="product" onclick="location.href='/index2';">
+                <img src="images/MenuRecommand.png" alt="음식추천">
+                <h2>음식추천 : <span th:text="${recommendedFood}"></h2>
+            </div>
+            <div class="product" onclick="location.href='/calendar';">
+                <img src="images/calender.png" alt="달력">
+                <h2>나의 음식 달력</h2>
+            </div>
+        </div>
     </section>
 
     <!-- 하단 메뉴 -->
@@ -162,140 +140,6 @@
 
 	<!-- JavaScript 연결 -->
 	<script src="/js/mainScript.js"></script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-	        // 로그아웃 버튼 클릭 시 AJAX 요청
-	        const logoutBtn = document.getElementById("logoutBtn");
-
-	        if (logoutBtn) {
-	            logoutBtn.addEventListener("click", function(event) {
-	                event.preventDefault(); // 기본 링크 동작 막기
-
-	                const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-	                const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
-	                fetch("/logout", {
-	                    method: "POST",
-	                    headers: {
-	                        "Content-Type": "application/x-www-form-urlencoded",
-	                        [csrfHeader]: csrfToken // CSRF 토큰 추가
-	                    }
-	                })
-	                .then(response => {
-	                    if (response.ok) {
-	                        window.location.href = "/index"; // 로그아웃 후 리다이렉트할 페이지로 이동
-	                    } else {
-	                        console.error("로그아웃 요청 실패: " + response.status);
-	                    }
-	                })
-	                .catch(error => {
-	                    console.error("로그아웃 중 오류 발생: ", error);
-	                });
-	            });
-	        }
-
-				   // 로그인 버튼 클릭 시 모달 열기
-				           const loginBtn = document.getElementById("loginBtn");
-				           if (loginBtn) {
-				               loginBtn.addEventListener("click", function(event) {
-				                   event.preventDefault(); // 기본 동작 막기
-
-				                   const xhr = new XMLHttpRequest();
-				                   xhr.open("GET", "/login", true);
-				                   xhr.onreadystatechange = function() {
-				                       if (xhr.readyState === 4) {
-										console.log("AJAX 요청 상태 코드:", xhr.status); // 상태 코드 출력
-				                           if (xhr.status === 200) {
-				                               document.getElementById("modalContent").innerHTML = xhr.responseText;
-				                               document.getElementById("loginModal").style.display = "flex";
-				                               document.body.style.overflow = "auto";
-				                           } else if (xhr.status === 401) {
-				                               showLoginModal(); // 로그인 모달 띄우기
-				                           } else {
-				                               console.error("AJAX 요청 실패: " + xhr.status);
-				                           }
-				                       }
-				                   };
-				                   xhr.send();
-				               });
-				           }
-
-	        // 회원가입 버튼 클릭 시 모달 열기
-	        const signupBtn = document.getElementById("signupBtn");
-	        if (signupBtn) {
-	            signupBtn.addEventListener("click", function(event) {
-	                event.preventDefault(); // 기본 동작 막기
-
-	                const xhr = new XMLHttpRequest();
-					
-	                xhr.open("GET", "/signup", true);
-	                xhr.onreadystatechange = function() {
-	                    if (xhr.readyState === 4 && xhr.status === 200) {
-	                        document.getElementById("signupModalContent").innerHTML = xhr.responseText;
-	                        document.getElementById("signupModal").style.display = "flex";
-							
-							
-							// 여기서 옵션 추가 코드 실행
-							                const ageSelect = document.getElementById("age");
-							                for (let i = 10; i <= 80; i++) {
-							                    const option = document.createElement("option");
-							                    option.value = i;
-							                    option.text = i;
-							                    ageSelect.appendChild(option);
-							                }
-							
-							
-	                        document.body.style.overflow = "auto";
-							
-	                    } else if (xhr.readyState === 4) {
-	                        console.error("AJAX 요청 실패: " + xhr.status);
-	                    }
-	                };
-	                xhr.send();
-	            });
-	        }
-	    });
-		// 모달 닫기 버튼 클릭 시 모달 닫기
-		const closeModal = document.getElementById("closeModal");
-		if (closeModal) {
-		    closeModal.addEventListener("click", function() {
-		        document.getElementById("loginModal").style.display = "none";
-		        document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
-		    });
-		}
-
-		// 회원가입 모달 닫기 버튼 클릭 시 모달 닫기
-		const closeSignupModal = document.getElementById("closeSignupModal");
-		if (closeSignupModal) {
-		    closeSignupModal.addEventListener("click", function() {
-		        document.getElementById("signupModal").style.display = "none";
-		        document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
-		    });
-		}
-
-	    // 드롭다운 토글 함수
-	    function toggleDropdown(event) {
-	        event.stopPropagation();  // 클릭 이벤트가 상위로 전달되지 않도록
-	        const dropdown = document.getElementById("userDropdown");
-	        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-	    }
-
-	    // 페이지의 다른 곳을 클릭했을 때 드롭다운을 닫는 기능
-	    window.onclick = function(event) {
-	        if (!event.target.matches('.user-icon')) {
-	            const dropdown = document.getElementById("userDropdown");
-	            if (dropdown.style.display === "block") {
-	                dropdown.style.display = "none";
-	            }
-	        }
-	    }
-		// 로그인 모달을 띄우는 함수
-		function showLoginModal() {
-		    document.getElementById("loginModal").style.display = "flex";
-		    document.body.style.overflow = "hidden"; // 스크롤 막기
-		}
-		
-	</script>
     <!-- Google Maps API 추가 (geometry 라이브러리 추가) -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=(api키)&libraries=places,geometry&callback=initMap"></script>
 </body>
