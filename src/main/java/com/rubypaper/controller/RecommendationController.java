@@ -68,7 +68,7 @@ public class RecommendationController {
             JSONObject json = new JSONObject(response.getBody());
             String recommendedFood = json.getString("recommended_food");
             model.addAttribute("recommendedFood", recommendedFood);
-            return "index";
+            return "index2";
         } else {
             model.addAttribute("error", "Failed to get recommendation");
             return "error";
