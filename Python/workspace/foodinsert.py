@@ -1,7 +1,616 @@
-import random
+from collections import Counter
 import pandas as pd
 
-meal_food_names = [
+nutrient_data = {
+    "김치찌개": {"kcal": 250, "carbohydrate": 10, "protein": 15, "fat": 18},
+    "된장찌개": {"kcal": 200, "carbohydrate": 12, "protein": 10, "fat": 8},
+    "순두부찌개": {"kcal": 300, "carbohydrate": 8, "protein": 20, "fat": 15},
+    "콩나물국": {"kcal": 150, "carbohydrate": 5, "protein": 8, "fat": 3},
+    "떡국": {"kcal": 350, "carbohydrate": 60, "protein": 10, "fat": 5},
+    "김치볶음밥": {"kcal": 550, "carbohydrate": 85, "protein": 12, "fat": 20},
+    "순대": {"kcal": 400, "carbohydrate": 10, "protein": 18, "fat": 30},
+    "제육볶음": {"kcal": 500, "carbohydrate": 20, "protein": 35, "fat": 25},
+    "오징어볶음": {"kcal": 300, "carbohydrate": 15, "protein": 30, "fat": 10},
+    "아귀찜": {"kcal": 450, "carbohydrate": 12, "protein": 40, "fat": 15},
+    "삼계탕": {"kcal": 800, "carbohydrate": 10, "protein": 60, "fat": 50},
+    "김치전": {"kcal": 400, "carbohydrate": 40, "protein": 10, "fat": 20},
+    "채소전": {"kcal": 350, "carbohydrate": 35, "protein": 8, "fat": 15},
+    "파전": {"kcal": 450, "carbohydrate": 45, "protein": 12, "fat": 20},
+    "해물파전": {"kcal": 500, "carbohydrate": 40, "protein": 20, "fat": 25},
+    "중화비빔면": {"kcal": 600, "carbohydrate": 90, "protein": 15, "fat": 18},
+    "해물탕": {"kcal": 300, "carbohydrate": 10, "protein": 40, "fat": 8},
+    "오징어국": {"kcal": 200, "carbohydrate": 5, "protein": 20, "fat": 5},
+    "설렁탕": {"kcal": 600, "carbohydrate": 20, "protein": 40, "fat": 30},
+    "육개장": {"kcal": 400, "carbohydrate": 10, "protein": 30, "fat": 15},
+    "우거지국": {"kcal": 150, "carbohydrate": 5, "protein": 10, "fat": 5},
+    "김치국": {"kcal": 200, "carbohydrate": 8, "protein": 10, "fat": 7},
+    "북엇국": {"kcal": 180, "carbohydrate": 5, "protein": 15, "fat": 3},
+    "시래기국": {"kcal": 150, "carbohydrate": 5, "protein": 8, "fat": 3},
+    "배추국": {"kcal": 130, "carbohydrate": 6, "protein": 6, "fat": 2},
+    "황태국": {"kcal": 200, "carbohydrate": 5, "protein": 25, "fat": 2},
+    "피쉬 앤 칩스": {"kcal": 800, "carbohydrate": 60, "protein": 40, "fat": 40},
+    "닭갈비": {"kcal": 600, "carbohydrate": 20, "protein": 35, "fat": 30},
+    "감자탕": {"kcal": 700, "carbohydrate": 30, "protein": 50, "fat": 30},
+    "육회": {"kcal": 300, "carbohydrate": 5, "protein": 30, "fat": 20},
+    "족발": {"kcal": 800, "carbohydrate": 10, "protein": 50, "fat": 60},
+    "오삼불고기": {"kcal": 550, "carbohydrate": 20, "protein": 35, "fat": 30},
+    "꼬막비빔밥": {"kcal": 500, "carbohydrate": 80, "protein": 20, "fat": 10},
+    "황태해장국": {"kcal": 180, "carbohydrate": 5, "protein": 25, "fat": 2},
+    "김치볶음면": {"kcal": 600, "carbohydrate": 90, "protein": 15, "fat": 18},
+    "곰탕": {"kcal": 600, "carbohydrate": 10, "protein": 50, "fat": 40},
+    "비지찌개": {"kcal": 350, "carbohydrate": 10, "protein": 20, "fat": 15},
+    "청국장": {"kcal": 300, "carbohydrate": 20, "protein": 25, "fat": 10},
+    "매운갈비찜": {"kcal": 800, "carbohydrate": 30, "protein": 60, "fat": 40},
+    "보리밥": {"kcal": 200, "carbohydrate": 45, "protein": 6, "fat": 2},
+    "떡만두국": {"kcal": 450, "carbohydrate": 60, "protein": 15, "fat": 10},
+    "오징어순대": {"kcal": 300, "carbohydrate": 12, "protein": 25, "fat": 10},
+    "삼합": {"kcal": 600, "carbohydrate": 20, "protein": 50, "fat": 30},
+    "부대찌개": {"kcal": 700, "carbohydrate": 30, "protein": 30, "fat": 40},
+    "해물라면": {"kcal": 550, "carbohydrate": 80, "protein": 20, "fat": 15},
+    "쭈꾸미볶음": {"kcal": 350, "carbohydrate": 10, "protein": 30, "fat": 10},
+    "꽁치구이": {"kcal": 300, "carbohydrate": 5, "protein": 25, "fat": 15},
+    "멘보샤": {"kcal": 450, "carbohydrate": 30, "protein": 15, "fat": 25},
+    "양꼬치": {"kcal": 350, "carbohydrate": 5, "protein": 30, "fat": 20},
+    "마라탕": {"kcal": 600, "carbohydrate": 20, "protein": 30, "fat": 30},
+    "마라샹궈": {"kcal": 550, "carbohydrate": 15, "protein": 35, "fat": 35},
+    "소룡포": {"kcal": 300, "carbohydrate": 25, "protein": 15, "fat": 10},
+    "북경오리": {"kcal": 900, "carbohydrate": 10, "protein": 60, "fat": 70},
+    "짜장밥": {"kcal": 600, "carbohydrate": 90, "protein": 20, "fat": 25},
+    "유니짜장": {"kcal": 550, "carbohydrate": 80, "protein": 15, "fat": 20},
+    "마파면": {"kcal": 650, "carbohydrate": 90, "protein": 25, "fat": 20},
+    "훈툰": {"kcal": 300, "carbohydrate": 35, "protein": 10, "fat": 10},
+    "깐쇼새우덮밥": {"kcal": 500, "carbohydrate": 70, "protein": 20, "fat": 15},
+    "사천식 돼지고기 볶음": {"kcal": 600, "carbohydrate": 15, "protein": 40, "fat": 30},
+    "라조기": {"kcal": 700, "carbohydrate": 20, "protein": 45, "fat": 35},
+    "꿔바로우": {"kcal": 800, "carbohydrate": 60, "protein": 30, "fat": 50},
+    "꿔바로우 샐러드": {"kcal": 700, "carbohydrate": 50, "protein": 20, "fat": 40},
+    "삼선짬뽕밥": {"kcal": 600, "carbohydrate": 80, "protein": 25, "fat": 20},
+    "건두부볶음": {"kcal": 400, "carbohydrate": 15, "protein": 20, "fat": 20},
+    "마라양념탕수육": {"kcal": 750, "carbohydrate": 50, "protein": 35, "fat": 45},
+    "해물볶음우동": {"kcal": 550, "carbohydrate": 85, "protein": 20, "fat": 10},
+    "초밥": {"kcal": 400, "carbohydrate": 60, "protein": 15, "fat": 5},
+    "우동": {"kcal": 450, "carbohydrate": 70, "protein": 10, "fat": 5},
+    "덴푸라": {"kcal": 600, "carbohydrate": 40, "protein": 15, "fat": 40},
+    "규동": {"kcal": 500, "carbohydrate": 60, "protein": 30, "fat": 15},
+    "오니기리": {"kcal": 350, "carbohydrate": 70, "protein": 8, "fat": 3},
+    "카츠돈": {"kcal": 700, "carbohydrate": 80, "protein": 30, "fat": 30},
+    "라멘": {"kcal": 550, "carbohydrate": 85, "protein": 20, "fat": 15},
+    "미소시루": {"kcal": 50, "carbohydrate": 5, "protein": 5, "fat": 1},
+    "타코야키": {"kcal": 350, "carbohydrate": 45, "protein": 10, "fat": 15},
+    "오코노미야키": {"kcal": 600, "carbohydrate": 60, "protein": 20, "fat": 30},
+    "소바": {"kcal": 300, "carbohydrate": 50, "protein": 10, "fat": 5},
+    "규카츠 덮밥": {"kcal": 700, "carbohydrate": 80, "protein": 30, "fat": 25},
+    "하이라이스": {"kcal": 550, "carbohydrate": 70, "protein": 15, "fat": 15},
+    "오차즈케": {"kcal": 300, "carbohydrate": 60, "protein": 10, "fat": 2},
+    "규카츠": {"kcal": 600, "carbohydrate": 15, "protein": 30, "fat": 35},
+    "장어덮밥": {"kcal": 650, "carbohydrate": 80, "protein": 30, "fat": 20},
+    "니쿠자가": {"kcal": 500, "carbohydrate": 20, "protein": 40, "fat": 25},
+    "가이센동": {"kcal": 400, "carbohydrate": 70, "protein": 15, "fat": 5},
+    "타마고야키": {"kcal": 150, "carbohydrate": 5, "protein": 6, "fat": 10},
+    "오야코동": {"kcal": 600, "carbohydrate": 80, "protein": 20, "fat": 20},
+    "시메사바": {"kcal": 300, "carbohydrate": 5, "protein": 25, "fat": 15},
+    "카마메시": {"kcal": 550, "carbohydrate": 80, "protein": 20, "fat": 15},
+    "이카메시": {"kcal": 400, "carbohydrate": 60, "protein": 20, "fat": 10},
+    "나가사키 짬뽕": {"kcal": 550, "carbohydrate": 80, "protein": 20, "fat": 10},
+    "우나기": {"kcal": 400, "carbohydrate": 10, "protein": 30, "fat": 20},
+    "샤케동": {"kcal": 500, "carbohydrate": 80, "protein": 20, "fat": 10},
+    "에비텐동": {"kcal": 600, "carbohydrate": 70, "protein": 20, "fat": 25},
+    "가츠샌드": {"kcal": 550, "carbohydrate": 80, "protein": 25, "fat": 20},
+    "메밀국수 샐러드": {"kcal": 300, "carbohydrate": 50, "protein": 10, "fat": 5},
+    "피자": {"kcal": 800, "carbohydrate": 100, "protein": 25, "fat": 35},
+    "햄버거": {"kcal": 600, "carbohydrate": 50, "protein": 25, "fat": 30},
+    "스테이크": {"kcal": 700, "carbohydrate": 5, "protein": 60, "fat": 40},
+    "치즈버거": {"kcal": 750, "carbohydrate": 45, "protein": 30, "fat": 40},
+    "브루스케타": {"kcal": 250, "carbohydrate": 30, "protein": 5, "fat": 10},
+    "타코": {"kcal": 350, "carbohydrate": 40, "protein": 15, "fat": 15},
+    "부리또": {"kcal": 600, "carbohydrate": 80, "protein": 25, "fat": 25},
+    "퀘사디아": {"kcal": 550, "carbohydrate": 65, "protein": 20, "fat": 30},
+    "프렌치 토스트": {"kcal": 450, "carbohydrate": 60, "protein": 10, "fat": 15},
+    "페퍼로니 피자": {"kcal": 850, "carbohydrate": 90, "protein": 30, "fat": 40},
+    "바베큐 치킨 피자": {"kcal": 900, "carbohydrate": 85, "protein": 35, "fat": 45},
+    "감자 샐러드": {"kcal": 250, "carbohydrate": 30, "protein": 5, "fat": 10},
+    "새우 크림 리조또": {"kcal": 550, "carbohydrate": 70, "protein": 15, "fat": 25},
+    "마르게리타 피자": {"kcal": 700, "carbohydrate": 85, "protein": 20, "fat": 30},
+    "알리오 올리오": {"kcal": 600, "carbohydrate": 85, "protein": 15, "fat": 25},
+    "까르보나라 파스타": {"kcal": 800, "carbohydrate": 90, "protein": 20, "fat": 40},
+    "랍스터 롤": {"kcal": 500, "carbohydrate": 60, "protein": 25, "fat": 20},
+    "맥 앤 치즈": {"kcal": 700, "carbohydrate": 75, "protein": 20, "fat": 35},
+    "치킨 너겟": {"kcal": 400, "carbohydrate": 20, "protein": 20, "fat": 25},
+    "연어 스테이크": {"kcal": 500, "carbohydrate": 5, "protein": 40, "fat": 30},
+    "비스크 수프": {"kcal": 400, "carbohydrate": 30, "protein": 15, "fat": 20},
+    "클램 차우더": {"kcal": 500, "carbohydrate": 40, "protein": 20, "fat": 25},
+    "스테이크 타르타르": {"kcal": 450, "carbohydrate": 0, "protein": 35, "fat": 30},
+    "훈제 연어 샐러드": {"kcal": 300, "carbohydrate": 5, "protein": 20, "fat": 15},
+    "바질 페스토 샌드위치": {"kcal": 500, "carbohydrate": 60, "protein": 10, "fat": 20},
+    "파인애플 볶음밥": {"kcal": 600, "carbohydrate": 85, "protein": 10, "fat": 15},
+    "갈릭 새우 파스타": {"kcal": 650, "carbohydrate": 80, "protein": 20, "fat": 30},
+    "참치 샌드위치": {"kcal": 450, "carbohydrate": 50, "protein": 20, "fat": 15},
+    "포크 롤": {"kcal": 550, "carbohydrate": 60, "protein": 25, "fat": 20},
+    "비프 브루기뇽": {"kcal": 600, "carbohydrate": 10, "protein": 50, "fat": 35},
+    "치킨 알프레도": {"kcal": 700, "carbohydrate": 85, "protein": 25, "fat": 30},
+    "수제비": {"kcal": 300, "carbohydrate": 60, "protein": 10, "fat": 5},
+    "철판 볶음밥": {"kcal": 600, "carbohydrate": 80, "protein": 15, "fat": 20},
+    "잔치국수": {"kcal": 400, "carbohydrate": 70, "protein": 10, "fat": 8},
+    "초계국수": {"kcal": 350, "carbohydrate": 60, "protein": 15, "fat": 5},
+    "오삼불고기 찌개": {"kcal": 500, "carbohydrate": 25, "protein": 30, "fat": 20},
+    "초계비빔국수": {"kcal": 450, "carbohydrate": 65, "protein": 15, "fat": 10},
+    "연어구이": {"kcal": 350, "carbohydrate": 5, "protein": 30, "fat": 20},
+    "방어구이": {"kcal": 400, "carbohydrate": 5, "protein": 35, "fat": 25},
+    "전어구이": {"kcal": 300, "carbohydrate": 5, "protein": 25, "fat": 10},
+    "도미구이": {"kcal": 350, "carbohydrate": 5, "protein": 30, "fat": 15},
+    "새우완자": {"kcal": 300, "carbohydrate": 15, "protein": 20, "fat": 15},
+    "갈치구이": {"kcal": 350, "carbohydrate": 5, "protein": 30, "fat": 20},
+    "우렁강된장": {"kcal": 200, "carbohydrate": 10, "protein": 20, "fat": 8},
+    "차돌박이 된장찌개": {"kcal": 450, "carbohydrate": 15, "protein": 25, "fat": 30},
+    "수박 샐러드": {"kcal": 100, "carbohydrate": 25, "protein": 2, "fat": 0},
+    "무채 비빔국수": {"kcal": 400, "carbohydrate": 70, "protein": 10, "fat": 10},
+    "숙성지 김치찌개": {"kcal": 300, "carbohydrate": 12, "protein": 18, "fat": 20},
+    "임연수구이": {"kcal": 300, "carbohydrate": 0, "protein": 30, "fat": 18},
+    "가자미구이": {"kcal": 250, "carbohydrate": 0, "protein": 25, "fat": 12},
+    "붕장어구이": {"kcal": 500, "carbohydrate": 5, "protein": 40, "fat": 35},
+    "고추참치 김밥": {"kcal": 350, "carbohydrate": 55, "protein": 12, "fat": 8},
+    "날치알 김밥": {"kcal": 320, "carbohydrate": 50, "protein": 10, "fat": 8},
+    "유부 김밥": {"kcal": 300, "carbohydrate": 55, "protein": 6, "fat": 5},
+    "곱창볶음": {"kcal": 600, "carbohydrate": 20, "protein": 40, "fat": 40},
+    "백합탕": {"kcal": 250, "carbohydrate": 8, "protein": 30, "fat": 10},
+    "파김치장어전골": {"kcal": 500, "carbohydrate": 15, "protein": 45, "fat": 30},
+    "해물 수제비": {"kcal": 400, "carbohydrate": 70, "protein": 20, "fat": 10},
+    "감자찌개": {"kcal": 300, "carbohydrate": 40, "protein": 10, "fat": 10},
+    "애호박찌개": {"kcal": 250, "carbohydrate": 20, "protein": 8, "fat": 5},
+    "비빔냉면": {"kcal": 450, "carbohydrate": 70, "protein": 12, "fat": 10},
+    "두부전골": {"kcal": 350, "carbohydrate": 15, "protein": 25, "fat": 20},
+    "매운 갈비찜 찌개": {"kcal": 700, "carbohydrate": 30, "protein": 50, "fat": 40},
+    "갈비탕": {"kcal": 550, "carbohydrate": 15, "protein": 45, "fat": 30},
+    "잡채밥": {"kcal": 600, "carbohydrate": 90, "protein": 20, "fat": 15},
+    "잡채": {"kcal": 600, "carbohydrate": 90, "protein": 20, "fat": 15},
+    "라면": {"kcal": 500, "carbohydrate": 70, "protein": 15, "fat": 20},
+    "불닭": {"kcal": 700, "carbohydrate": 30, "protein": 40, "fat": 35},
+    "팥죽": {"kcal": 300, "carbohydrate": 60, "protein": 5, "fat": 3},
+    "어묵탕": {"kcal": 250, "carbohydrate": 10, "protein": 15, "fat": 10},
+    "돈카츠 회오리 오므라이스": {"kcal": 700, "carbohydrate": 50, "protein": 25, "fat": 40},
+    "호박전": {"kcal": 300, "carbohydrate": 40, "protein": 10, "fat": 12},
+    "크림수프": {"kcal": 400, "carbohydrate": 30, "protein": 10, "fat": 25},
+    "새우볶음밥": {"kcal": 500, "carbohydrate": 80, "protein": 20, "fat": 8},
+    "짬뽕": {"kcal": 650, "carbohydrate": 90, "protein": 20, "fat": 15},
+    "닭강정": {"kcal": 550, "carbohydrate": 40, "protein": 30, "fat": 25},
+    "고등어조림": {"kcal": 400, "carbohydrate": 5, "protein": 35, "fat": 25},
+    "칼국수": {"kcal": 500, "carbohydrate": 70, "protein": 25, "fat": 10},
+    "마늘빵": {"kcal": 400, "carbohydrate": 50, "protein": 8, "fat": 15},
+    "토마토 바질 스프": {"kcal": 200, "carbohydrate": 30, "protein": 5, "fat": 5},
+    "애호박전": {"kcal": 150, "carbohydrate": 10, "protein": 5, "fat": 8},
+    "동태찌개": {"kcal": 300, "carbohydrate": 10, "protein": 25, "fat": 8},
+    "가자미조림": {"kcal": 350, "carbohydrate": 10, "protein": 30, "fat": 15},
+    "고등어구이": {"kcal": 500, "carbohydrate": 20, "protein": 35, "fat": 25},
+    "베이글 샌드위치": {"kcal": 400, "carbohydrate": 40, "protein": 20, "fat": 15},
+    "참치국": {"kcal": 180, "carbohydrate": 5, "protein": 20, "fat": 7},
+    "사골국": {"kcal": 300, "carbohydrate": 10, "protein": 25, "fat": 18},
+    "버섯국": {"kcal": 150, "carbohydrate": 6, "protein": 8, "fat": 4},
+    "낙지탕탕이": {"kcal": 200, "carbohydrate": 5, "protein": 25, "fat": 6},
+    "우렁 된장찌개": {"kcal": 250, "carbohydrate": 12, "protein": 20, "fat": 10},
+    "해물된장찌개": {"kcal": 280, "carbohydrate": 15, "protein": 22, "fat": 12},
+    "필라프": {"kcal": 550, "carbohydrate": 85, "protein": 15, "fat": 20},
+    "연어 김밥": {"kcal": 350, "carbohydrate": 55, "protein": 15, "fat": 10},
+    "전주비빔밥": {"kcal": 550, "carbohydrate": 80, "protein": 15, "fat": 10},
+    "리조또": {"kcal": 600, "carbohydrate": 85, "protein": 15, "fat": 20},
+    "돈부리": {"kcal": 650, "carbohydrate": 85, "protein": 20, "fat": 20},
+    "카레라이스": {"kcal": 600, "carbohydrate": 90, "protein": 15, "fat": 10},
+    "굴밥": {"kcal": 400, "carbohydrate": 60, "protein": 25, "fat": 10},
+    "가마솥밥": {"kcal": 550, "carbohydrate": 85, "protein": 10, "fat": 10},
+    "소고기덮밥": {"kcal": 700, "carbohydrate": 90, "protein": 30, "fat": 25},
+    "참치마요덮밥": {"kcal": 550, "carbohydrate": 85, "protein": 20, "fat": 15},
+    "참치볶음밥": {"kcal": 500, "carbohydrate": 80, "protein": 15, "fat": 10},
+    "깻잎 김밥": {"kcal": 320, "carbohydrate": 50, "protein": 10, "fat": 5},
+    "야채 김밥": {"kcal": 300, "carbohydrate": 60, "protein": 5, "fat": 5},
+    "참치 김밥": {"kcal": 350, "carbohydrate": 55, "protein": 15, "fat": 8},
+    "소고기 김밥": {"kcal": 350, "carbohydrate": 55, "protein": 12, "fat": 10},
+    "버섯 리소토": {"kcal": 550, "carbohydrate": 75, "protein": 15, "fat": 15},
+    "로코모코": {"kcal": 650, "carbohydrate": 85, "protein": 25, "fat": 20},
+    "참치 비빔밥": {"kcal": 500, "carbohydrate": 75, "protein": 20, "fat": 10},
+    "트러플 리소토": {"kcal": 600, "carbohydrate": 85, "protein": 15, "fat": 25},
+    "계란 김밥": {"kcal": 300, "carbohydrate": 55, "protein": 8, "fat": 5},
+    "토마토 리소토": {"kcal": 500, "carbohydrate": 75, "protein": 10, "fat": 15},
+    "감바스 리조또": {"kcal": 600, "carbohydrate": 85, "protein": 20, "fat": 20},
+    "멸치 김밥": {"kcal": 320, "carbohydrate": 55, "protein": 10, "fat": 5},
+    "새우 김밥": {"kcal": 350, "carbohydrate": 55, "protein": 15, "fat": 10},
+    "유부 초밥": {"kcal": 300, "carbohydrate": 65, "protein": 6, "fat": 5},
+    "불고기 덮밥": {"kcal": 600, "carbohydrate": 85, "protein": 25, "fat": 15},
+    "제육덮밥": {"kcal": 650, "carbohydrate": 80, "protein": 30, "fat": 20},
+    "돈가스 김밥": {"kcal": 450, "carbohydrate": 55, "protein": 20, "fat": 18},
+    "카레": {"kcal": 600, "carbohydrate": 90, "protein": 15, "fat": 10},
+    "치킨 필라프": {"kcal": 550, "carbohydrate": 85, "protein": 20, "fat": 15},
+    "타이 그린 카레": {"kcal": 600, "carbohydrate": 80, "protein": 15, "fat": 25},
+    "버섯 볶음밥": {"kcal": 450, "carbohydrate": 80, "protein": 10, "fat": 10},
+    "마파두부밥": {"kcal": 550, "carbohydrate": 75, "protein": 20, "fat": 20},
+    "베이컨 김밥": {"kcal": 350, "carbohydrate": 55, "protein": 15, "fat": 10},
+    "닭갈비 덮밥": {"kcal": 650, "carbohydrate": 80, "protein": 25, "fat": 20},
+    "새우 카레라이스": {"kcal": 550, "carbohydrate": 80, "protein": 15, "fat": 15},
+    "날치알 주먹밥": {"kcal": 350, "carbohydrate": 55, "protein": 8, "fat": 6},
+    "회덮밥": {"kcal": 400, "carbohydrate": 70, "protein": 30, "fat": 8},
+    "부타동": {"kcal": 650, "carbohydrate": 85, "protein": 25, "fat": 20},
+    "가츠동": {"kcal": 700, "carbohydrate": 80, "protein": 30, "fat": 30},
+    "새우가츠동": {"kcal": 750, "carbohydrate": 85, "protein": 30, "fat": 35},
+    "가라아게가츠동": {"kcal": 700, "carbohydrate": 80, "protein": 30, "fat": 35},
+    "월남쌈": {"kcal": 300, "carbohydrate": 60, "protein": 10, "fat": 8},
+    "짬짜면": {"kcal": 700, "carbohydrate": 100, "protein": 20, "fat": 25},
+    "회냉면": {"kcal": 450, "carbohydrate": 70, "protein": 15, "fat": 10},
+    "트러플 파스타": {"kcal": 750, "carbohydrate": 95, "protein": 20, "fat": 35},
+    "양송이 크림파스타": {"kcal": 700, "carbohydrate": 80, "protein": 15, "fat": 30},
+    "아부라소바": {"kcal": 600, "carbohydrate": 75, "protein": 15, "fat": 25},
+    "연어 파스타": {"kcal": 550, "carbohydrate": 75, "protein": 25, "fat": 15},
+    "카라이라멘": {"kcal": 650, "carbohydrate": 90, "protein": 20, "fat": 15},
+    "미트볼 파스타": {"kcal": 700, "carbohydrate": 85, "protein": 25, "fat": 25},
+    "유산슬": {"kcal": 500, "carbohydrate": 30, "protein": 25, "fat": 20},
+    "돈코츠라멘": {"kcal": 600, "carbohydrate": 90, "protein": 20, "fat": 25},
+    "고추짬뽕": {"kcal": 700, "carbohydrate": 95, "protein": 20, "fat": 20},
+    "야끼소바": {"kcal": 650, "carbohydrate": 90, "protein": 15, "fat": 20},
+    "쌀국수": {"kcal": 500, "carbohydrate": 80, "protein": 15, "fat": 8},
+    "라볶이": {"kcal": 550, "carbohydrate": 90, "protein": 10, "fat": 10},
+    "교카이라멘": {"kcal": 600, "carbohydrate": 85, "protein": 20, "fat": 20},
+    "명란 크림파스타": {"kcal": 750, "carbohydrate": 90, "protein": 20, "fat": 35},
+    "토마토 갈릭 파스타": {"kcal": 650, "carbohydrate": 85, "protein": 15, "fat": 25},
+    "차슈 라멘": {"kcal": 700, "carbohydrate": 90, "protein": 25, "fat": 20},
+    "블랙 올리브 파스타": {"kcal": 650, "carbohydrate": 85, "protein": 15, "fat": 25},
+    "투움바 파스타": {"kcal": 800, "carbohydrate": 90, "protein": 25, "fat": 40},
+    "바질소바": {"kcal": 500, "carbohydrate": 75, "protein": 10, "fat": 15},
+    "크림 시금치 파스타": {"kcal": 700, "carbohydrate": 90, "protein": 20, "fat": 35},
+    "마라짬뽕": {"kcal": 700, "carbohydrate": 90, "protein": 25, "fat": 20},
+    "쫄면": {"kcal": 500, "carbohydrate": 80, "protein": 12, "fat": 10},
+    "바질 파스타": {"kcal": 650, "carbohydrate": 90, "protein": 15, "fat": 25},
+    "트러플 마카로니": {"kcal": 700, "carbohydrate": 85, "protein": 15, "fat": 35},
+    "시저 파스타 샐러드": {"kcal": 400, "carbohydrate": 60, "protein": 10, "fat": 15},
+    "살몬 크림 파스타": {"kcal": 650, "carbohydrate": 85, "protein": 25, "fat": 30},
+    "까르보나라 불닭볶음면": {"kcal": 800, "carbohydrate": 90, "protein": 20, "fat": 40},
+    "매콤로제파스타": {"kcal": 700, "carbohydrate": 85, "protein": 20, "fat": 35},
+    "상하이볶음면": {"kcal": 750, "carbohydrate": 90, "protein": 25, "fat": 25},
+    "아란치니": {"kcal": 400, "carbohydrate": 60, "protein": 10, "fat": 20},
+    "에그 베네딕트": {"kcal": 300, "carbohydrate": 25, "protein": 15, "fat": 15},
+    "베이컨 에그 베네딕트": {"kcal": 400, "carbohydrate": 30, "protein": 20, "fat": 20},
+    "크로와상 샌드위치": {"kcal": 350, "carbohydrate": 35, "protein": 15, "fat": 20},
+    "햄 치즈 파니니": {"kcal": 500, "carbohydrate": 50, "protein": 20, "fat": 25},
+    "샐러드 피자": {"kcal": 600, "carbohydrate": 70, "protein": 20, "fat": 25},
+    "감자 피자": {"kcal": 700, "carbohydrate": 90, "protein": 20, "fat": 30},
+    "시금치 피자": {"kcal": 650, "carbohydrate": 80, "protein": 20, "fat": 25},
+    "찐빵": {"kcal": 250, "carbohydrate": 50, "protein": 6, "fat": 4},
+    "애호박 라자냐": {"kcal": 400, "carbohydrate": 45, "protein": 15, "fat": 18},
+    "치킨 팟파이": {"kcal": 500, "carbohydrate": 50, "protein": 25, "fat": 20},
+    "클럽 샌드위치": {"kcal": 550, "carbohydrate": 60, "protein": 25, "fat": 25},
+    "디아블로 피자": {"kcal": 800, "carbohydrate": 90, "protein": 25, "fat": 35},
+    "포테이토베이컨 피자": {"kcal": 750, "carbohydrate": 85, "protein": 30, "fat": 40},
+    "와플 샌드위치": {"kcal": 500, "carbohydrate": 60, "protein": 15, "fat": 25},
+    "페스토 샌드위치": {"kcal": 450, "carbohydrate": 50, "protein": 15, "fat": 20},
+    "시나몬 롤": {"kcal": 400, "carbohydrate": 70, "protein": 5, "fat": 15},
+    "치킨 시저랩": {"kcal": 500, "carbohydrate": 45, "protein": 25, "fat": 25},
+    "바나나 브레드": {"kcal": 350, "carbohydrate": 60, "protein": 5, "fat": 10},
+    "토마토 모차렐라 피자": {"kcal": 700, "carbohydrate": 90, "protein": 25, "fat": 30},
+    "크로크무슈": {"kcal": 450, "carbohydrate": 40, "protein": 20, "fat": 25},
+    "크림 바질 피자": {"kcal": 800, "carbohydrate": 85, "protein": 25, "fat": 35},
+    "바질페스토 피자": {"kcal": 750, "carbohydrate": 90, "protein": 20, "fat": 30},
+    "프레즐": {"kcal": 300, "carbohydrate": 60, "protein": 5, "fat": 5},
+    "토마토 치즈 타르트": {"kcal": 400, "carbohydrate": 50, "protein": 10, "fat": 20},
+    "베지터블 라자냐": {"kcal": 450, "carbohydrate": 50, "protein": 20, "fat": 20},
+    "아보카도 토스트": {"kcal": 350, "carbohydrate": 40, "protein": 10, "fat": 15},
+    "비건 버거": {"kcal": 500, "carbohydrate": 60, "protein": 15, "fat": 20},
+    "브런치 세트": {"kcal": 600, "carbohydrate": 70, "protein": 25, "fat": 25},
+    "살사 치킨 타코": {"kcal": 400, "carbohydrate": 50, "protein": 15, "fat": 15},
+    "라따뚜이": {"kcal": 150, "carbohydrate": 15, "protein": 3, "fat": 8},
+    "레몬 허니 샐러드": {"kcal": 120, "carbohydrate": 25, "protein": 1, "fat": 2},
+    "버팔로 치킨 샐러드": {"kcal": 300, "carbohydrate": 15, "protein": 20, "fat": 18},
+    "사우전 아일랜드 샐러드": {"kcal": 180, "carbohydrate": 20, "protein": 2, "fat": 10},
+    "브로콜리 샐러드": {"kcal": 80, "carbohydrate": 15, "protein": 3, "fat": 2},
+    "토마토 달걀 볶음": {"kcal": 200, "carbohydrate": 10, "protein": 10, "fat": 12},
+    "치즈 옥수수": {"kcal": 250, "carbohydrate": 30, "protein": 10, "fat": 12},
+    "트로피컬 샐러드": {"kcal": 150, "carbohydrate": 30, "protein": 2, "fat": 3},
+    "오리엔탈 드레싱 샐러드": {"kcal": 120, "carbohydrate": 10, "protein": 2, "fat": 8},
+    "파파야 샐러드": {"kcal": 100, "carbohydrate": 25, "protein": 2, "fat": 1},
+    "비트 샐러드": {"kcal": 60, "carbohydrate": 12, "protein": 2, "fat": 1},
+    "렌틸콩 샐러드": {"kcal": 200, "carbohydrate": 30, "protein": 10, "fat": 5},
+    "참치 니스와 샐러드": {"kcal": 350, "carbohydrate": 25, "protein": 20, "fat": 15},
+    "푸아그라": {"kcal": 450, "carbohydrate": 3, "protein": 13, "fat": 43},
+    "한우구이": {"kcal": 400, "carbohydrate": 1, "protein": 20, "fat": 35},
+    "양고기 찹스": {"kcal": 300, "carbohydrate": 0, "protein": 25, "fat": 20},
+    "닭다리 구이": {"kcal": 210, "carbohydrate": 0, "protein": 28, "fat": 10},
+    "꽃목살": {"kcal": 380, "carbohydrate": 0, "protein": 25, "fat": 30},
+    "양갈비": {"kcal": 350, "carbohydrate": 0, "protein": 30, "fat": 25},
+    "오향장육": {"kcal": 500, "carbohydrate": 10, "protein": 40, "fat": 30},
+    "미트로프": {"kcal": 320, "carbohydrate": 15, "protein": 25, "fat": 18},
+    "소대창": {"kcal": 400, "carbohydrate": 0, "protein": 30, "fat": 30},
+    "소막창": {"kcal": 450, "carbohydrate": 0, "protein": 30, "fat": 35},
+    "사과 소스 포크": {"kcal": 350, "carbohydrate": 20, "protein": 25, "fat": 15},
+    "토마호크 스테이크": {"kcal": 600, "carbohydrate": 0, "protein": 60, "fat": 40},
+    "비프 타르타르": {"kcal": 250, "carbohydrate": 0, "protein": 20, "fat": 18},
+    "갈비구이": {"kcal": 450, "carbohydrate": 5, "protein": 40, "fat": 30},
+    "코코넛 치킨": {"kcal": 300, "carbohydrate": 15, "protein": 20, "fat": 18},
+    "닭봉구이": {"kcal": 180, "carbohydrate": 0, "protein": 22, "fat": 10},
+    "소갈비살": {"kcal": 450, "carbohydrate": 0, "protein": 30, "fat": 35},
+    "모듬카츠": {"kcal": 700, "carbohydrate": 60, "protein": 30, "fat": 35},
+    "히레카츠": {"kcal": 600, "carbohydrate": 50, "protein": 25, "fat": 30},
+    "갈매기살": {"kcal": 350, "carbohydrate": 0, "protein": 30, "fat": 25},
+    "튀김만두": {"kcal": 450, "carbohydrate": 50, "protein": 10, "fat": 20},
+    "고구마튀김": {"kcal": 350, "carbohydrate": 80, "protein": 2, "fat": 15},
+    "단호박튀김": {"kcal": 300, "carbohydrate": 60, "protein": 2, "fat": 10},
+    "스윗 칠리 새우": {"kcal": 500, "carbohydrate": 45, "protein": 20, "fat": 25},
+    "오징어 튀김": {"kcal": 400, "carbohydrate": 30, "protein": 20, "fat": 25},
+    "치즈스틱": {"kcal": 350, "carbohydrate": 20, "protein": 10, "fat": 25},
+    "양파 링": {"kcal": 400, "carbohydrate": 50, "protein": 5, "fat": 20},
+    "고로케": {"kcal": 500, "carbohydrate": 60, "protein": 10, "fat": 20},
+    "튀김우동": {"kcal": 400, "carbohydrate": 55, "protein": 8, "fat": 15},
+    "칠리 치즈 감자튀김": {"kcal": 600, "carbohydrate": 60, "protein": 10, "fat": 35},
+    "야채튀김": {"kcal": 300, "carbohydrate": 40, "protein": 5, "fat": 15},
+    "트러플 감자튀김": {"kcal": 550, "carbohydrate": 60, "protein": 5, "fat": 30},
+    "블랙빈 수프": {"kcal": 350, "carbohydrate": 50, "protein": 15, "fat": 10},
+    "토마토 수프": {"kcal": 180, "carbohydrate": 30, "protein": 5, "fat": 5},
+    "랍스터 비스크": {"kcal": 450, "carbohydrate": 20, "protein": 25, "fat": 30},
+    "양송이 수프": {"kcal": 300, "carbohydrate": 25, "protein": 5, "fat": 15},
+    "아스파라거스 수프": {"kcal": 250, "carbohydrate": 20, "protein": 5, "fat": 15},
+    "브로콜리 체다 수프": {"kcal": 400, "carbohydrate": 30, "protein": 15, "fat": 25},
+    "감자크림수프": {"kcal": 350, "carbohydrate": 35, "protein": 5, "fat": 20},
+    "시금치 수프": {"kcal": 200, "carbohydrate": 25, "protein": 5, "fat": 10},
+    "호박 수프": {"kcal": 180, "carbohydrate": 35, "protein": 3, "fat": 5},
+    "프렌치 어니언 수프": {"kcal": 300, "carbohydrate": 40, "protein": 5, "fat": 10},
+    "호박죽": {"kcal": 300, "carbohydrate": 60, "protein": 5, "fat": 3},
+    "랍스터 크림 스프": {"kcal": 450, "carbohydrate": 20, "protein": 25, "fat": 30},
+    "비트 수프": {"kcal": 180, "carbohydrate": 35, "protein": 5, "fat": 3},
+    "전복죽": {"kcal": 400, "carbohydrate": 50, "protein": 15, "fat": 10},
+    "계란말이": {"kcal": 250, "carbohydrate": 5, "protein": 15, "fat": 20},
+    "계란찜": {"kcal": 150, "carbohydrate": 2, "protein": 10, "fat": 12},
+    "고구마전": {"kcal": 300, "carbohydrate": 60, "protein": 5, "fat": 5},
+    "깻잎전": {"kcal": 200, "carbohydrate": 20, "protein": 5, "fat": 10},
+    "감자전": {"kcal": 250, "carbohydrate": 50, "protein": 5, "fat": 5},
+    "부추전": {"kcal": 220, "carbohydrate": 40, "protein": 5, "fat": 5},
+    "굴전": {"kcal": 180, "carbohydrate": 15, "protein": 12, "fat": 7},
+    "체다 치즈 튀김": {"kcal": 400, "carbohydrate": 30, "protein": 10, "fat": 25},
+    "체다 치즈 칩": {"kcal": 500, "carbohydrate": 45, "protein": 7, "fat": 30},
+    "허니 버터 칩": {"kcal": 550, "carbohydrate": 50, "protein": 5, "fat": 35},
+    "베이컨 감자 샐러드": {"kcal": 300, "carbohydrate": 25, "protein": 10, "fat": 15},
+    "구운 감자 샐러드": {"kcal": 250, "carbohydrate": 30, "protein": 5, "fat": 10},
+    "한치물회": {"kcal": 150, "carbohydrate": 10, "protein": 25, "fat": 3},
+    "레몬 버터 새우": {"kcal": 250, "carbohydrate": 5, "protein": 20, "fat": 18},
+    "불고기덮밥": {"kcal": 575, "carbohydrate": 65, "protein": 30, "fat": 20},
+    "홍합찜": {"kcal": 180, "carbohydrate": 6, "protein": 25, "fat": 7},
+    "광어 사시미": {"kcal": 120, "carbohydrate": 0, "protein": 25, "fat": 3},
+    "로제쉬림프": {"kcal": 400, "carbohydrate": 20, "protein": 25, "fat": 25},
+    "연어 사시미": {"kcal": 200, "carbohydrate": 0, "protein": 30, "fat": 10},
+    "참치 사시미": {"kcal": 220, "carbohydrate": 0, "protein": 30, "fat": 12},
+    "장어정식": {"kcal": 600, "carbohydrate": 80, "protein": 35, "fat": 15},
+    "크림통새우": {"kcal": 450, "carbohydrate": 20, "protein": 25, "fat": 30},
+    "고추장찌개": {"kcal": 280, "carbohydrate": 15, "protein": 18, "fat": 12},
+    "미소 된장국": {"kcal": 50, "carbohydrate": 5, "protein": 5, "fat": 1},
+    "곱창전골": {"kcal": 600, "carbohydrate": 20, "protein": 35, "fat": 40},
+    "바질페스토 파스타": {"kcal": 650, "carbohydrate": 75, "protein": 15, "fat": 25},
+    "새우튀김": {"kcal": 350, "carbohydrate": 30, "protein": 15, "fat": 20},
+    "바지락 칼국수": {"kcal": 450, "carbohydrate": 70, "protein": 15, "fat": 10},
+    "푸실리 파스타": {"kcal": 600, "carbohydrate": 85, "protein": 15, "fat": 20},
+    "떡볶이": {"kcal": 400, "carbohydrate": 80, "protein": 8, "fat": 8},
+    "물막국수": {"kcal": 400, "carbohydrate": 70, "protein": 12, "fat": 5},
+    "새우 스캄피 파스타": {"kcal": 650, "carbohydrate": 85, "protein": 20, "fat": 25},
+    "탄탄멘": {"kcal": 650, "carbohydrate": 80, "protein": 25, "fat": 30},
+    "바질페스토 라비올리": {"kcal": 650, "carbohydrate": 85, "protein": 20, "fat": 25},
+    "크림치즈 파스타": {"kcal": 750, "carbohydrate": 85, "protein": 20, "fat": 35},
+    "치킨 크림파스타": {"kcal": 700, "carbohydrate": 90, "protein": 25, "fat": 30},
+    "닭칼국수": {"kcal": 450, "carbohydrate": 65, "protein": 15, "fat": 10},
+    "콩국수": {"kcal": 400, "carbohydrate": 60, "protein": 10, "fat": 10},
+    "버팔로 치킨 샌드위치": {"kcal": 500, "carbohydrate": 50, "protein": 25, "fat": 20},
+    "갈릭 토스트": {"kcal": 400, "carbohydrate": 50, "protein": 8, "fat": 15},
+    "연어 샌드위치": {"kcal": 450, "carbohydrate": 50, "protein": 20, "fat": 15},
+    "그릴드 치즈 샌드위치": {"kcal": 450, "carbohydrate": 40, "protein": 20, "fat": 20},
+    "치즈 퀘사디아": {"kcal": 550, "carbohydrate": 65, "protein": 20, "fat": 30},
+    "참치 카나페": {"kcal": 200, "carbohydrate": 20, "protein": 10, "fat": 10},
+    "피자 토스트": {"kcal": 400, "carbohydrate": 50, "protein": 10, "fat": 15},
+    "미니 햄버거": {"kcal": 350, "carbohydrate": 35, "protein": 15, "fat": 15},
+    "토마토 브루스케타": {"kcal": 200, "carbohydrate": 30, "protein": 5, "fat": 5},
+    "시저 치킨랩": {"kcal": 450, "carbohydrate": 50, "protein": 25, "fat": 15},
+    "살몬 아보카도 샐러드": {"kcal": 350, "carbohydrate": 10, "protein": 25, "fat": 20},
+    "새우 토스트": {"kcal": 350, "carbohydrate": 30, "protein": 15, "fat": 18},
+    "오이 샐러드": {"kcal": 50, "carbohydrate": 10, "protein": 1, "fat": 1},
+    "매운탕": {"kcal": 300, "carbohydrate": 20, "protein": 25, "fat": 15},
+    "미역국": {"kcal": 50, "carbohydrate": 7, "protein": 3, "fat": 2},
+    "순대국": {"kcal": 400, "carbohydrate": 25, "protein": 30, "fat": 25},
+    "순대국밥": {"kcal": 450, "carbohydrate": 30, "protein": 35, "fat": 20},
+    "홍합탕": {"kcal": 150, "carbohydrate": 10, "protein": 20, "fat": 5},
+    "계란국": {"kcal": 80, "carbohydrate": 5, "protein": 5, "fat": 4},
+    "무국": {"kcal": 50, "carbohydrate": 10, "protein": 2, "fat": 0},
+    "낙지국": {"kcal": 120, "carbohydrate": 15, "protein": 15, "fat": 3},
+    "해물순두부찌개": {"kcal": 250, "carbohydrate": 20, "protein": 15, "fat": 12},
+    "만두국": {"kcal": 220, "carbohydrate": 30, "protein": 12, "fat": 7},
+    "순두부국": {"kcal": 150, "carbohydrate": 12, "protein": 10, "fat": 5},
+    "시래기된장국": {"kcal": 90, "carbohydrate": 12, "protein": 5, "fat": 3},
+    "황태찌개": {"kcal": 200, "carbohydrate": 12, "protein": 18, "fat": 6},
+    "짜장면": {"kcal": 600, "carbohydrate": 80, "protein": 15, "fat": 20},
+    "불닭볶음면": {"kcal": 600, "carbohydrate": 85, "protein": 20, "fat": 25},
+    "물냉면": {"kcal": 400, "carbohydrate": 90, "protein": 10, "fat": 5},
+    "비빔국수": {"kcal": 450, "carbohydrate": 80, "protein": 12, "fat": 10},
+    "샌드위치": {"kcal": 300, "carbohydrate": 40, "protein": 15, "fat": 10},
+    "쉬림프 타코": {"kcal": 400, "carbohydrate": 50, "protein": 20, "fat": 15},
+    "불고기 타코": {"kcal": 450, "carbohydrate": 55, "protein": 25, "fat": 20},
+    "파스타": {"kcal": 500, "carbohydrate": 75, "protein": 15, "fat": 20},
+    "라자냐": {"kcal": 700, "carbohydrate": 80, "protein": 20, "fat": 35},
+    "크림치즈 베이글": {"kcal": 450, "carbohydrate": 50, "protein": 10, "fat": 20},
+    "햄 치즈 토스트": {"kcal": 400, "carbohydrate": 45, "protein": 20, "fat": 15},
+    "샐러드롤": {"kcal": 300, "carbohydrate": 35, "protein": 8, "fat": 10},
+    "시저 샐러드": {"kcal": 200, "carbohydrate": 10, "protein": 6, "fat": 15},
+    "두부조림": {"kcal": 150, "carbohydrate": 10, "protein": 12, "fat": 5},
+    "로메인 샐러드": {"kcal": 20, "carbohydrate": 4, "protein": 1, "fat": 0},
+    "포테이토 샐러드": {"kcal": 200, "carbohydrate": 30, "protein": 3, "fat": 10},
+    "양고기 스테이크": {"kcal": 300, "carbohydrate": 0, "protein": 25, "fat": 20},
+    "오리 로스트": {"kcal": 350, "carbohydrate": 0, "protein": 30, "fat": 25},
+    "닭가슴살 스테이크": {"kcal": 250, "carbohydrate": 0, "protein": 40, "fat": 8},
+    "버팔로윙": {"kcal": 200, "carbohydrate": 5, "protein": 15, "fat": 12},
+    "불고기": {"kcal": 400, "carbohydrate": 20, "protein": 30, "fat": 20},
+    "삼겹살": {"kcal": 600, "carbohydrate": 0, "protein": 20, "fat": 50},
+    "갈비찜": {"kcal": 500, "carbohydrate": 15, "protein": 35, "fat": 30},
+    "보쌈": {"kcal": 550, "carbohydrate": 10, "protein": 40, "fat": 35},
+    "마파두부": {"kcal": 300, "carbohydrate": 20, "protein": 20, "fat": 15},
+    "탕수육": {"kcal": 450, "carbohydrate": 50, "protein": 20, "fat": 20},
+    "유린기": {"kcal": 400, "carbohydrate": 30, "protein": 25, "fat": 15},
+    "군만두": {"kcal": 300, "carbohydrate": 40, "protein": 10, "fat": 15},
+    "깐풍기": {"kcal": 500, "carbohydrate": 40, "protein": 30, "fat": 25},
+    "동파육": {"kcal": 600, "carbohydrate": 30, "protein": 40, "fat": 35},
+    "가라아게": {"kcal": 300, "carbohydrate": 15, "protein": 20, "fat": 20},
+    "깐쇼새우": {"kcal": 400, "carbohydrate": 30, "protein": 25, "fat": 15},
+    "돼지갈비": {"kcal": 500, "carbohydrate": 15, "protein": 35, "fat": 30},
+    "닭볶음탕": {"kcal": 450, "carbohydrate": 25, "protein": 30, "fat": 20},
+    "안동찜닭": {"kcal": 400, "carbohydrate": 35, "protein": 25, "fat": 10},
+    "고추기름 닭고기": {"kcal": 500, "carbohydrate": 20, "protein": 35, "fat": 30},
+    "닭가슴살 샐러드": {"kcal": 200, "carbohydrate": 10, "protein": 25, "fat": 5},
+    "바베큐 폭립": {"kcal": 600, "carbohydrate": 30, "protein": 45, "fat": 35},
+    "레몬 치킨": {"kcal": 350, "carbohydrate": 5, "protein": 35, "fat": 15},
+    "바베큐 치킨": {"kcal": 400, "carbohydrate": 15, "protein": 35, "fat": 15},
+    "치킨 파마산": {"kcal": 350, "carbohydrate": 20, "protein": 40, "fat": 15},
+    "닭가슴살 튀김": {"kcal": 280, "carbohydrate": 10, "protein": 35, "fat": 12},
+    "오렌지 치킨": {"kcal": 400, "carbohydrate": 30, "protein": 25, "fat": 20},
+    "돼지고기묵은지찜": {"kcal": 300, "carbohydrate": 15, "protein": 20, "fat": 12},
+    "연어 타르타르": {"kcal": 220, "carbohydrate": 0, "protein": 25, "fat": 12},
+    "산적": {"kcal": 250, "carbohydrate": 5, "protein": 30, "fat": 10},
+    "타이 새우 볶음": {"kcal": 280, "carbohydrate": 25, "protein": 20, "fat": 12},
+    "소이 글레이즈드 연어": {"kcal": 350, "carbohydrate": 20, "protein": 30, "fat": 15},
+    "치킨 카레": {"kcal": 500, "carbohydrate": 40, "protein": 35, "fat": 20},
+    "매운돼지갈비": {"kcal": 450, "carbohydrate": 10, "protein": 35, "fat": 25},
+    "냉채족발": {"kcal": 300, "carbohydrate": 5, "protein": 25, "fat": 15},
+    "후라이드 치킨": {"kcal": 600, "carbohydrate": 30, "protein": 35, "fat": 35},
+    "치즈계란말이": {"kcal": 250, "carbohydrate": 5, "protein": 15, "fat": 20},
+    "소곱창": {"kcal": 350, "carbohydrate": 0, "protein": 25, "fat": 30},
+    "소갈비찜": {"kcal": 500, "carbohydrate": 15, "protein": 40, "fat": 25},
+    "라임 치킨": {"kcal": 350, "carbohydrate": 5, "protein": 35, "fat": 15},
+    "떡갈비": {"kcal": 450, "carbohydrate": 20, "protein": 25, "fat": 30},
+    "찜닭": {"kcal": 500, "carbohydrate": 35, "protein": 40, "fat": 15},
+    "소불고기": {"kcal": 450, "carbohydrate": 20, "protein": 35, "fat": 25},
+    "백숙": {"kcal": 300, "carbohydrate": 5, "protein": 40, "fat": 10},
+    "사천식 양꼬치": {"kcal": 400, "carbohydrate": 5, "protein": 35, "fat": 25},
+    "돼지갈비 스튜": {"kcal": 500, "carbohydrate": 25, "protein": 30, "fat": 20},
+    "소시지 그라탱": {"kcal": 450, "carbohydrate": 25, "protein": 20, "fat": 30},
+    "돼지고기볶음": {"kcal": 300, "carbohydrate": 10, "protein": 25, "fat": 15},
+    "항정살": {"kcal": 400, "carbohydrate": 0, "protein": 25, "fat": 35},
+    "파삼겹": {"kcal": 550, "carbohydrate": 5, "protein": 30, "fat": 45},
+    "초벌 막창": {"kcal": 450, "carbohydrate": 5, "protein": 30, "fat": 35},
+    "로스카츠": {"kcal": 550, "carbohydrate": 20, "protein": 30, "fat": 30},
+    "치즈카츠": {"kcal": 600, "carbohydrate": 25, "protein": 35, "fat": 35},
+    "고구마치즈카츠": {"kcal": 650, "carbohydrate": 30, "protein": 30, "fat": 40},
+    "닭튀김": {"kcal": 500, "carbohydrate": 20, "protein": 35, "fat": 25},
+    "크로켓": {"kcal": 300, "carbohydrate": 35, "protein": 10, "fat": 15},
+    "치즈 감자튀김": {"kcal": 400, "carbohydrate": 40, "protein": 10, "fat": 25},
+    "할라피뇨 팝퍼": {"kcal": 300, "carbohydrate": 30, "protein": 10, "fat": 15},
+    "감자튀김": {"kcal": 350, "carbohydrate": 50, "protein": 5, "fat": 15},
+    "감자그라탕": {"kcal": 350, "carbohydrate": 25, "protein": 10, "fat": 25},
+    "낙지볶음": {"kcal": 200, "carbohydrate": 10, "protein": 30, "fat": 5},
+    "새우구이": {"kcal": 150, "carbohydrate": 0, "protein": 20, "fat": 8},
+    "해물찜": {"kcal": 350, "carbohydrate": 20, "protein": 30, "fat": 10},
+    "갈치조림": {"kcal": 250, "carbohydrate": 10, "protein": 20, "fat": 15},
+    "낙지전골": {"kcal": 300, "carbohydrate": 20, "protein": 25, "fat": 10},
+    "게장": {"kcal": 200, "carbohydrate": 10, "protein": 20, "fat": 5},
+    "꽁치조림": {"kcal": 350, "carbohydrate": 10, "protein": 30, "fat": 15},
+    "장어구이": {"kcal": 400, "carbohydrate": 5, "protein": 35, "fat": 25},
+    "조기구이": {"kcal": 300, "carbohydrate": 0, "protein": 35, "fat": 15},
+    "감바스 알 아히요": {"kcal": 400, "carbohydrate": 5, "protein": 25, "fat": 30},
+    "어묵볶음": {"kcal": 200, "carbohydrate": 15, "protein": 10, "fat": 10},
+    "그릴드 연어": {"kcal": 350, "carbohydrate": 5, "protein": 40, "fat": 20},
+    "삼치구이": {"kcal": 300, "carbohydrate": 0, "protein": 35, "fat": 15},
+    "조개찜": {"kcal": 150, "carbohydrate": 5, "protein": 20, "fat": 3},
+    "명태구이": {"kcal": 200, "carbohydrate": 0, "protein": 25, "fat": 5}
+}
+
+# 음식 리스트
+food_names = [
+    "김치찌개", "된장찌개", "순두부찌개", "콩나물국", "떡국", "감자탕",
+    "북엇국", "삼계탕", "설렁탕", "시래기국", "오징어국", "해물탕",
+    "육개장", "배추국", "김치국", "곰탕", "떡만두국", "황태해장국", "해물 수제비",
+    "황태국", "부대찌개", "우거지국", "비지찌개", "감자찌개",
+    "갈비탕", "매운탕", "동태찌개", "미역국", "순대국", "홍합탕", "두부전골",
+    "계란국", "무국", "낙지국", "애호박찌개", "마라탕",
+    "참치국", "사골국", "버섯국", "고추장찌개", "수제비",
+    "청국장", "해물순두부찌개", "만두국", "순두부국",
+    "시래기된장국", "우렁강된장", "낙지탕탕이", "어묵탕", "미소 된장국",
+    "차돌박이 된장찌개", "매운 갈비찜 찌개", "황태찌개", "오삼불고기 찌개",
+    "파김치장어전골", "곱창전골", "우렁 된장찌개", "숙성지 김치찌개", "해물된장찌개",
+    "마라샹궈", "비스크 수프", "클램 차우더", "크림수프", "블랙빈 수프",
+    "랍스터 비스크", "토마토 바질 스프", "타마고야키",
+    "양송이 수프", "아스파라거스 수프", "토마토 수프", "감자그라탕",
+    "브로콜리 체다 수프", "감자크림수프", "시금치 수프", "호박 수프",
+    "프렌치 어니언 수프", "호박죽", "계란말이", "랍스터 크림 스프",
+    "비트 수프", "팥죽", "전복죽", "계란찜",
+    "필라프", "니쿠자가", "시메사바", "카츠돈", "짜장밥", "연어 김밥",
+    "삼선짬뽕밥", "전주비빔밥", "리조또", "잡채밥", "돈부리",
+    "규동", "오니기리", "굴밥", "가마솥밥", "불고기덮밥",
+    "소고기덮밥", "참치마요덮밥", "참치볶음밥", "깻잎 김밥",
+    "꼬막비빔밥", "규카츠 덮밥", "장어덮밥", "카마메시", "이카메시", "야채 김밥",
+    "깐쇼새우덮밥", "유니짜장", "오차즈케", "하이라이스", "참치 김밥",
+    "가이센동", "샤케동", "오야코동", "쭈꾸미볶음", "소고기 김밥",
+    "버섯 리소토", "로코모코", "참치 비빔밥", "새우볶음밥", "트러플 리소토", "계란 김밥",
+    "토마토 리소토", "감바스 리조또", "새우 크림 리조또", "멸치 김밥", "새우 김밥",
+    "유부 초밥", "불고기 덮밥", "제육덮밥", "김치볶음밥", "돈가스 김밥", "보리밥", "날치알 김밥", "카레라이스",
+    "카레", "치킨 필라프", "타이 그린 카레", "버섯 볶음밥", "마파두부밥", "베이컨 김밥",
+    "파인애플 볶음밥", "닭갈비 덮밥", "새우 카레라이스", "철판 볶음밥", "고추참치 김밥", "유부 김밥",
+    "날치알 주먹밥", "회덮밥", "부타동", "가츠동", "새우가츠동", "가라아게가츠동", "월남쌈",
+    "중화비빔면", "까르보나라 파스타", "바질페스토 파스타", "짬짜면", "회냉면", "무채 비빔국수",
+    "트러플 파스타", "양송이 크림파스타", "우동", "라멘", "칼국수", "잡채", "비빔냉면", "아부라소바",
+    "라면", "파스타", "짜장면", "짬뽕", "불닭볶음면", "물냉면", "연어 파스타", "카라이라멘",
+    "미트볼 파스타", "초계비빔국수", "돈코츠라멘",
+    "고추짬뽕", "야끼소바", "소바", "비빔국수", "쌀국수", "라볶이", "초계국수", "바지락 칼국수",
+    "떡볶이", "김치볶음면", "마파면", "물막국수", "교카이라멘",
+    "해물볶음우동", "메밀국수 샐러드", "미소시루", "우나기", "새우 스캄피 파스타", "명란 크림파스타",
+    "토마토 갈릭 파스타", "탄탄멘", "차슈 라멘", "훈툰", "블랙 올리브 파스타", "투움바 파스타", "바질소바",
+    "갈릭 새우 파스타", "크림 시금치 파스타", "바질페스토 라비올리", "해물라면", "마라짬뽕", "알리오 올리오",
+    "쫄면", "바질 파스타", "트러플 마카로니", "크림치즈 파스타", "치킨 크림파스타", "잔치국수",
+    "닭칼국수", "맥 앤 치즈", "시저 파스타 샐러드", "살몬 크림 파스타", "콩국수", "까르보나라 불닭볶음면",
+    "푸실리 파스타", "나가사키 짬뽕", "매콤로제파스타", "상하이볶음면",
+    "퀘사디아", "부리또", "포크 롤", "아란치니", "에그 베네딕트",
+    "베이컨 에그 베네딕트", "크로와상 샌드위치", "햄 치즈 파니니",
+    "피자", "햄버거", "샐러드 피자", "감자 피자", "샌드위치", "라자냐", "시금치 피자",
+    "찐빵", "타코", "멘보샤", "소룡포", "가츠샌드", "애호박 라자냐",
+    "치킨 팟파이", "클럽 샌드위치", "치즈버거",
+    "참치 샌드위치", "프렌치 토스트", "디아블로 피자", "포테이토베이컨 피자",
+    "와플 샌드위치", "페스토 샌드위치", "크림치즈 베이글", "마르게리타 피자",
+    "버팔로 치킨 샌드위치", "갈릭 토스트", "마늘빵", "베이글 샌드위치", "시나몬 롤", "치킨 시저랩",
+    "페퍼로니 피자", "햄 치즈 토스트", "샐러드롤", "바질 페스토 샌드위치",
+    "바나나 브레드", "연어 샌드위치",
+    "그릴드 치즈 샌드위치", "바베큐 치킨 피자", "치즈 퀘사디아", "브루스케타",
+    "참치 카나페", "피자 토스트", "미니 햄버거", "살사 치킨 타코",
+    "토마토 모차렐라 피자", "크로크무슈", "랍스터 롤", "크림 바질 피자",
+    "바질페스토 피자", "토마토 브루스케타", "시저 치킨랩", "프레즐", "토마토 치즈 타르트",
+    "쉬림프 타코", "베지터블 라자냐", "아보카도 토스트", "비건 버거", "브런치 세트",
+     "마파두부", "건두부볶음", "두부조림",
+    "라따뚜이", "레몬 허니 샐러드",
+    "버팔로 치킨 샐러드", "사우전 아일랜드 샐러드", "훈제 연어 샐러드",
+    "브로콜리 샐러드", "토마토 달걀 볶음", "치즈 옥수수", "시저 샐러드", "살몬 아보카도 샐러드",
+    "트로피컬 샐러드", "오리엔탈 드레싱 샐러드", "로메인 샐러드", "감자 샐러드",
+    "파파야 샐러드", "새우 토스트", "수박 샐러드", "비트 샐러드",
+    "오이 샐러드", "렌틸콩 샐러드", "포테이토 샐러드", "참치 니스와 샐러드",
+    "체다 치즈 튀김", "체다 치즈 칩", "허니 버터 칩", "닭가슴살 샐러드",
+    "베이컨 감자 샐러드", "구운 감자 샐러드",
+    "꿔바로우", "마라양념탕수육", "푸아그라", "양고기 스테이크", "오리 로스트",
+    "한우구이", "양고기 찹스", "닭가슴살 스테이크", "닭다리 구이", "버팔로윙",
+    "제육볶음", "닭갈비", "스테이크", "불고기", "삼겹살", "갈비찜", "보쌈",
+    "탕수육", "유린기", "군만두", "규카츠", "꽃목살",
+    "깐풍기", "동파육", "가라아게", "양갈비", "오향장육", "미트로프", "돼지갈비",
+    "닭볶음탕", "불닭", "안동찜닭", "치킨 알프레도", "족발", "양꼬치", "닭강정",
+    "비프 브루기뇽", "고추기름 닭고기", "북경오리", "사천식 돼지고기 볶음", "소막창",
+    "라조기", "매운갈비찜", "삼합", "소대창",
+    "바베큐 폭립", "레몬 치킨", "사과 소스 포크", "불고기 타코", "토마호크 스테이크",
+    "바베큐 치킨", "치킨 파마산", "비프 타르타르",
+    "닭가슴살 튀김", "갈비구이", "오렌지 치킨", "돼지고기묵은지찜", "연어 타르타르",
+    "코코넛 치킨", "치킨 너겟", "닭봉구이", "산적", "타이 새우 볶음",
+    "소이 글레이즈드 연어", "치킨 카레", "매운돼지갈비", "냉채족발", "순대국밥",
+    "후라이드 치킨", "치즈계란말이", "순대", "오삼불고기", "곱창볶음", "소곱창",
+    "육회", "소갈비찜", "라임 치킨", "떡갈비", "찜닭", "소불고기", "백숙", "사천식 양꼬치",
+    "돼지갈비 스튜", "소시지 그라탱", "스테이크 타르타르", "돼지고기볶음", "항정살",
+    "소갈비살", "파삼겹", "초벌 막창", "모듬카츠", "로스카츠", "히레카츠", "치즈카츠",
+    "고구마치즈카츠", "돈카츠 회오리 오므라이스", "갈매기살",
+    "새우튀김", "덴푸라", "튀김만두", "고구마튀김", "닭튀김",
+    "단호박튀김", "크로켓", "에비텐동", "피쉬 앤 칩스", "치즈 감자튀김",
+    "할라피뇨 팝퍼", "스윗 칠리 새우", "오징어 튀김", "꿔바로우 샐러드",
+    "감자튀김", "치즈스틱", "깐쇼새우", "양파 링",
+    "고로케", "튀김우동", "타코야키", "칠리 치즈 감자튀김", "야채튀김", "트러플 감자튀김",
+    "김치전", "해물파전", "채소전", "고구마전", "깻잎전", "감자전",
+    "호박전", "파전", "부추전", "애호박전", "굴전", "오코노미야키",
+    "한치물회", "갈치구이", "낙지볶음", "새우구이", "고등어구이", "새우완자", "해물찜",
+    "오징어볶음", "갈치조림", "낙지전골", "게장", "꽁치조림", "장어구이",
+    "레몬 버터 새우", "홍합찜", "조기구이", "꽁치구이", "감바스 알 아히요", "광어 사시미",
+    "어묵볶음", "고등어조림", "아귀찜", "그릴드 연어", "오징어순대",
+    "삼치구이", "임연수구이", "가자미구이", "도미구이", "붕장어구이", "전어구이", "조개찜",
+    "명태구이", "방어구이", "연어구이", "백합탕", "로제쉬림프", "연어 사시미", "참치 사시미",
+    "장어정식", "크림통새우", "유산슬", "연어 스테이크", "가자미조림", "초밥"
+]
+
+foodinfo_data = [
     ("김치찌개", ["고기", "채소"]),
     ("된장찌개", ["쌀", "채소"]),
     ("순두부찌개", ["두부", "채소"]),
@@ -11,7 +620,6 @@ meal_food_names = [
     ("순대", ["고기"]),
     ("제육볶음", ["고기", "채소"]),
     ("오징어볶음", ["해산물", "채소"]),
-    ("열무김치", ["채소"]),
     ("아귀찜", ["해산물", "채소"]),
     ("삼계탕", ["고기", "채소"]),
     ("김치전", ["밀", "채소"]),
@@ -108,7 +716,7 @@ meal_food_names = [
     ("파스타", ["밀", "채소"]),
     ("치킨 알프레도", ["고기", "유제품"]),
     ("크림수프", ["유제품", "채소"]),
-    ("부리또", ["밀", "채소", "고기"]),
+    ("부리또", ["밀", "채소"]),
     ("타코", ["밀", "채소"]),
     ("퀘사디아", ["밀", "고기", "채소"]),
     ("블랙빈 수프", ["콩", "채소"]),
@@ -267,7 +875,6 @@ meal_food_names = [
     ("미니 햄버거", ["밀", "고기"]),
     ("비건 버거", ["밀", "채소"]),
     ("토마토 브루스케타", ["밀", "채소"]),
-    ("체다 감자 크림", ["감자", "유제품"]),
     ("로메인 샐러드", ["채소"]),
     ("크림 시금치 파스타", ["채소", "밀"]),
     ("트러플 마카로니", ["밀", "유제품"]),
@@ -311,7 +918,6 @@ meal_food_names = [
     ("낙지전골", ["해산물", "채소"]),
     ("전복죽", ["해산물", "쌀"]),
     ("갈치조림", ["해산물", "채소"]),
-    ("두부김치", ["두부", "채소"]),
     ("닭칼국수", ["밀", "닭고기"]),
     ("부추전", ["채소"]),
     ("떡갈비", ["고기", "쌀"]),
@@ -346,11 +952,11 @@ meal_food_names = [
     ("찜닭", ["닭고기", "채소"]),
     ("굴전", ["해산물", "채소"]),
     ("갈비구이", ["고기", "채소"]),
-    ("청포묵", ["묵"]),
     ("팥죽", ["팥", "쌀"]),
     ("야채튀김", ["채소", "밀"]),
     ("피자 토스트", ["밀", "치즈"]),
     ("짬뽕", ["밀",'해산물']),
+    ("감자전", ["감자"]),
     ("시래기된장국", ["고기", "채소"]),
     ("고추장찌개", ["고기", "채소"]),
     ("조기구이", ["해산물"]),
@@ -513,252 +1119,115 @@ meal_food_names = [
     ("연어 스테이크", ["채소", "밀", "유제품"])
 ]
 
-food_categories = {
-    "국류": [
-        "김치찌개", "된장찌개", "순두부찌개", "콩나물국", "떡국", "감자탕",
-        "북엇국", "삼계탕", "설렁탕", "시래기국", "오징어국", "해물탕",
-        "육개장", "배추국", "김치국", "곰탕", "떡만두국", "황태해장국", "해물 수제비",
-        "황태국", "부대찌개", "우거지국", "비지찌개", "감자찌개",
-        "갈비탕", "매운탕", "동태찌개", "미역국", "순대국", "두부전골",
-        "계란국", "무국", "낙지국", "애호박찌개", "마라탕",
-        "참치국", "사골국", "버섯국", "고추장찌개", "수제비",
-        "홍합탕", "청국장", "해물순두부찌개", "만두국", "순두부국",
-        "시래기된장국", "우렁강된장", "낙지탕탕이", "어묵탕", "미소 된장국",
-        "차돌박이 된장찌개", "매운 갈비찜 찌개", "황태찌개", "오삼불고기 찌개",
-        "파김치장어전골", "곱창전골", "우렁 된장찌개", "숙성지 김치찌개", "해물된장찌개",
-        "마라샹궈", "비스크 수프", "클램 차우더", "크림수프", "블랙빈 수프",
-        "랍스터 비스크", "토마토 바질 스프", "타마고야키",
-        "양송이 수프", "아스파라거스 수프", "토마토 수프", "감자그라탕",
-        "브로콜리 체다 수프", "감자크림수프", "시금치 수프", "호박 수프",
-        "프렌치 어니언 수프", "호박죽", "계란말이", "랍스터 크림 스프",
-        "비트 수프", "팥죽", "전복죽", "계란찜"
-    ],
-    "밥류": [
-        "필라프", "니쿠자가", "시메사바", "카츠돈", "짜장밥", "연어 김밥",
-        "삼선짬뽕밥", "전주비빔밥", "리조또", "잡채밥", "돈부리",
-        "규동", "오니기리", "굴밥", "가마솥밥", "불고기덮밥",
-        "소고기덮밥", "참치마요덮밥", "참치볶음밥", "깻잎 김밥",
-        "꼬막비빔밥", "규카츠 덮밥", "장어덮밥", "카마메시", "이카메시", "야채 김밥",
-        "깐쇼새우덮밥", "유니짜장", "오차즈케", "하이라이스", "참치 김밥",
-        "가이센동", "샤케동", "오야코동", "보리밥", "쭈꾸미볶음", "소고기 김밥",
-        "버섯 리소토", "로코모코", "참치 비빔밥", "새우볶음밥", "트러플 리소토", "계란 김밥",
-        "토마토 리소토", "감바스 리조또", "새우 크림 리조또", "멸치 김밥", "새우 김밥",
-        "유부 초밥", "불고기 덮밥", "제육덮밥", "김치볶음밥", "돈가스 김밥", "날치알 김밥", "카레라이스",
-        "카레", "치킨 필라프", "타이 그린 카레", "버섯 볶음밥", "마파두부밥", "베이컨 김밥",
-        "파인애플 볶음밥", "닭갈비 덮밥", "새우 카레라이스", "철판 볶음밥", "고추참치 김밥", "유부 김밥",
-        "날치알 주먹밥", "회덮밥", "부타동", "가츠동", "새우가츠동", "가라아게가츠동", "월남쌈"
-    ],
-    "면류": [
-        "중화비빔면", "까르보나라 파스타", "바질페스토 파스타", "짬짜면", "회냉면", "무채 비빔국수",
-        "트러플 파스타", "양송이 크림파스타", "우동", "라멘", "칼국수", "잡채", "비빔냉면", "아부라소바",
-        "라면", "파스타", "짜장면", "짬뽕", "불닭볶음면", "물냉면", "연어 파스타", "카라이라멘",
-        "미트볼 파스타", "초계비빔국수", "돈코츠라멘",
-        "고추짬뽕", "야끼소바", "소바", "비빔국수", "쌀국수", "라볶이", "초계국수", "바지락 칼국수",
-        "푸실리 파스타", "떡볶이", "김치볶음면", "마파면", "물막국수", "교카이라멘",
-        "해물볶음우동", "메밀국수 샐러드", "미소시루", "우나기", "새우 스캄피 파스타", "명란 크림파스타",
-        "토마토 갈릭 파스타", "탄탄멘", "차슈 라멘", "훈툰", "블랙 올리브 파스타", "투움바 파스타", "바질소바",
-        "갈릭 새우 파스타", "크림 시금치 파스타", "바질페스토 라비올리", "해물라면", "마라짬뽕", "알리오 올리오",
-        "쫄면", "바질 파스타", "트러플 마카로니", "크림치즈 파스타", "치킨 크림파스타", "잔치국수",
-        "닭칼국수", "맥 앤 치즈", "시저 파스타 샐러드", "살몬 크림 파스타", "콩국수", "까르보나라 불닭볶음면",
-        "나가사키 짬뽕", "매콤로제파스타", "상하이볶음면"
-    ],
-    "빵류": [
-        "퀘사디아", "부리또", "포크 롤", "아란치니", "에그 베네딕트",
-        "베이컨 에그 베네딕트", "크로와상 샌드위치", "햄 치즈 파니니",
-        "피자", "햄버거", "샐러드 피자", "감자 피자",
-        "샌드위치", "라자냐", "시금치 피자",
-        "찐빵", "타코", "멘보샤", "소룡포", "가츠샌드", "애호박 라자냐",
-        "치킨 팟파이", "클럽 샌드위치", "치즈버거",
-        "참치 샌드위치", "프렌치 토스트", "디아블로 피자", "포테이토베이컨 피자",
-        "와플 샌드위치", "페스토 샌드위치", "크림치즈 베이글", "마르게리타 피자",
-        "버팔로 치킨 샌드위치", "갈릭 토스트",
-        "마늘빵", "베이글 샌드위치", "시나몬 롤", "치킨 시저랩",
-        "페퍼로니 피자", "햄 치즈 토스트", "샐러드롤", "바질 페스토 샌드위치",
-        "바나나 브레드", "연어 샌드위치",
-        "그릴드 치즈 샌드위치", "바베큐 치킨 피자", "치즈 퀘사디아", "브루스케타",
-        "참치 카나페", "피자 토스트", "미니 햄버거",
-        "토마토 모차렐라 피자", "크로크무슈", "랍스터 롤", "크림 바질 피자",
-        "바질페스토 피자", "토마토 브루스케타", "시저 치킨랩", "프레즐", "토마토 치즈 타르트",
-        "쉬림프 타코", "베지터블 라자냐", "아보카도 토스트", "비건 버거", "브런치 세트",
-        "살사 치킨 타코"
-    ],
-    "채소류": [
-        "열무김치", "청포묵",  "두부김치", "마파두부", "건두부볶음", "두부조림",
-        "라따뚜이", "레몬 허니 샐러드",
-        "버팔로 치킨 샐러드", "사우전 아일랜드 샐러드", "훈제 연어 샐러드",
-        "브로콜리 샐러드", "토마토 달걀 볶음", "치즈 옥수수", "시저 샐러드", "살몬 아보카도 샐러드",
-        "트로피컬 샐러드", "오리엔탈 드레싱 샐러드", "로메인 샐러드", "감자 샐러드",
-        "파파야 샐러드", "새우 토스트", "수박 샐러드", "비트 샐러드",
-        "오이 샐러드", "렌틸콩 샐러드", "포테이토 샐러드", "참치 니스와 샐러드",
-        "체다 치즈 튀김", "체다 치즈 칩", "허니 버터 칩", "닭가슴살 샐러드",
-        "체다 감자 크림", "베이컨 감자 샐러드", "구운 감자 샐러드"
-    ],
-    "육류": [
-        "꿔바로우", "마라양념탕수육", "푸아그라", "양고기 스테이크", "오리 로스트",
-        "한우구이", "양고기 찹스", "닭가슴살 스테이크", "닭다리 구이", "버팔로윙",
-        "제육볶음", "닭갈비", "스테이크", "불고기", "삼겹살", "갈비찜", "보쌈",
-        "탕수육", "유린기", "군만두", "규카츠", "꽃목살",
-        "깐풍기", "동파육", "가라아게", "양갈비",
-        "오향장육", "미트로프", "돼지갈비",
-        "닭볶음탕", "불닭", "안동찜닭", "치킨 알프레도", "족발", "양꼬치", "닭강정",
-        "비프 브루기뇽", "고추기름 닭고기", "북경오리", "사천식 돼지고기 볶음", "소막창",
-        "라조기", "매운갈비찜", "삼합", "소대창",
-        "바베큐 폭립", "레몬 치킨", "사과 소스 포크", "불고기 타코", "토마호크 스테이크",
-        "바베큐 치킨", "치킨 파마산", "비프 타르타르",
-        "닭가슴살 튀김", "갈비구이", "오렌지 치킨", "돼지고기묵은지찜", "연어 타르타르",
-        "코코넛 치킨", "치킨 너겟", "닭봉구이", "산적", "타이 새우 볶음",
-        "소이 글레이즈드 연어", "치킨 카레", "매운돼지갈비", "냉채족발", "순대국밥",
-        "후라이드 치킨", "치즈계란말이", "순대", "오삼불고기", "곱창볶음", "소곱창",
-        "육회", "소갈비찜", "라임 치킨", "떡갈비", "찜닭", "소불고기", "백숙", "사천식 양꼬치",
-        "돼지갈비 스튜", "소시지 그라탱", "스테이크 타르타르", "돼지고기볶음", "항정살",
-        "소갈비살", "파삼겹", "초벌 막창", "모듬카츠", "로스카츠", "히레카츠", "치즈카츠",
-        "고구마치즈카츠", "돈카츠 회오리 오므라이스", "갈매기살"
-    ],
-    "튀김류": [
-        "새우튀김", "덴푸라", "튀김만두", "고구마튀김", "닭튀김",
-        "단호박튀김", "크로켓", "에비텐동", "피쉬 앤 칩스", "치즈 감자튀김",
-        "할라피뇨 팝퍼", "스윗 칠리 새우", "오징어 튀김", "꿔바로우 샐러드",
-        "감자튀김", "치즈스틱", "깐쇼새우", "양파 링",
-        "고로케", "튀김우동", "타코야키", "칠리 치즈 감자튀김", "야채튀김", "트러플 감자튀김",
-        "김치전", "해물파전", "채소전", "고구마전", "깻잎전", "감자전",
-        "호박전", "파전", "부추전", "애호박전", "굴전", "오코노미야키"
-    ],
-    "해산물류": [
-        "한치물회",  "갈치구이", "낙지볶음", "새우구이", "고등어구이", "새우완자", "해물찜",
-        "오징어볶음", "갈치조림", "낙지전골", "게장", "꽁치조림", "장어구이",
-        "레몬 버터 새우", "홍합찜", "조기구이", "꽁치구이", "감바스 알 아히요", "광어 사시미",
-        "어묵볶음", "고등어조림", "아귀찜", "그릴드 연어", "오징어순대",
-        "삼치구이", "임연수구이", "가자미구이", "도미구이", "붕장어구이", "전어구이", "조개찜",
-        "명태구이", "방어구이", "연어구이", "백합탕", "로제쉬림프", "연어 사시미", "참치 사시미",
-        "장어정식", "크림통새우", "유산슬", "연어 스테이크", "가자미조림", "초밥"
-    ],
-}
+insert_statements = []
 
-cuisine_types = {
-    "한식": ['가자미조림', '불고기덮밥', '깻잎전', '오징어 튀김', '단호박튀김', '닭튀김', '동파육', '새우볶음밥', '참치볶음밥', '참치마요덮밥', '버섯국', '사골국', '참치국', '낙지국', '찐빵', '라볶이', '참치 비빔밥', '파전', '호박전', '갈매기살', '장어정식', '초벌 막창', '파삼겹', '해물된장찌개', '날치알 주먹밥', '무채 비빔국수', '숙성지 김치찌개', '우렁 된장찌개', '소갈비살', '항정살', '양갈비', '회냉면', '꽃목살', '유부 김밥', '고추참치 김밥', '깻잎 김밥', '날치알 김밥', '돈가스 김밥', '새우 김밥', '멸치 김밥', '계란 김밥', '소고기 김밥', '참치 김밥', '야채 김밥', '물막국수', '곱창전골', '소막창', '소대창', '소곱창', '순대국밥', '곱창볶음', '백합탕', '바지락 칼국수', '해물 수제비', '파김치장어전골', '해물 수제.비', '수제비', '철판 볶음밥', '비빔냉면', '두부전골', '잔치국수', '초계국수', '초계비빔국수', '오삼불고기 찌개', '황태찌개', '매운 갈비찜 찌개', '붕장어구이', '애호박찌개', '감자찌개', '차돌박이 된장찌개', '연어구이', '방어구이', '명태구이', '전어구이', '도미구이', '가자미구이', '임연수구이', '삼치구이', '갈치구이', '낙지탕탕이', '순대국', '불닭볶음면', '까르보나라 불닭볶음면', '후라이드 치킨', '동태찌개', '마파두부', '제육덮밥', '어묵볶음', '어묵탕', '고구마튀김', '새우완자', '유부 초밥', '돼지고기묵은지찜', '순두부국', '닭강정', '매운돼지갈비', '콩국수', '청포묵', '낙지볶음', '우렁강된장', '갈치조림', '돼지고기볶음', '시래기된장국', '소불고기', '치즈계란말이', '해물순두부찌개', '팥죽', '만두국', '수박 샐러드', '불고기 덮밥', '전복죽', '감자전', '무국', '갈비구이', '고등어구이', '찜닭', '호박죽', '게장', '부추전', '해물찜', '한치물회', '매운탕', '버섯볶음', '쫄면', '닭칼국수', '미역국', '야채튀김', '두부김치', '꽁치조림', '홍합탕', '두부조림', '오이 샐러드', '미소 된장국', '조기구이', '닭봉구이', '장어구이', '계란찜', '비빔국수', '버섯 볶음밥', '낙지전골', '백숙', '고구마전', '산적', '떡갈비', '백김치', '고등어조림', '시금치 수프', '굴전', '소갈비찜', '갈비탕', '애호박전', '돼지갈비', '계란국', '고추장찌개', '냉채족발', '계란말이', '김치찌개', '된장찌개', '제육볶음', '닭갈비', '감자탕', '김치볶음밥', '김치전', '떡국', '북엇국', '삼계탕', '설렁탕', '순대', '순두부찌개', '시래기국', '아귀찜', '열무김치', '오징어국', '오징어볶음', '육개장', '콩나물국', '해물탕', '해물파전', '가마솥밥', '갈비찜', '꼬막비빔밥', '굴밥', '물냉면', '닭볶음탕', '보쌈', '볶음밥', '불고기', '불닭', '전주비빔밥', '삼겹살', '소고기덮밥', '안동찜닭', '잡채밥', '잡채', '채소전', '족발', '김치볶음면', '떡볶이', '칼국수', '배추국', '보리밥', '김치국', '비지찌개', '오징어순대', '꽁치구이', '황태국', '육회', '오삼불고기', '해물라면', '부대찌개', '청국장', '황태해장국', '매운갈비찜', '삼합', '쭈꾸미볶음', '우거지국', '떡만두국', '곰탕', '한우구이', '닭갈비 덮밥'],
-    "중식": ['오향장육', '깐풍기', '유린기', '탄탄멘', '쌀국수', '상하이볶음면', '월남쌈', '마파두부밥', '마라짬뽕', '짬짜면', '토마토 달걀 볶음', '오렌지 치킨', '사천식 양꼬치','짜장밥', '삼선짬뽕밥', '멘보샤', '양꼬치', '고추기름 닭고기', '마라탕', '마라샹궈', '소룡포', '북경오리', '유니짜장', '마파면', '훈툰', '깐쇼새우덮밥', '사천식 돼지고기 볶음', '라조기', '꿔바로우 샐러드', '건두부볶음', '마라양념탕수육', '해물볶음우동', '고추짬뽕', '군만두', '튀김만두', '깐쇼새우', '꿔바로우', '라면', '짬뽕', '짜장면', '탕수육', '중화비빔면', '사천식 닭 날개', '마라 샤브샤브'],
-    "일식": ['가라아게', '차슈 라멘', '새우튀김', '돈부리', '야끼소바', '튀김우동', '가라아게가츠동', '새우가츠동', '가츠동', '고구마치즈카츠', '치즈카츠', '히레카츠', '로스카츠', '모듬카츠', '부타동', '바질소바', '교카이라멘', '카라이라멘', '돈코츠라멘', '아부라소바', '참치 사시미', '광어 사시미', '연어 사시미', '훈제 연어 샐러드', '연어 타르타르', '우동', '라멘', '초밥', '덴푸라', '규동', '오니기리', '카츠돈', '미소시루', '타코야키', '오코노미야키', '소바', '규카츠 덮밥', '하이라이스', '오차즈케', '규카츠', '장어덮밥', '니쿠자가', '가이센동', '타마고야키', '오야코동', '시메사바', '카마메시', '이카메시', '나가사키 짬뽕', '우나기', '샤케동', '에비텐동', '가츠샌드', '메밀국수 샐러드', '미소된장국'],
-    "양식": ['연어 스테이크', '카레라이스', '감자그라탕', '브로콜리 체다 수프', '아스파라거스 수프', '양송이 수프', '토마토 수프', '고로케', '치즈스틱', '라자냐', '감자튀김', '토마호크 스테이크', '리조또', '샌드위치', '버팔로 치킨 샌드위치', '크림통새우', '매콤로제파스타', '조개찜', '회덮밥', '포테이토베이컨 피자', '로제쉬림프', '알리오 올리오', '시금치 피자', '디아블로 피자', '마르게리타 피자', '샐러드 피자', '푸실리 파스타', '미트볼 파스타', '트러플 마카로니', '크림 바질 피자', '맥 앤 치즈', '와플 샌드위치', '투움바 파스타', '토마토 갈릭 파스타', '미니 햄버거', '치킨 너겟', '베이글 샌드위치', '햄 치즈 토스트', '바나나 브레드', '감자크림수프', '갈릭 토스트', '페스토 샌드위치', '바베큐 치킨', '토마토 리소토', '바베큐 치킨 피자', '라임 치킨', '체다 치즈 튀김', '토마토 모차렐라 피자', '브루스케타', '마늘빵', '크로크무슈', '레몬 치킨', '시나몬 롤', '로코모코', '체다 치즈 칩', '연어 파스타', '프레즐', '렌틸콩 샐러드', '양파 링', '아보카도 토스트', '소시지 그라탱', '참치 니스와 샐러드', '돼지갈비 스튜', '연어 샌드위치', '크림치즈 파스타', '버팔로 치킨 샐러드', '새우 스캄피 파스타', '토마토 치즈 타르트', '감자 피자', '치즈 옥수수', '사우전 아일랜드 샐러드', '레몬 버터 새우', '그릴드 치즈 샌드위치', '레몬 허니 샐러드', '소이 글레이즈드 연어', '오리엔탈 드레싱 샐러드', '로메인 샐러드', '바질 페스토 샌드위치', '미트볼 파스타', '치킨 파마산', '스테이크 타르타르', '구운 감자 샐러드', '그릴드 연어', '바질페스토 피자', '할라피뇨 팝퍼', '비트 수프', '허니 버터 칩', '치킨 크림파스타', '랍스터 크림 스프', '비프 타르타르', '칠리 치즈 감자튀김', '갈릭 새우 파스타', '블랙 올리브 파스타', '살몬 크림 파스타', '크림치즈 베이글', '토마토 바질 스프', '새우 크림 리조또', '바질페스토 라비올리', '감바스 리조또', '토마토 브루스케타', '바베큐 폭립', '페퍼로니 피자', '비건 버거', '코코넛 치킨', '트러플 감자튀김', '사과 소스 포크', '트러플 리소토', '체다 감자 크림', '피자 토스트', '까르보나라 파스타', '바질페스토 파스타', '트러플 파스타', '비스크 수프', '푸아그라', '베이컨 에그 베네딕트', '스테이크', '피자', '샐러드', '크림수프', '라따뚜이', '비프 브루기뇽', '치킨 팟파이', '치즈버거', '클럽 샌드위치', '시저 치킨랩', '감바스 알 아히요', '크로켓', '필라프', '프렌치 어니언 수프', '바질 파스타', '살몬 아보카도 샐러드', '랍스터 비스크', '포크 롤', '미트로프', '햄버거', '피쉬 앤 칩스', '치킨 알프레도', '시저 샐러드', '블랙빈 수프', '파스타', '감자 샐러드', '포테이토 샐러드', '브런치 세트', '양송이 크림파스타', '클램 차우더', '닭다리 구이', '양고기 찹스', '닭가슴살 샐러드', '오리 로스트', '크로와상 샌드위치', '새우 카레라이스', '닭가슴살 스테이크', '비트 샐러드', '양고기 스테이크', '치즈 감자튀김', '버섯 리소토', '베지터블 라자냐', '참치 샌드위치', '버팔로윙', '홍합찜', '랍스터 롤', '치킨 시저랩', '프렌치 토스트', '새우 크림 스튜'],
-    "퓨전": ['유산슬', '돈카츠 회오리 오므라이스', '연어 김밥', '베이컨 김밥', '명란 크림파스타', '애호박 라자냐', '타이 새우 볶음', '치즈 퀘사디아', '트로피컬 샐러드', '치킨 카레', '살사 치킨 타코', '참치 카나페', '샐러드롤', '새우 토스트', '파파야 샐러드', '닭가슴살 튀김', '새우구이', '타이 그린 카레', '스윗 칠리 새우', '불고기 타코', '카레', '베이컨 감자 샐러드', '호박 수프', '브로콜리 샐러드', '크림 시금치 파스타', '시저 파스타 샐러드', '쉬림프 타코', '파인애플 볶음밥', '치킨 필라프', '햄 치즈 파니니', '퀘사디아', '감바스 알 아히요', '부리또', '아란치니', '에그 베네딕트', '타코', '타이식 닭볶음', '하와이안 치킨 샐러드']
-}
+# INSERT INTO 쿼리를 생성하는 함수
+for i, food_name in enumerate(food_names, start=1):
+    # 음식 이름을 기준으로 영양 정보 가져오기 (기본값으로 0을 설정)
+    kcal = nutrient_data.get(food_name, {}).get("kcal", 0)
+    carbohydrate = nutrient_data.get(food_name, {}).get("carbohydrate", 0)
+    protein = nutrient_data.get(food_name, {}).get("protein", 0)
+    fat = nutrient_data.get(food_name, {}).get("fat", 0)
 
-weather_weights = {
-    "Clear": ["볶음밥", "김치찌개"],  # 맑은 날에 나오는 음식 리스트
-    "Cloudy": ["제육볶음", "삼계탕", "비빔밥"],  # 흐린 날에 나오는 음식 리스트
-    "Rain": ["파전", "감자탕", "해물파전", "김치전"],  # 비오는 날에 더 자주 나오는 음식들
-    "Snow": ["떡국", "설렁탕", "감자탕"]  # 눈 오는 날에 나오는 음식들
-}
+    # INSERT INTO 쿼리 생성
+    insert_query = f"INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES ({i}, '{food_name}', {kcal}, {carbohydrate}, {protein}, {fat});"
+    insert_statements.append(insert_query)
 
-# 알레르기 번호 설정
-allergy_map = {
-    "없음": 0,
-    "우유": 1,
-    "달걀": 2,
-    "땅콩": 3,
-    "견과류": 4,
-    "해산물": 5,
-    "갑각류": 6,
-    "밀": 7,
-    "대두류": 8
-}
+# 결과를 확인하기 위한 예시 출력 (또는 파일로 저장)
+for statement in insert_statements:
+    print(statement)
 
-# 각 음식의 알레르기 정보를 설정
-def get_allergy_info(ingredients):
-    allergies = set()
-    if "밀" in ingredients:
-        allergies.add(allergy_map["밀"])
-    if "해산물" in ingredients:
-        allergies.add(allergy_map["해산물"])
-    if "갑각류" in ingredients:
-        allergies.add(allergy_map["갑각류"])
-    if "대두" in ingredients or "두부" in ingredients:
-        allergies.add(allergy_map["대두류"])
-    if "달걀" in ingredients:
-        allergies.add(allergy_map["달걀"])
-    if "유제품" in ingredients:
-        allergies.add(allergy_map["우유"])
+# INSERT INTO 쿼리를 파일로 저장
+with open('db/insert_food.sql', 'w', encoding='utf-8') as file:
+    for statement in insert_statements:
+        file.write(statement + "\n")
+print("SQL 파일이 성공적으로 생성되었습니다.")
 
-    return sorted(allergies) if allergies else [allergy_map["없음"]]
+# 0인 데이터만 저장할 리스트
+zero_data_statements = []
 
-num_samples = 3000
+# INSERT INTO 쿼리를 생성하는 함수
+for i, food_name in enumerate(food_names, start=1):
+# 음식 이름을 기준으로 영양 정보 가져오기 (nutrient_data에 값이 없는 경우 기본값으로 0)
+    kcal = nutrient_data.get(food_name, {}).get("kcal", 0)
+    carbohydrate = nutrient_data.get(food_name, {}).get("carbohydrate", 0)
+    protein = nutrient_data.get(food_name, {}).get("protein", 0)
+    fat = nutrient_data.get(food_name, {}).get("fat", 0)
 
-# 데이터 생성
-data = {
-    "food_id": [],
-    "food_name": [],
-    "weather_condition": [],
-    "allergy_info": [],
-    "main_ingredient_1": [],
-    "main_ingredient_2": [],
-    "food_category": [],
-    "cuisine_type": [],
-    "season": []
-}
+# 값이 모두 0인 경우만 리스트에 추가
+    if kcal == 0 and carbohydrate == 0 and protein == 0 and fat == 0:
+# INSERT INTO 쿼리 생성
+        zero_data_query = f"INSERT INTO food (f_seq, f_name, kcal, carbohydrate, protein, fat) VALUES ({i}, '{food_name}', {kcal}, {carbohydrate}, {protein}, {fat});"
+        zero_data_statements.append(zero_data_query)
 
-for i in range(1, num_samples + 1):
-    food_name, ingredients = random.choice(meal_food_names)
-    cuisine_type = next((key for key, values in cuisine_types.items() if food_name in values), "기타")
-    food_category = next((key for key, values in food_categories.items() if food_name in values), "기타")
-    weather_condition = random.choice(['Clear', 'Cloudy', 'Rain', 'Snow'])
-    allergies = get_allergy_info(ingredients)
-    allergy_info = ','.join(map(str, allergies))  # 알레르기 정보를 숫자로 변환
-    main_ingredient_1 = ingredients[0] if len(ingredients) > 0 else ''
-    main_ingredient_2 = ingredients[1] if len(ingredients) > 1 else ''
+# 결과를 확인하기 위한 예시 출력
+for statement in zero_data_statements:
+    print(statement)
 
-    season = random.choice(['Spring', 'Summer', 'Fall', 'Winter'])
+# 값이 0인 데이터만을 파일로 저장
+with open('db/zero_data_food.sql', 'w', encoding='utf-8') as file:
+    for statement in zero_data_statements:
+        file.write(statement + "\n")
 
-    if season == 'Summer':
-        weather_condition = random.choice(['Clear', 'Cloudy', 'Rain'])
-    elif season == 'Winter':
-        weather_condition = random.choice(['Clear', 'Cloudy', 'Snow'])
-    else:
-        weather_condition = random.choice(['Clear', 'Cloudy', 'Rain', 'Snow'])
+print("값이 0인 SQL 파일이 성공적으로 생성되었습니다.")
 
-    # 날씨에 따라 음식 선택 가중치 적용
-    if weather_condition in weather_weights:
-        weighted_foods = weather_weights[weather_condition]
-        if random.random() < 0.5:  # 50% 확률로 날씨와 관련된 음식을 선택
-            weighted_food = random.choice(weighted_foods)
-            # weighted_food가 실제 음식 데이터에 존재하는지 확인하고 가져오기
-            weighted_food_data = next(((name, ingr) for name, ingr in meal_food_names if name == weighted_food), None)
-            if weighted_food_data:
-                food_name, ingredients = weighted_food_data
-                food_category = next((key for key, values in food_categories.items() if food_name in values), "기타")
-                cuisine_type = next((key for key, values in cuisine_types.items() if food_name in values), "기타")
-                main_ingredient_1 = ingredients[0] if len(ingredients) > 0 else ''
-                main_ingredient_2 = ingredients[1] if len(ingredients) > 1 else ''
+# 중복된 음식 찾기
 
-    data['food_id'].append(i)
-    data['food_name'].append(food_name)
-    data['weather_condition'].append(weather_condition)
-    data['allergy_info'].append(allergy_info)
-    data['main_ingredient_1'].append(main_ingredient_1)
-    data['main_ingredient_2'].append(main_ingredient_2)
-    data['cuisine_type'].append(cuisine_type)
-    data['food_category'].append(food_category)
-    data['season'].append(season)
+food_counts = Counter(food_names)
+duplicate_foods = [food for food, count in food_counts.items() if count > 1]
 
-df = pd.DataFrame(data)
+# 중복된 음식 목록을 파일로 저장
+file_path = 'data/duplicate_foods.txt'
+with open(file_path, 'w',encoding='utf-8') as file:
+    for food in duplicate_foods:
+        file.write(f"{food}\n")
 
-df_gitad = df[(df['food_category'] == '기타') | (df['food_category'] == '디저트') | (df['cuisine_type'] == '기타')]
+print(f"중복된 음식 목록이 {file_path}에 저장되었습니다.")
 
-# 기타, 디저트로 분류된 음식 출력
-print(df_gitad)
+# food_names에 있지만 foodinfo_data에 없는 음식 출력
+missing_foods = [food for food in food_names if food not in [item[0] for item in foodinfo_data]]
 
-# 기타, 디저트로 로 분류되지 않은 음식들 삭제 (즉, 기타, 디저트로 분류된 항목들만 남김)
-df_gitad_cleaned = df_gitad.copy()
+# 결과 출력
+print("foodinfo_data에 없는 food_names의 음식들:")
+for food in missing_foods:
+    print(food)
 
-# 기타로 분류된 음식들만 CSV 파일로 저장
-csv_file_path = "data/기타분류_음식.csv"
-df_gitad_cleaned.to_csv(csv_file_path, index=False, encoding='utf-8')
+# 결과를 파일로 저장
+with open('data/missing_foods.txt', 'w', encoding='utf-8') as f:
+    f.write("foodinfo_data에 없는 food_names의 음식들:\n")
+    for food in missing_foods:
+        f.write(f"{food}\n")
 
-# 결과를 확인
+# foodinfo_data에 있지만 food_names에 없는 음식 확인
+missing_in_food_names = [item[0] for item in foodinfo_data if item[0] not in food_names]
 
-print(df.head())
+# 결과 출력
+print("food_names에 없는 foodinfo_data의 음식들:")
+for food in missing_in_food_names:
+    print(food)
 
-# CSV 파일로 저장
-csv_file_path = "data/데이터.csv"
+# 결과를 파일로 저장
+with open('data/missing_in_food_names.txt', 'w', encoding='utf-8') as f:
+    f.write("food_names에 없는 foodinfo_data의 음식들:\n")
+    for food in missing_in_food_names:
+        f.write(f"{food}\n")
 
-df.to_csv(csv_file_path, index=False, encoding='utf-8')
+# nutrient_data에 있지만 food_names에 없는 음식들을 찾기
+missing_nutrient = list(set(nutrient_data) - set(food_names))
 
-csv_file_path
+# 결과를 DataFrame으로 변환
+missing_df = pd.DataFrame(missing_nutrient, columns=['MissingFoodItems'])
+
+# data 폴더에 missing_nutrient.csv 파일로 저장
+file_path = 'data/missing_nutrient.csv'
+missing_df.to_csv(file_path, index=False)
+
+# food_names에 있지만 nutrient_data에 없는 음식들을 찾기
+missing_food_names = list(set(food_names) - set(nutrient_data))
+
+# 결과를 DataFrame으로 변환
+missing_df = pd.DataFrame(missing_food_names, columns=['MissingFoodItems'])
+
+# data 폴더에 missing_nutrient.csv 파일로 저장
+file_path = 'data/missing_food_names.csv'
+missing_df.to_csv(file_path, index=False)
