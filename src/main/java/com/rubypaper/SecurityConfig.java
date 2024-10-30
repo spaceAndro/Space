@@ -1,5 +1,6 @@
 package com.rubypaper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +12,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
+	 @Autowired
+	    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
 
     // PasswordEncoder 빈 등록
     @Bean
@@ -34,7 +39,7 @@ public class SecurityConfig {
             .formLogin(form -> form
                 .loginPage("/login") // 커스텀 로그인 페이지 경로
                 .defaultSuccessUrl("/index", true) // 로그인 성공 후 이동할 URL
-                .failureUrl("/login?error=true") // 로그인 실패 시 이동할 URL
+                .failureUrl("/?error=true") // 로그인 실패 시 index로 리다이렉트하면서 error 파라미터 추가
                 .permitAll()
             )
             .logout(logout -> logout
@@ -44,7 +49,11 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID")
                 .clearAuthentication(true) // 인증 정보 초기화
                 .permitAll()
-            );
+            )
+            .exceptionHandling(exception -> exception
+                    .authenticationEntryPoint(customAuthenticationEntryPoint) // Custom EntryPoint 설정
+                );
+        
 
         return http.build();
     }

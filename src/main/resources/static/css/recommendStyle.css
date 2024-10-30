@@ -277,3 +277,24 @@ body {
         inset 0 0 0 14px rgba(255, 255, 255, 0.05);
     transform: translate(-50%, -50%);
 }
+.button-container button {
+    padding: 0;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    transition: transform 0.2s;
+}
+
+.button-container button:hover {
+    transform: scale(1.1);
+}
+
+.button-container button img {
+    width: 60px; /* 이미지 크기 조정 */
+    height: 60px;
+    object-fit: contain; /* 이미지 비율 유지 */
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+}
+

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import com.rubypaper.dto.User;
 import com.rubypaper.jpa.UserRepository;
@@ -37,11 +38,16 @@ public class LoginController {
     }
     
     @GetMapping("/")
-    public String indexPage(Model model) {
+    public String indexPage(@RequestParam(value = "error", required = false) String error, Model model) {
     	String weatherCondition = weatherService.getWeatherCondition();
         String season = weatherService.getSeason();
         model.addAttribute("weather_condition", weatherCondition);
         model.addAttribute("season", season);
+        if (error != null) {
+            model.addAttribute("loginError", true); // 에러 상태를 모델에 추가
+        } else {
+            model.addAttribute("loginError", false); // 에러가 없을 경우 false로 설정
+        }
         return "index"; // index.html 반환
     }
 	/*
@@ -55,7 +61,6 @@ public class LoginController {
         user.setName(userDTO.getName());
         user.setAge(userDTO.getAge());
         user.setGender(userDTO.getGender());
-        user.setAddr(userDTO.getAddr());
 
         userRepository.save(user); // 사용자 정보를 저장
         return "redirect:/index"; // 로그인 페이지로 리다이렉트

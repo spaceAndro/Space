@@ -1,21 +1,23 @@
 package com.rubypaper.controller;
 
+import java.time.LocalDate;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import com.rubypaper.dto.User;
 import com.rubypaper.service.UserService;
 import com.rubypaper.service.WeatherService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.time.LocalDate;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class UserController {
@@ -78,6 +80,15 @@ public class UserController {
         return "login";  // 로그아웃 후 로그인 페이지로 리다이렉트
     }
     
-   
-    
+	/*
+	 * @GetMapping("/check-first-login") public boolean
+	 * checkFirstLogin(@AuthenticationPrincipal User user) { return
+	 * user.isFirstLogin(); // 최초 로그인 여부 반환 }
+	 * 
+	 * // 로그인 성공 시 최초 로그인 플래그 업데이트
+	 * 
+	 * @PostMapping("/login-success") public void
+	 * loginSuccess(@AuthenticationPrincipal User user) { user.setFirstLogin(false);
+	 * // 최초 로그인 후 false로 업데이트 // User 엔티티를 저장하여 DB에 반영 }
+	 */
 }
