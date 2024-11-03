@@ -1,8 +1,12 @@
 package com.rubypaper.controller;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +18,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.rubypaper.dto.Meal;
 import com.rubypaper.dto.User;
 import com.rubypaper.dto.UserAllergy;
+import com.rubypaper.jpa.MealRepository;
 import com.rubypaper.service.UserService;
 import com.rubypaper.service.WeatherService;
 
@@ -33,6 +41,9 @@ public class RecommendationController {
     
     @Autowired
     private UserService userService; // UserService 주입
+    
+    @Autowired
+    private MealRepository mealRepository;
 
     @PostMapping("/getRecommendation")
     public String getRecommendation(
@@ -98,5 +109,37 @@ public class RecommendationController {
             model.addAttribute("error", "Failed to get recommendation");
             return "error";
         }
+    }
+    @PostMapping("/saveMeal")
+    @ResponseBody
+    public ResponseEntity<String> saveMeal(@RequestBody Map<String, String> requestData) {
+        String foodName = requestData.get("foodName");
+        LocalDate today = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+
+        // 오늘 날짜의 Meal 레코드가 있는지 확인
+        Optional<Meal> optionalMeal = mealRepository.findByMealDate(today);
+        Meal meal;
+
+        if (optionalMeal.isPresent()) {
+            meal = optionalMeal.get();
+        } else {
+            // 오늘 날짜의 Meal 객체가 없으면 새로 생성
+            meal = new Meal(today, null, null, null);
+        }
+
+        // 현재 시간에 따라 아침, 점심, 저녁 필드에 음식 저장
+        if (currentTime.isBefore(LocalTime.NOON)) {
+            meal.setBreakfast(foodName);
+        } else if (currentTime.isBefore(LocalTime.of(18, 0))) {
+            meal.setLunch(foodName);
+        } else {
+            meal.setDinner(foodName);
+        }
+
+        // Meal 객체 저장
+        mealRepository.save(meal);
+
+        return ResponseEntity.ok("추천된 음식이 저장되었습니다.");
     }
 }
