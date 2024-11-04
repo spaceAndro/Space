@@ -291,10 +291,129 @@ body {
 }
 
 .button-container button img {
-    width: 60px; /* 이미지 크기 조정 */
+    width: 60px;
     height: 60px;
-    object-fit: contain; /* 이미지 비율 유지 */
+    object-fit: contain;
     border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
+/* 기본 이미지 스타일 */
+.floating-ingredient, .floating-cuisine, .floating-food {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+}
+
+/* 각 카테고리에 따른 애니메이션 */
+.floating-ingredient {
+    animation: float-ingredient 4s infinite ease-in-out;
+}
+
+.floating-cuisine {
+    animation: float-cuisine 4s infinite ease-in-out;
+}
+
+.floating-food {
+    animation: float-food 4s infinite ease-in-out;
+}
+
+/* 애니메이션 키프레임 - 선호 재료 */
+@keyframes float-ingredient {
+    0% {
+        transform: translate(50px, 30px) rotate(0deg);
+    }
+    25% {
+        transform: translate(40px, 15px) rotate(-5deg);
+    }
+    50% {
+        transform: translate(60px, 50px) rotate(10deg);
+    }
+    75% {
+        transform: translate(35px, 40px) rotate(-8deg);
+    }
+    100% {
+        transform: translate(50px, 30px) rotate(0deg);
+    }
+}
+
+/* 애니메이션 키프레임 - 음식 분류 */
+@keyframes float-cuisine {
+	 0% {
+	        transform: translate(110px, 30px) rotate(0deg);
+	    }
+	    25% {
+	        transform: translate(100px, 15px) rotate(-5deg);
+	    }
+	    50% {
+	        transform: translate(120px, 50px) rotate(10deg);
+	    }
+	    75% {
+	        transform: translate(95px, 40px) rotate(-8deg);
+	    }
+	    100% {
+	        transform: translate(110px, 30px) rotate(0deg);
+	    }
+	}
+
+
+/* 애니메이션 키프레임 - 음식 종류 */
+@keyframes float-food {
+	 0% {
+	        transform: translate(170px, 30px) rotate(0deg);
+	    }
+	    25% {
+	        transform: translate(160px, 15px) rotate(-5deg);
+	    }
+	    50% {
+	        transform: translate(180px, 50px) rotate(10deg);
+	    }
+	    75% {
+	        transform: translate(155px, 40px) rotate(-8deg);
+	    }
+	    100% {
+	        transform: translate(170px, 30px) rotate(0deg);
+	    }
+	}
+/* 기존 버블 애니메이션 스타일 유지 */
+.bubble {
+    width: 20px;
+    height: 20px;
+    background-color: #add8e6;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bubble-rise 2s infinite ease-in-out;
+    opacity: 0.8;
+}
+
+.bubble:nth-child(1) {
+    left: 40%;
+    animation-delay: 0s;
+}
+
+.bubble:nth-child(2) {
+    left: 60%;
+    animation-delay: 0.5s;
+}
+
+.bubble:nth-child(3) {
+    left: 50%;
+    animation-delay: 1s;
+}
+
+@keyframes bubble-rise {
+    0% {
+        transform: translateX(-50%) translateY(0) scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-60px) scale(1.5);
+        opacity: 0;
+    }
+}
