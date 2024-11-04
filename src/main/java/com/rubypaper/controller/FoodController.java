@@ -115,7 +115,7 @@ public class FoodController {
         for (String food : foods) {
         	boolean flag = false;
             for (String fName : allFNames) {
-                if (food.equals(fName) || food == null) {
+                if (food.equals(fName) || food == "") {
                 	flag = true;
                 	saveFoods.add(food);
                     continue; // 일치하는 항목을 찾았으므로 다음 food로 넘어감

@@ -1,7 +1,6 @@
 package com.rubypaper.dto;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,9 +20,7 @@ public class User {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private UserAllergy userAllergy;
 	
-	@Column(unique = true)
 	public String id;
-	
 	public String pw;
 	public String name;
 	public int age;

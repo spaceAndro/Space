@@ -19,22 +19,22 @@
             <div id="preferred_ingredient_container" class="section">
                 <label for="preferred_ingredient">선호하는 재료:</label>
                 <div class="button-container">
-                    <button type="button" onclick="selectOption('preferred_ingredient', '고기')">
+                    <button type="button" onclick="selectOption('preferred_ingredient', '고기', 'images/food/meat.png')">
                         <img src="images/food/meat.png" alt="고기">
                     </button>
-                    <button type="button" onclick="selectOption('preferred_ingredient', '채소')">
+                    <button type="button" onclick="selectOption('preferred_ingredient', '채소', 'images/food/vegetable.png')">
                         <img src="images/food/vegetable.png" alt="채소">
                     </button>
-                    <button type="button" onclick="selectOption('preferred_ingredient', '쌀')">
+                    <button type="button" onclick="selectOption('preferred_ingredient', '쌀', 'images/food/rice.png')">
                         <img src="images/food/rice.png" alt="쌀">
                     </button>
-                    <button type="button" onclick="selectOption('preferred_ingredient', '해산물')">
+                    <button type="button" onclick="selectOption('preferred_ingredient', '해산물', 'images/food/seafood.png')">
                         <img src="images/food/seafood.png" alt="해산물">
                     </button>
-                    <button type="button" onclick="selectOption('preferred_ingredient', '밀')">
+                    <button type="button" onclick="selectOption('preferred_ingredient', '밀', 'images/food/wheat.png')">
                         <img src="images/food/wheat.png" alt="밀">
                     </button>
-                    <button type="button" onclick="selectOption('preferred_ingredient', '유제품')">
+                    <button type="button" onclick="selectOption('preferred_ingredient', '유제품', 'images/food/dairy.png')">
                         <img src="images/food/dairy.png" alt="유제품">
                     </button>
                 </div>
@@ -44,17 +44,17 @@
             <div id="cuisine_type_container" class="section">
                 <label for="cuisine_type">음식 분류:</label>
                 <div class="button-container">
-                    <button type="button" onclick="selectOption('cuisine_type', '한식')">
+                    <button type="button" onclick="selectOption('cuisine_type', '한식', 'images/food/korean.png')">
                         <img src="images/food/korean.png" alt="한식">
                     </button>
-                    <button type="button" onclick="selectOption('cuisine_type', '중식')">
+                    <button type="button" onclick="selectOption('cuisine_type', '중식', 'images/food/chinese.png')">
                         <img src="images/food/chinese.png" alt="중식">
                     </button>
-                    <button type="button" onclick="selectOption('cuisine_type', '일식')">
+                    <button type="button" onclick="selectOption('cuisine_type', '일식', 'images/food/japanese.png')">
                         <img src="images/food/japanese.png" alt="일식">
                     </button>
-                    <button type="button" onclick="selectOption('cuisine_type', '양식')">
-                        <img src="images/food/western.png" alt="양식">
+                    <button type="button" onclick="selectOption('cuisine_type', '양식', 'images/food/usa.png')">
+                        <img src="images/food/usa.png" alt="양식">
                     </button>
                 </div>
             </div>
@@ -63,28 +63,28 @@
             <div id="food_category_container" class="section">
                 <label for="food_category">음식 종류:</label>
                 <div class="button-container">
-                    <button type="button" onclick="selectOption('food_category', '국류')">
+                    <button type="button" onclick="selectOption('food_category', '국류', 'images/food/soup.png')">
                         <img src="images/food/soup.png" alt="국류">
                     </button>
-                    <button type="button" onclick="selectOption('food_category', '밥류')">
+                    <button type="button" onclick="selectOption('food_category', '밥류', 'images/food/rice_dish.png')">
                         <img src="images/food/rice_dish.png" alt="밥류">
                     </button>
-                    <button type="button" onclick="selectOption('food_category', '면류')">
+                    <button type="button" onclick="selectOption('food_category', '면류', 'images/food/noodles.png')">
                         <img src="images/food/noodles.png" alt="면류">
                     </button>
-                    <button type="button" onclick="selectOption('food_category', '빵류')">
+                    <button type="button" onclick="selectOption('food_category', '빵류', 'images/food/bread.png')">
                         <img src="images/food/bread.png" alt="빵류">
                     </button>
-                    <button type="button" onclick="selectOption('food_category', '채소류')">
+                    <button type="button" onclick="selectOption('food_category', '채소류', 'images/food/vegetable_dish.png')">
                         <img src="images/food/vegetable_dish.png" alt="채소류">
                     </button>
-                    <button type="button" onclick="selectOption('food_category', '육류')">
+                    <button type="button" onclick="selectOption('food_category', '육류', 'images/food/meat_dish.png')">
                         <img src="images/food/meat_dish.png" alt="육류">
                     </button>
-                    <button type="button" onclick="selectOption('food_category', '튀김류')">
+                    <button type="button" onclick="selectOption('food_category', '튀김류', 'images/food/fried_food.png')">
                         <img src="images/food/fried_food.png" alt="튀김류">
                     </button>
-                    <button type="button" onclick="selectOption('food_category', '해산물류')">
+                    <button type="button" onclick="selectOption('food_category', '해산물류', 'images/food/seafood_dish.png')">
                         <img src="images/food/seafood_dish.png" alt="해산물류">
                     </button>
                 </div>
@@ -94,53 +94,118 @@
                 <button type="submit">추천받기</button>
             </div>
         </form>
-
-        <h3>추천된 음식: <span th:text="${recommendedFood}"></span></h3>
+		<div id="return-container">
+		    <button onclick="location.href='/'" type="button">메인으로</button>
+		</div>
+		<h3>추천된 음식: <span th:text="${recommendedFood}" id="recommendedFood"></span></h3>
+		<button onclick="saveRecommendedFood()" type="button">추천된 음식 저장</button>
     </div>
-	<div id="campfire-container">
-		        <div id="campfire">
-		            <!-- 통나무 -->
-		            <div class="log1"></div>
-		            <div class="log2"></div>
-		            <div class="log3"></div>
-		            <!-- 솥 -->
-		            <div class="pot">
-		                <!-- 솥 내부 하늘색 원 -->
-		                <div class="inner-surface">
-		                    <!-- 물방울 애니메이션 원 -->
-		                    <div class="bubble"></div>
-		                    <div class="bubble"></div>
-		                    <div class="bubble"></div>
-		                </div>
-		                <div class="pot-handle left"></div>
-		                <div class="pot-handle right"></div>
-		                <div class="leg left"></div>
-		                <div class="leg right"></div>
-		            </div>
-		            <!-- 불꽃 -->
-		            <div class="flame-container">
-		                <div class="flame">
-		                    <div class="inner-flame"></div>
-		                </div>
-		                <div class="flame">
-		                    <div class="inner-flame"></div>
-		                </div>
-		                <div class="flame">
-		                    <div class="inner-flame"></div>
-		                </div>
-		            </div>
-		        </div>
+
+    <div id="campfire-container">
+        <div id="campfire">
+            <div class="log1"></div>
+            <div class="log2"></div>
+            <div class="log3"></div>
+            <div class="pot">
+                <div class="inner-surface" id="floating-images-container">
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                </div>
+                <div class="pot-handle left"></div>
+                <div class="pot-handle right"></div>
+            </div>
+            <div class="flame-container">
+                <div class="flame">
+                    <div class="inner-flame"></div>
+                </div>
+                <div class="flame">
+                    <div class="inner-flame"></div>
+                </div>
+                <div class="flame">
+                    <div class="inner-flame"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="/js/recommend.js"></script>
     <script>
-        function selectOption(inputName, value) {
+        let imageCount = 0;
+        const westernImages = [
+            'images/food/usa.png',
+            'images/food/france.png',
+            'images/food/italy.png',
+            'images/food/germany.png'
+        ];
+        let westernImageIndex = 0;
+
+        // 양식 버튼 이미지가 자동으로 순환하도록 설정
+        const cuisineButton = document.querySelector("button[onclick*='양식']");
+        setInterval(() => {
+            cuisineButton.querySelector("img").src = westernImages[westernImageIndex];
+            westernImageIndex = (westernImageIndex + 1) % westernImages.length;
+        }, 2000); // 2초마다 이미지 변경
+
+        function selectOption(inputName, value, imgSrc) {
             const input = document.createElement('input');
             input.type = 'hidden';
             input.name = inputName;
             input.value = value;
             document.querySelector('form').appendChild(input);
             document.getElementById(`${inputName}_container`).classList.add('hidden');
+
+            // 선택한 이미지를 pot 내부로 이동시키기
+            const floatingImagesContainer = document.getElementById('floating-images-container');
+            const img = document.createElement('img');
+            img.src = imgSrc;
+			if (inputName === 'cuisine_type' && value === '양식') {
+			            img.src = westernImages[westernImageIndex]; // 첫 이미지 설정
+			            img.classList.add('floating-cuisine'); // 애니메이션 클래스 추가
+
+			            // 이미지가 일정 시간마다 변경되도록 설정 (2초 간격)
+			            setInterval(() => {
+			                westernImageIndex = (westernImageIndex + 1) % westernImages.length;
+			                img.src = westernImages[westernImageIndex];
+			            }, 2000); // 2초마다 이미지 변경
+			        } else if(inputName === 'cuisine_type'){
+			            img.classList.add('floating-cuisine'); // 기본 이미지 설정
+			        }
+            // 카테고리별로 애니메이션 클래스를 다르게 추가
+            if (inputName === 'preferred_ingredient') {
+                img.classList.add('floating-ingredient');
+            } else if (inputName === 'food_category') {
+                img.classList.add('floating-food');
+            }
+
+            // 위치 조정 - 이미지가 추가될 때마다 20px씩 오른쪽으로 이동
+            const startPositionX = 30 + imageCount * 20;
+            img.style.transform = `translateX(${startPositionX}px)`;
+            imageCount++; // 다음 이미지를 위한 카운트 증가
+
+            floatingImagesContainer.appendChild(img);
         }
+		function saveRecommendedFood() {
+		        const recommendedFood = document.getElementById("recommendedFood").innerText;
+		
+		        // 서버로 POST 요청 전송
+		        fetch('/saveFoodToCalendar', {
+		            method: 'POST',
+		            headers: {
+		                'Content-Type': 'application/json',
+		                'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content // CSRF 토큰
+		            },
+		            body: JSON.stringify({ foodName: recommendedFood })
+		        })
+		        .then(response => {
+		            if (response.ok) {
+		                alert("추천된 음식이 저장되었습니다.");
+		            } else {
+		                alert("저장에 실패했습니다.");
+		            }
+		        })
+		        .catch(error => console.error("Error:", error));
+		    }
     </script>
 </body>
 </html>

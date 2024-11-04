@@ -22,11 +22,24 @@ public class CalendarService {
         return calendarRepository.findByUserIdAndSaveDateBetween(userId, startDate, endDate);
     }
     
-    // 특정 userId에 해당하는 캘린더 항목 리스트를 반환
-    public Calendar getCalendarsByUserIdAndSaveDate(String userId, LocalDate saveDate) {
-        return calendarRepository.findByUserIdAndSaveDate(userId, saveDate).orElse(null);
+    // 해당 날짜에 캘린더 데이터가 없을 때 새로 생성
+    public Calendar createNewCalendar(String userId, LocalDate saveDate) {
+        Calendar calendar = new Calendar();
+        calendar.setUserId(userId);
+        calendar.setSaveDate(saveDate);
+        return calendarRepository.save(calendar);
     }
     
+    // 특정 userId에 해당하는 캘린더 항목 리스트를 반환
+    public Calendar getCalendarsByUserIdAndSaveDate(String userId, LocalDate saveDate) {
+    	Calendar calendar = calendarRepository.findByUserIdAndSaveDate(userId, saveDate).orElse(null);
+    	
+    	if (calendar == null) {
+            calendar = createNewCalendar(userId, saveDate); // 새로운 캘린더 생성
+        }
+    	
+        return calendar;
+    }
     // 수정 calendar 정보 저장
     public void saveCalendar(Calendar calendar, List<String> foods) {
     	String breakfast = foods.get(0);

@@ -18,4 +18,10 @@ public class UserService {
     public User findByUsername(String username) {
         return userRepository.findById(username).orElse(null);
     }
+ // 현재 로그인된 사용자 가져오기
+    public User getLoggedInUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return findByUsername(username);
+    }
 }
