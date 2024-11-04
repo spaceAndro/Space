@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+  	<title>음식 수정</title>
+	<link rel="stylesheet" href="css/modal.css">
+  	<link rel="stylesheet" href="/css/food.css">
+</head>
+<body>
+	<div class="foodUpdate-container" th:data-user-id="${userId}">
+		<form th:action="@{/changeFood}" method="post">
+			<input type="hidden" name="_csrf" th:value="${_csrf.token}">
+			
+	        <label for="breakfastInput">아침 : </label>
+	        <input type="text" id="breakfastInput" name="foods"><br>
+	        <label for="lunchInput">점심 : </label>
+	        <input type="text" id="lunchInput" name="foods"><br>
+	        <label for="dinnerInput">저녁 : </label>
+	        <input type="text" id="dinnerInput" name="foods">
+			
+			<!-- 숨겨진 input 필드로 savedDate 추가 -->
+			<input type="hidden" id="savedDateInput" name="savedDate">
+	        
+	        <button type="submit">저장</button>
+	    </form>
+	</div>
+	<script src="/js/update.js"></script>
+</body>
+</html>

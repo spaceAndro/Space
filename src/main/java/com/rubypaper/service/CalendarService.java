@@ -26,4 +26,23 @@ public class CalendarService {
     public Calendar getCalendarsByUserIdAndSaveDate(String userId, LocalDate saveDate) {
         return calendarRepository.findByUserIdAndSaveDate(userId, saveDate).orElse(null);
     }
+    // 수정 calendar 정보 저장
+    public void saveCalendar(Calendar calendar, List<String> foods) {
+    	String breakfast = foods.get(0);
+        String lunch = foods.get(1);
+        String dinner = foods.get(2);
+    	
+    	calendar.setBreakfast(breakfast);
+    	calendar.setLunch(lunch);
+    	calendar.setDinner(dinner);
+    	
+    	calendarRepository.save(calendar);
+    }
+    
+    public void deleteCalendar(String userId, LocalDate date) {
+        Calendar calendar = calendarRepository.findByUserIdAndSaveDate(userId, date).orElse(null);
+        if (calendar != null) {
+            calendarRepository.delete(calendar);
+        }
+    }
 }

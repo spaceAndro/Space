@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.rubypaper.dto.Calendar;
 import com.rubypaper.dto.Meal;
 import com.rubypaper.dto.User;
 import com.rubypaper.dto.UserAllergy;
+import com.rubypaper.jpa.CalendarRepository;
 import com.rubypaper.jpa.MealRepository;
 import com.rubypaper.service.UserService;
 import com.rubypaper.service.WeatherService;
@@ -43,7 +45,7 @@ public class RecommendationController {
     private UserService userService; // UserService 주입
     
     @Autowired
-    private MealRepository mealRepository;
+    private CalendarRepository calendarRepository;
 
     @PostMapping("/getRecommendation")
     public String getRecommendation(
@@ -110,35 +112,40 @@ public class RecommendationController {
             return "error";
         }
     }
-    @PostMapping("/saveMeal")
+    @PostMapping("/saveFoodToCalendar")
     @ResponseBody
-    public ResponseEntity<String> saveMeal(@RequestBody Map<String, String> requestData) {
+    public ResponseEntity<String> saveFoodToCalendar(@RequestBody Map<String, String> requestData) {
         String foodName = requestData.get("foodName");
         LocalDate today = LocalDate.now();
         LocalTime currentTime = LocalTime.now();
 
-        // 오늘 날짜의 Meal 레코드가 있는지 확인
-        Optional<Meal> optionalMeal = mealRepository.findByMealDate(today);
-        Meal meal;
+        // 현재 로그인된 사용자 ID 가져오기
+        String userId = userService.getLoggedInUser().getId();
 
-        if (optionalMeal.isPresent()) {
-            meal = optionalMeal.get();
+        // 오늘 날짜와 사용자 ID로 Calendar 레코드가 있는지 확인
+        Optional<Calendar> optionalCalendar = calendarRepository.findByUserIdAndSaveDate(userId, today);
+        Calendar calendar;
+
+        if (optionalCalendar.isPresent()) {
+            calendar = optionalCalendar.get();
         } else {
-            // 오늘 날짜의 Meal 객체가 없으면 새로 생성
-            meal = new Meal(today, null, null, null);
+            // 오늘 날짜의 Calendar 객체가 없으면 새로 생성
+            calendar = new Calendar();
+            calendar.setSaveDate(today);
+            calendar.setUserId(userId);
         }
 
         // 현재 시간에 따라 아침, 점심, 저녁 필드에 음식 저장
         if (currentTime.isBefore(LocalTime.NOON)) {
-            meal.setBreakfast(foodName);
+            calendar.setBreakfast(foodName);
         } else if (currentTime.isBefore(LocalTime.of(18, 0))) {
-            meal.setLunch(foodName);
+            calendar.setLunch(foodName);
         } else {
-            meal.setDinner(foodName);
+            calendar.setDinner(foodName);
         }
 
-        // Meal 객체 저장
-        mealRepository.save(meal);
+        // Calendar 객체 저장
+        calendarRepository.save(calendar);
 
         return ResponseEntity.ok("추천된 음식이 저장되었습니다.");
     }

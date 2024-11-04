@@ -163,7 +163,7 @@ button {
   color: black;
   font-weight: bold;
 }
-.high-calorie-info {
+.calorie-info {
   font-size: 0.8em;
   color: red;
   margin-top: 5px;
@@ -188,6 +188,13 @@ button {
   word-break: break-all;
 }
 
+#calendar tbody .calorie-info {
+  font-size: 0.9em;
+  color: #333;
+  margin-top: 5px;
+  word-break: break-all;
+}
+
 /* 공휴일 표시 스타일 */
 #calendar tbody td.holiday {
   background-color: #f8d7da;
@@ -198,4 +205,8 @@ button {
   border: 2px solid #007bff;
 }
 
-
+#updateButton, #deleteButton {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
