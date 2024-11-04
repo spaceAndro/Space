@@ -164,8 +164,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     selectedDateInfo.textContent = `${year}년 ${month + 1}월 ${clickedCell}일`;
                     
                     let saveDate = `${year}-${month + 1}-${clickedCell}`;
-<<<<<<< HEAD
-=======
                     
                     // 날짜 형식을 'YYYY-MM-DD'로 변경
 					if (saveDate) {
@@ -178,7 +176,6 @@ document.addEventListener("DOMContentLoaded", function () {
 						}
 					}
                     
->>>>>>> kjm
                     localStorage.setItem("date", saveDate);
                     console.log(saveDate);
 
