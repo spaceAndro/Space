@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   break;
                 } else {
                   const calendar = updatedCalendarData.find(calendar => calendar.saveDate === `${year}-${(month + 1).toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`);
-
+				  console.log(calendar);
                   if (j === 0) cell.classList.add("sunday");
                   else if (j === 6) cell.classList.add("saturday");
 
@@ -164,6 +164,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     selectedDateInfo.textContent = `${year}년 ${month + 1}월 ${clickedCell}일`;
                     
                     let saveDate = `${year}-${month + 1}-${clickedCell}`;
+<<<<<<< HEAD
+=======
+                    
+                    // 날짜 형식을 'YYYY-MM-DD'로 변경
+					if (saveDate) {
+						const dateParts = saveDate.split("-");
+						if (dateParts.length === 3) {
+							// 월(month)과 일(day)을 두 자리로 맞춤
+							dateParts[1] = dateParts[1].padStart(2, "0"); // 월이 한 자리면 두 자리로 변경
+							dateParts[2] = dateParts[2].padStart(2, "0"); // 일이 한 자리면 두 자리로 변경
+							saveDate = dateParts.join("-");
+						}
+					}
+                    
+>>>>>>> kjm
                     localStorage.setItem("date", saveDate);
                     console.log(saveDate);
 
