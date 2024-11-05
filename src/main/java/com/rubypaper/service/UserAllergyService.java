@@ -1,10 +1,10 @@
 package com.rubypaper.service;
 
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rubypaper.dto.User;
 import com.rubypaper.dto.UserAllergy;
@@ -13,28 +13,41 @@ import com.rubypaper.jpa.UserRepository;
 
 @Service
 public class UserAllergyService {
-
+	
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private UserAllergyRepository userAllergyRepository;
 
-    public void saveUserAllergies(User user, List<String> allergies) {
-        UserAllergy userAllergy = userAllergyRepository.findByUser(user);
+    // 사용자 ID로 알러지 정보 가져오기
+    public UserAllergy findByUserUSeq(Integer uSeq) {
+        return userAllergyRepository.findByUser_uSeq(uSeq);
+    }
 
-        if (userAllergy == null) {
-            userAllergy = new UserAllergy();
-            userAllergy.setUser(user);
+    @Transactional
+    public void saveUserAllergy(String username, UserAllergy allergyForm) {
+        User user = userRepository.findById(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        
+        // 기존 알러지 정보 조회
+        UserAllergy existingAllergy = userAllergyRepository.findByUser(user);
+        
+        if (existingAllergy != null) {
+            // 기존의 알러지 정보를 업데이트
+            existingAllergy.setMilk(allergyForm.isMilk());
+            existingAllergy.setEgg(allergyForm.isEgg());
+            existingAllergy.setPeanut(allergyForm.isPeanut());
+            existingAllergy.setNuts(allergyForm.isNuts());
+            existingAllergy.setSeafood(allergyForm.isSeafood());
+            existingAllergy.setShellfish(allergyForm.isShellfish());
+            existingAllergy.setWheat(allergyForm.isWheat());
+            existingAllergy.setLeguminoseae(allergyForm.isLeguminoseae());
+
+            // 업데이트된 정보를 저장
+            userAllergyRepository.save(existingAllergy);
+        } else {
+            // 기존 알러지 정보가 없으면 새로운 정보를 생성
+            allergyForm.setUser(user); // 사용자 연결
+            userAllergyRepository.save(allergyForm); // UserAllergy 저장
         }
-
-        // 기본적으로 모든 알러지 필드는 false로 설정됨
-        userAllergy.setMilk(allergies.contains("milk"));
-        userAllergy.setEgg(allergies.contains("egg"));
-        userAllergy.setPeanut(allergies.contains("peanut"));
-        userAllergy.setNuts(allergies.contains("nuts"));
-        userAllergy.setSeafood(allergies.contains("seafood"));
-        userAllergy.setShellfish(allergies.contains("shellfish"));
-        userAllergy.setWheat(allergies.contains("wheat"));
-        userAllergy.setLeguminoseae(allergies.contains("leguminoseae"));
-
-        userAllergyRepository.save(userAllergy);
     }
 }

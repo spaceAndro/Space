@@ -1,13 +1,15 @@
 package com.rubypaper.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.ui.Model;
+
 import com.rubypaper.dto.User;
 import com.rubypaper.jpa.UserRepository;
 import com.rubypaper.service.UserService;
@@ -18,6 +20,9 @@ public class LoginController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -36,6 +41,21 @@ public class LoginController {
     	
     	return "login.html";
     }
+    
+    @GetMapping("/loginSuccess")
+    public String loginSuccess(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        
+        if (userService.isFirstLogin(username)) {
+            // 최초 로그인 시 firstLogin 값을 false로 업데이트
+            userService.updateFirstLogin(username);
+            return "redirect:/AllergyForm"; // 설문조사 페이지로 리다이렉트
+        }
+        
+        return "redirect:/index"; // 일반 로그인 성공 시 인덱스 페이지로 이동
+    }
+
+    
     
     @GetMapping("/")
     public String indexPage(@RequestParam(value = "error", required = false) String error, Model model) {

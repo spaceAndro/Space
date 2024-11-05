@@ -19,24 +19,24 @@ public class UserAllergy {
 	
 	// ManyToOne 에서 OneToOne으로 관계 수정
 	@OneToOne
-	@JoinColumn(name="uSeq")
+	@JoinColumn(name = "uSeq") // 외래 키로 User의 u_seq를 사용
 	private User user;
 	
 	//9/18 db 내용 수정 (우유, 달걀, 땅콩, 견과류, 해산물, 갑각류, 밀, 대두류) 8가지
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "1")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "milk")
 	public boolean milk = false;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "2")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "egg")
 	public boolean egg = false;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "3")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "peanut")
 	public boolean peanut = false;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "4")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "nuts")
 	public boolean nuts = false;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "5")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "seafood")
 	public boolean seafood = false;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "6")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "shellfish")
 	public boolean shellfish = false;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "7")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "wheat")
 	public boolean wheat = false;
-	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "8")
+	@Column(columnDefinition = "TINYINT(1) DEFAULT 0", name = "leguminoseae")
 	public boolean leguminoseae = false;
 }

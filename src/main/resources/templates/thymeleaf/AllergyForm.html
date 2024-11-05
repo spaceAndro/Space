@@ -4,83 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>알러지 설문지</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            max-width: 600px;
-            width: 100%;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        input[type="checkbox"] {
-            margin-right: 10px;
-        }
-        .submit-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            border: none;
-        }
-        .submit-btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
+	<link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="/css/signup.css">
+	<link rel="stylesheet" href="/css/allergyForm.css">
 </head>
+<header class="header">
+       <div class="logo">Space</div>
+       <nav class="nav">
+           <ul>
+               <li><a href="#">#유한대학교</a></li>
+               <li><a href="#">#졸업작품</a></li>
+               <li><a href="#">#3조</a></li>
+           </ul>
+       </nav>
+</header>
+<br>
 <body>
+	<center>
     <div class="container">
         <h2>알러지 설문지</h2>
-        <form action="/submit-survey" method="post">
-            <label>
-                <input type="checkbox" name="allergies" value="milk"> 우유
-            </label>
-            <label>
-                <input type="checkbox" name="allergies" value="egg"> 달걀
-            </label>
-            <label>
-                <input type="checkbox" name="allergies" value="peanut"> 땅콩
-            </label>
-            <label>
-                <input type="checkbox" name="allergies" value="nuts"> 견과류
-            </label>
-            <label>
-                <input type="checkbox" name="allergies" value="seafood"> 해산물
-            </label>
-            <label>
-                <input type="checkbox" name="allergies" value="shellfish"> 갑각류
-            </label>
-            <label>
-                <input type="checkbox" name="allergies" value="wheat"> 밀
-            </label>
-            <label>
-                <input type="checkbox" name="allergies" value="Leguminoseae"> 대두류
-            </label>
-            <button type="submit" class="submit-btn">제출하기</button>
-        </form>
+		<br>
+		<form action="/submit-survey" method="post" th:action="@{/submit-survey}" th:object="${allergyForm}">
+		    <input type="hidden" name="_csrf" th:value="${_csrf.token}"> <!-- CSRF 토큰 추가 -->
+
+		    <label>
+		        <input type="checkbox" name="milk" th:field="*{milk}"> 우유
+		    </label>
+		    <label>
+		        <input type="checkbox" name="egg" th:field="*{egg}"> 달걀
+		    </label>
+		    <label>
+		        <input type="checkbox" name="peanut" th:field="*{peanut}"> 땅콩
+		    </label>
+		    <label>
+		        <input type="checkbox" name="nuts" th:field="*{nuts}"> 견과류
+		    </label>
+			<br>
+			<br>
+
+		    <label>
+		        <input type="checkbox" name="seafood" th:field="*{seafood}"> 해산물
+		    </label>
+		    <label>
+		        <input type="checkbox" name="shellfish" th:field="*{shellfish}"> 갑각류
+		    </label>
+		    <label>
+		        <input type="checkbox" name="wheat" th:field="*{wheat}"> 밀
+		    </label>
+		    <label>
+		        <input type="checkbox" name="leguminoseae" th:field="*{leguminoseae}"> 대두류
+		    </label>
+			<br>
+			<br>
+			<label>
+			    <input type="checkbox" name="null"> 없음
+			</label>
+			<br>
+			<br>
+		    <button type="submit" class="submit-btn">제출하기</button>
+		</form>
     </div>
+	</center>
 </body>
 </html>

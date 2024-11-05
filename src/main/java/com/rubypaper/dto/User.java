@@ -25,5 +25,6 @@ public class User {
 	public String name;
 	public int age;
 	public String gender;
-	public String addr;
+	 // 최초 로그인 여부를 나타내는 필드 추가
+    public boolean firstLogin = true; // 기본값은 true로 설정
 }

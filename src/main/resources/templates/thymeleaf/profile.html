@@ -4,72 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space - 내 정보</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const links = document.querySelectorAll(".nav-wrapper a");
-
-            function setActiveLink() {
-                const path = window.location.pathname;
-                links.forEach(link => {
-                    link.classList.toggle("active", link.getAttribute("href") === path);
-                });
-            }
-
-            // Set active link on page load
-            setActiveLink();
-
-            // Footer visibility control
-            const footer = document.querySelector("footer");
-            let lastScrollTop = 0;
-
-            window.addEventListener("scroll", function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                if (scrollTop > lastScrollTop) {
-                    // Scroll down
-                    footer.classList.add("footer-hidden");
-                } else {
-                    // Scroll up
-                    footer.classList.remove("footer-hidden");
-                }
-                lastScrollTop = scrollTop;
-            });
-        });
-    </script>
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="/css/signup.css">
+	<link rel="stylesheet" href="/css/allergyForm.css">
 </head>
 <body>
-    <header>
-        <div class="date">
-            <span th:text="${date}"></span>
-        </div>
-        <div class="title">Space</div>
-		<div class="logout-button">
-		    <form action="/logout" method="post" style="display: inline;">
-		        <button type="submit">로그아웃</button>
-		    </form>
-		</div>
+	<header class="header">
+	       <div class="logo">Space</div>
+	       <nav class="nav">
+	           <ul>
+	               <li><a href="#">#유한대학교</a></li>
+	               <li><a href="#">#졸업작품</a></li>
+	               <li><a href="#">#3조</a></li>
+	           </ul>
+	       </nav>
     </header>
-    <div class="nav-wrapper">
-        <a href="/index">음식 추천</a>
-        <a href="/restaurant">식당 추천</a>
-        <a href="/calendar">음식 캘린더</a>
-        <a href="/history">지난 먹은 음식 내역</a>
-        <a href="/profile" class="active">내 정보</a>
-    </div>
-	<div class="recommendation-box">
-	    <h2>내 정보</h2>
+	<center>
+		<div class="container">
 	    <p th:if="${user != null}">
 	        아이디: <span th:text="${user.id}"></span><br>
 	        이름: <span th:text="${user.name}"></span><br>
 	        나이: <span th:text="${user.age}"></span><br>
 	        성별: <span th:text="${user.gender}"></span><br>
-	        주소: <span th:text="${user.addr}"></span><br>
+	    </p>
+	    <p th:if="${userAllergy != null}">
+	        알러지 정보:<br>
+	        <span th:if="${userAllergy.1}">우유 </span>
+	        <span th:if="${userAllergy.2}">달걀 </span>
+	        <span th:if="${userAllergy.3}">땅콩 </span>
+	        <span th:if="${userAllergy.4}">견과류 </span>
+	        <span th:if="${userAllergy.5}">해산물 </span>
+	        <span th:if="${userAllergy.6}">갑각류 </span>
+	        <span th:if="${userAllergy.7}">밀 </span>
+	        <span th:if="${userAllergy.8}">대두류 </span>
+	        <span th:if="${userAllergy.none}">없음</span>
 	    </p>
 	    <p th:if="${user == null}">사용자 정보를 찾을 수 없습니다.</p>
-	    <a href="/AllergyForm">알러지 설문</a>
-	</div>
-    <footer class="footer">
-        <p>© 2024 Space. All rights reserved.</p>
-    </footer>
+		<br>
+		<br>
+		<a href="/AllergyForm">알러지 정보 수정하기</a>
+		<br>
+		<br>
+		<a href="/index">메인 페이지로 돌아가기</a>
+		<div>
+	</center>
 </body>
 </html>

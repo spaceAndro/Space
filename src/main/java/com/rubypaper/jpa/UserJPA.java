@@ -22,7 +22,6 @@ public class UserJPA {
 		user1.setAge(23);
 		user1.setName("아무개");
 		user1.setGender("male");
-		user1.setAddr("구로구");
 		
 		// 알러지 테이블도 같이 입력
 		UserAllergy allergy = new UserAllergy();

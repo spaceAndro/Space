@@ -1,5 +1,6 @@
 package com.rubypaper.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,21 +41,15 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String profile(Model model) {
-        // 현재 로그인한 사용자 정보 가져오기
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); // 사용자 이름 (아이디)
+    public String userInfo(Model model, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
 
-        // 사용자 정보 가져오기
-        User user = userService.findByUsername(username);
-
-        // 모델에 사용자 정보 추가
-        model.addAttribute("user", user);
-        model.addAttribute("date", LocalDate.now().toString().replace("-", "."));
-        model.addAttribute("message", "내 정보 페이지");
         
+        model.addAttribute("user", user);
         return "profile"; // profile.html 템플릿 반환
     }
+    
+    
     @GetMapping("/calendar")
     public String calendarPage(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -80,15 +75,16 @@ public class UserController {
         return "login";  // 로그아웃 후 로그인 페이지로 리다이렉트
     }
     
-	/*
-	 * @GetMapping("/check-first-login") public boolean
-	 * checkFirstLogin(@AuthenticationPrincipal User user) { return
-	 * user.isFirstLogin(); // 최초 로그인 여부 반환 }
-	 * 
-	 * // 로그인 성공 시 최초 로그인 플래그 업데이트
-	 * 
-	 * @PostMapping("/login-success") public void
-	 * loginSuccess(@AuthenticationPrincipal User user) { user.setFirstLogin(false);
-	 * // 최초 로그인 후 false로 업데이트 // User 엔티티를 저장하여 DB에 반영 }
-	 */
+    @GetMapping("/check-first-login")
+    public boolean checkFirstLogin(@AuthenticationPrincipal User user) {
+        return user.isFirstLogin(); // 최초 로그인 여부 반환
+    }
+
+    // 로그인 성공 시 최초 로그인 플래그 업데이트
+    @PostMapping("/login-success")
+    public void loginSuccess(@AuthenticationPrincipal User user) {
+        user.setFirstLogin(false); // 최초 로그인 후 false로 업데이트
+        // User 엔티티를 저장하여 DB에 반영
+    }
+    
 }

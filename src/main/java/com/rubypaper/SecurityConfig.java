@@ -37,11 +37,11 @@ public class SecurityConfig {
                 .ignoringRequestMatchers("/api/meals/**") // /api/meals 경로는 CSRF 예외 처리
             )
             .formLogin(form -> form
-                .loginPage("/login") // 커스텀 로그인 페이지 경로
-                .defaultSuccessUrl("/index", true) // 로그인 성공 후 이동할 URL
-                .failureUrl("/?error=true") // 로그인 실패 시 index로 리다이렉트하면서 error 파라미터 추가
-                .permitAll()
-            )
+                    .loginPage("/login") // 커스텀 로그인 페이지 경로
+                    .defaultSuccessUrl("/loginSuccess", true)
+                    .failureUrl("/?error=true") // 로그인 실패 시 index로 리다이렉트하면서 error 파라미터 추가
+                    .permitAll()
+                )
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/index")  // 로그아웃 후 리다이렉트할 경로 설정
