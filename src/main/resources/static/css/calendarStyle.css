@@ -210,3 +210,28 @@ button {
     margin: 0 5px;
     cursor: pointer;
 }
+/* 날짜 셀 스타일 */
+.calendar-cell {
+  position: relative; 
+  padding-top: 60px; 
+}
+
+/* 날짜 셀 안의 이미지 스타일 */
+.meal-image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 5px;
+  position: absolute;
+  top: 30px; 
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* 총 열량 정보 스타일 */
+.total-kcal-info {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 70px; 
+  position: relative;
+}
