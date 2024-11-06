@@ -229,74 +229,74 @@
 	            });
 	        }
 
-				   // 로그인 버튼 클릭 시 모달 열기
-				           const loginBtn = document.getElementById("loginBtn");
-				           if (loginBtn) {
-				               loginBtn.addEventListener("click", function(event) {
-				                   event.preventDefault(); // 기본 동작 막기
+   			// 로그인 버튼 클릭 시 모달 열기
+           const loginBtn = document.getElementById("loginBtn");
+           if (loginBtn) {
+               loginBtn.addEventListener("click", function(event) {
+                   event.preventDefault(); // 기본 동작 막기
 
-				                   const xhr = new XMLHttpRequest();
-				                   xhr.open("GET", "/login", true);
-				                   xhr.onreadystatechange = function() {
-				                       if (xhr.readyState === 4) {
-										console.log("AJAX 요청 상태 코드:", xhr.status); // 상태 코드 출력
-				                           if (xhr.status === 200) {
-				                               document.getElementById("modalContent").innerHTML = xhr.responseText;
-				                               document.getElementById("loginModal").style.display = "flex";
-				                               document.body.style.overflow = "auto";
-				                           } else if (xhr.status === 401) {
-				                               showLoginModal(); // 로그인 모달 띄우기
-				                           } else {
-				                               console.error("AJAX 요청 실패: " + xhr.status);
-				                           }
-				                       }
-				                   };
-				                   xhr.send();
-				               });
-				           }
-						   
-						   // "내 정보" 버튼 클릭 시 모달 열기
-						   const profileBtn = document.querySelector("a[href='/profile']");
-						   if (profileBtn) {
-						       profileBtn.addEventListener("click", function(event) {
-						           event.preventDefault(); // 기본 동작 막기
+                   const xhr = new XMLHttpRequest();
+                   xhr.open("GET", "/login", true);
+                   xhr.onreadystatechange = function() {
+                       if (xhr.readyState === 4) {
+						console.log("AJAX 요청 상태 코드:", xhr.status); // 상태 코드 출력
+                           if (xhr.status === 200) {
+                               document.getElementById("modalContent").innerHTML = xhr.responseText;
+                               document.getElementById("loginModal").style.display = "flex";
+                               document.body.style.overflow = "auto";
+                           } else if (xhr.status === 401) {
+                               showLoginModal(); // 로그인 모달 띄우기
+                           } else {
+                               console.error("AJAX 요청 실패: " + xhr.status);
+                           }
+                       }
+                   };
+                   xhr.send();
+               });
+           }
+		   
+		   // "내 정보" 버튼 클릭 시 모달 열기
+		   const profileBtn = document.querySelector("a[href='/profile']");
+		   if (profileBtn) {
+		       profileBtn.addEventListener("click", function(event) {
+		           event.preventDefault(); // 기본 동작 막기
 
-						           const xhr = new XMLHttpRequest();
-						           xhr.open("GET", "/profile", true);
-						           xhr.onreadystatechange = function() {
-						               if (xhr.readyState === 4 && xhr.status === 200) {
-						                   document.getElementById("profileModalContent").innerHTML = xhr.responseText;
-						                   document.getElementById("profileModal").style.display = "flex";
-						                   document.body.style.overflow = "hidden";
-						               } else if (xhr.readyState === 4) {
-						                   console.error("AJAX 요청 실패: " + xhr.status);
-						               }
-						           };
-						           xhr.send();
-						       });
-						   }
-						   // "알러지 수정" 버튼 클릭 시 모달 열기
-						      const openAllergyFormBtn = document.getElementById("openAllergyFormBtn");
-						      if (openAllergyFormBtn) {
-						          openAllergyFormBtn.addEventListener("click", function(event) {
-						              event.preventDefault(); // 기본 동작 막기
+		           const xhr = new XMLHttpRequest();
+		           xhr.open("GET", "/profile", true);
+		           xhr.onreadystatechange = function() {
+		               if (xhr.readyState === 4 && xhr.status === 200) {
+		                   document.getElementById("profileModalContent").innerHTML = xhr.responseText;
+		                   document.getElementById("profileModal").style.display = "flex";
+		                   document.body.style.overflow = "hidden";
+		               } else if (xhr.readyState === 4) {
+		                   console.error("AJAX 요청 실패: " + xhr.status);
+		               }
+		           };
+		           xhr.send();
+		       });
+		   }
+		   // "알러지 수정" 버튼 클릭 시 모달 열기
+	       const openAllergyFormBtn = document.getElementById("openAllergyFormBtn");
+	       if (openAllergyFormBtn) {
+	           openAllergyFormBtn.addEventListener("click", function(event) {
+	              event.preventDefault(); // 기본 동작 막기
 
-						              const xhr = new XMLHttpRequest();
-						              xhr.open("GET", "/AllergyForm", true); // 알러지 폼을 로드하는 GET 요청
-						              xhr.onreadystatechange = function() {
-						                  if (xhr.readyState === 4 && xhr.status === 200) {
-						                      // 알러지 폼을 모달에 로드
-						                      document.getElementById("AllergyFormModalContent").innerHTML = xhr.responseText;
-						                      // 모달 표시
-						                      document.getElementById("AllergyFormModal").style.display = "flex";
-						                      document.body.style.overflow = "hidden"; // 스크롤 막기
-						                  } else if (xhr.readyState === 4) {
-						                      console.error("AJAX 요청 실패: " + xhr.status);
-						                  }
-						              };
-						              xhr.send();
-						          });
-						      }			   
+	              const xhr = new XMLHttpRequest();
+	              xhr.open("GET", "/AllergyForm", true); // 알러지 폼을 로드하는 GET 요청
+	              xhr.onreadystatechange = function() {
+	                  if (xhr.readyState === 4 && xhr.status === 200) {
+	                      // 알러지 폼을 모달에 로드
+	                      document.getElementById("AllergyFormModalContent").innerHTML = xhr.responseText;
+	                      // 모달 표시
+	                      document.getElementById("AllergyFormModal").style.display = "flex";
+	                      document.body.style.overflow = "hidden"; // 스크롤 막기
+	                  } else if (xhr.readyState === 4) {
+	                      console.error("AJAX 요청 실패: " + xhr.status);
+	                  }
+	              };
+	              xhr.send();
+	           });
+	        }			   
 
 	        // 회원가입 버튼 클릭 시 모달 열기
 	        const signupBtn = document.getElementById("signupBtn");
@@ -314,14 +314,57 @@
 							
 							
 							// 여기서 옵션 추가 코드 실행
-							                const ageSelect = document.getElementById("age");
-							                for (let i = 10; i <= 80; i++) {
-							                    const option = document.createElement("option");
-							                    option.value = i;
-							                    option.text = i;
-							                    ageSelect.appendChild(option);
-							                }
+			                const ageSelect = document.getElementById("age");
+			                for (let i = 10; i <= 80; i++) {
+			                    const option = document.createElement("option");
+			                    option.value = i;
+			                    option.text = i;
+			                    ageSelect.appendChild(option);
+			                }
 							
+							// 이메일 중복 검사 기능 추가
+		                    const checkEmailBtn = document.getElementById("check-email");
+		                    if (checkEmailBtn) {
+		                        checkEmailBtn.addEventListener("click", function() {
+									const emailField = document.getElementById("email");
+									const email = emailField.value;
+		                            const passwordField = document.getElementById("password");
+		                            
+		                            fetch(`/api/signup/checkEmail?id=${email}`)
+		                                .then(response => {
+											if(!response.ok) {
+									            throw new Error("네트워크 응답에 문제가 있습니다."); // 응답 상태가 OK가 아닌 경우 에러 처리
+									        }
+									        return response.json(); // JSON으로 변환
+										})
+		                                .then(data => {
+											console.log(data);
+											if (data.exists) {
+									            alert("이미 사용 중인 아이디입니다.");
+									            emailField.focus();
+									        } else {
+									            alert("사용 가능한 아이디입니다.");
+									            emailField.setAttribute("readonly", true); // 이메일 필드 확정
+									            passwordField.focus(); // 포커스를 비밀번호 필드로 이동
+									        }
+		                                })
+		                                .catch(error => console.error('Error:', error));
+		                        });
+		                    }
+							
+							// 가입하기 버튼 클릭 이벤트
+							const signupBtn = document.getElementById("signup");
+						    if (signupBtn) {
+						        signupBtn.addEventListener("click", function(event) {
+									const emailField = document.getElementById("email");
+						            // 이메일 필드가 readonly 상태가 아니면 제출 막기
+						            if (!emailField.hasAttribute("readonly")) {
+						                event.preventDefault(); // 폼 제출 막기
+						                alert("이메일 중복 검사를 통과해야 합니다.");
+						                emailField.focus(); // emailField로 포커스 이동
+						            }
+						        });
+						    }
 							
 	                        document.body.style.overflow = "auto";
 							

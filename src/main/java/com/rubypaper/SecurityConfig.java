@@ -31,10 +31,12 @@ public class SecurityConfig {
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // 정적 리소스 접근 허용
                 .requestMatchers("/login", "/signup", "/index", "/").permitAll() // 로그인과 회원가입 페이지는 모두 접근 가능
                 .requestMatchers("/api/meals/**").permitAll() // /api/meals 경로 접근 허용
+                .requestMatchers("/api/signup/**").permitAll() // /api/signup 경로 접근 허용
                 .anyRequest().authenticated() // 나머지 요청은 인증 필요
             )
             .csrf(csrf -> csrf
                 .ignoringRequestMatchers("/api/meals/**") // /api/meals 경로는 CSRF 예외 처리
+                .ignoringRequestMatchers("/api/signup/**") // /api/signup 경로는 CSRF 예외 처리
             )
             .formLogin(form -> form
                     .loginPage("/login") // 커스텀 로그인 페이지 경로

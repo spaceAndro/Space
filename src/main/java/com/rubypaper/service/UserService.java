@@ -1,5 +1,6 @@
 package com.rubypaper.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +45,15 @@ public class UserService {
         return findByUsername(username);
     }
 
+    public boolean isEmailExists(String id) {
+    	List<String> allUser = userRepository.findAllId();
+    	
+    	for(String user : allUser) {
+    		System.out.println(user);
+    		if(id.equals(user))
+    			return true;
+    	}
+    	
+    	return false;
+    }
 }
