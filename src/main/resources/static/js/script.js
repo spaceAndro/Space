@@ -234,6 +234,11 @@ document.addEventListener("DOMContentLoaded", function () {
 				                    kcalInfo.textContent = `총 열량: ${calendar.totalKcalForDate} kcal`;
 				                    kcalInfo.classList.add("total-kcal-info");
 				                    cell.appendChild(kcalInfo);
+									
+									// breakfast, lunch, dinner 모두 빈 문자열일 때 kcalInfo 제거
+								    if (calendar.breakfast === "" && calendar.lunch === "" && calendar.dinner === "") {
+								        cell.removeChild(kcalInfo);
+								    }
 				                  }
 
                   cell.addEventListener("click", function() {
