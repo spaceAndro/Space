@@ -15,24 +15,39 @@
 	<script src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous"></script>
 	<script th:inline="javascript">
 	    window.onload = function() {
+			const urlParams = new URLSearchParams(window.location.search);
 	        /* 컨트롤러에서 loginError가 true로 설정되었는지 확인 */
 	       	var loginError = /*[[${loginError}]]*/ false;// loginError 모델을 불러옴
 			console.log("로그인 에러 상태:", loginError); // 로그인 에러 상태를 콘솔에 출력
 	        if (loginError) {
 	            alert("로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
 	        }
+			
+			// 'error=loginRequired' 파라미터가 있으면 로그인 필요 메시지를 띄운다.
+			            if (urlParams.get('error') === 'loginRequired') {
+			                alert('로그인이 필요합니다.');
+			            }
 	    };
+		
+		
 		function handleProductClick(link) {
-		    fetch(link)
+		    // link.href로 실제 URL을 가져옵니다.
+		    fetch(link.href)
 		        .then(response => {
 		            if (response.status === 401) {
-		                alert("로그인 후 이용 가능합니다."); // 인증 필요 시 알림
+		                // 로그인 필요 상태로 세션에 'loginRequired' 설정
+		                sessionStorage.setItem('loginRequired', 'true');
+		                alert('로그인이 필요합니다.');
+		                // 로그인 페이지로 리다이렉트
+		                window.location.href = '/login'; // 또는 로그인 페이지 URL로 변경
 		            } else {
-		                window.location.href = link; // 정상적으로 리다이렉트
+		                // 인증된 사용자는 정상적으로 페이지 이동
+		                window.location.href = link.href;
 		            }
 		        })
-		        .catch(error => console.error("인증 오류:", error));
+		        .catch(error => console.error('인증 오류:', error));
 		}
+		
 	</script>
 </head>
 <body>
@@ -51,6 +66,9 @@
 			<ul id="userDropdown" class="dropdown-menu">
 				<li sec:authorize="hasRole('USER')">
 				    <a href="/profile">내 정보</a>
+				</li>
+				<li sec:authorize="hasRole('USER')">
+				    <a href="#" id="openAllergyFormBtn">알러지 수정</a>
 				</li>
 			    <li sec:authorize="isAuthenticated()">
 			        <a id="logoutBtn" href="#">로그아웃</a>
@@ -96,6 +114,14 @@
 	    </div>
 	</div>
 	
+	<div id="AllergyFormModal" class="modal-bg">
+	        <div class="modal">
+	            <span class="modal-close" id="closeAllergyFormModal">&times;</span> <!-- 닫기 버튼 -->
+	            <div id="AllergyFormModalContent">
+	                <!-- 알러지 폼 내용은 여기에 동적으로 로드됩니다. -->
+	            </div>
+	        </div>
+	    </div>
 	
     <!-- 메인 슬라이드 -->
     <section class="main-slide">
@@ -248,7 +274,29 @@
 						           };
 						           xhr.send();
 						       });
-						   }			   
+						   }
+						   // "알러지 수정" 버튼 클릭 시 모달 열기
+						      const openAllergyFormBtn = document.getElementById("openAllergyFormBtn");
+						      if (openAllergyFormBtn) {
+						          openAllergyFormBtn.addEventListener("click", function(event) {
+						              event.preventDefault(); // 기본 동작 막기
+
+						              const xhr = new XMLHttpRequest();
+						              xhr.open("GET", "/AllergyForm", true); // 알러지 폼을 로드하는 GET 요청
+						              xhr.onreadystatechange = function() {
+						                  if (xhr.readyState === 4 && xhr.status === 200) {
+						                      // 알러지 폼을 모달에 로드
+						                      document.getElementById("AllergyFormModalContent").innerHTML = xhr.responseText;
+						                      // 모달 표시
+						                      document.getElementById("AllergyFormModal").style.display = "flex";
+						                      document.body.style.overflow = "hidden"; // 스크롤 막기
+						                  } else if (xhr.readyState === 4) {
+						                      console.error("AJAX 요청 실패: " + xhr.status);
+						                  }
+						              };
+						              xhr.send();
+						          });
+						      }			   
 
 	        // 회원가입 버튼 클릭 시 모달 열기
 	        const signupBtn = document.getElementById("signupBtn");
@@ -285,6 +333,15 @@
 	            });
 	        }
 	    });
+		
+		// 알러지 폼 모달 닫기 버튼 클릭 시 모달 닫기
+		const closeAllergyFormModal = document.getElementById("closeAllergyFormModal");
+		if (closeAllergyFormModal) {
+		    closeAllergyFormModal.addEventListener("click", function() {
+		        document.getElementById("AllergyFormModal").style.display = "none";
+		        document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+		    });
+		}
 		
 		// "내 정보" 모달 닫기 버튼 클릭 시 모달 닫기
 		   const closeProfileModal = document.getElementById("closeProfileModal");

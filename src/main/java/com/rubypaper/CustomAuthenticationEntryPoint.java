@@ -12,9 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        // 인증이 필요한 경우 응답 상태와 메시지 설정
-        response.sendRedirect("/index");
-    }
+	@Override
+	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+	    response.sendRedirect("/index?error=loginRequired"); // 'loginRequired' 파라미터를 추가하여 리다이렉트
+	}
 }

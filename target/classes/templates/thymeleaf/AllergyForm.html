@@ -8,16 +8,6 @@
     <link rel="stylesheet" href="/css/signup.css">
 	<link rel="stylesheet" href="/css/allergyForm.css">
 </head>
-<header class="header">
-       <div class="logo">Space</div>
-       <nav class="nav">
-           <ul>
-               <li><a href="#">#유한대학교</a></li>
-               <li><a href="#">#졸업작품</a></li>
-               <li><a href="#">#3조</a></li>
-           </ul>
-       </nav>
-</header>
 <br>
 <body>
 	<center>
@@ -28,36 +18,36 @@
 		    <input type="hidden" name="_csrf" th:value="${_csrf.token}"> <!-- CSRF 토큰 추가 -->
 
 		    <label>
-		        <input type="checkbox" name="milk" th:field="*{milk}"> 우유
+		        <input type="checkbox" class="allergy" name="milk" th:field="*{milk}"> 우유
 		    </label>
 		    <label>
-		        <input type="checkbox" name="egg" th:field="*{egg}"> 달걀
+		        <input type="checkbox" class="allergy" name="egg" th:field="*{egg}"> 달걀
 		    </label>
 		    <label>
-		        <input type="checkbox" name="peanut" th:field="*{peanut}"> 땅콩
+		        <input type="checkbox" class="allergy" name="peanut" th:field="*{peanut}"> 땅콩
 		    </label>
 		    <label>
-		        <input type="checkbox" name="nuts" th:field="*{nuts}"> 견과류
+		        <input type="checkbox" class="allergy" name="nuts" th:field="*{nuts}"> 견과류
 		    </label>
 			<br>
 			<br>
 
 		    <label>
-		        <input type="checkbox" name="seafood" th:field="*{seafood}"> 해산물
+		        <input type="checkbox" class="allergy" name="seafood" th:field="*{seafood}"> 해산물
 		    </label>
 		    <label>
-		        <input type="checkbox" name="shellfish" th:field="*{shellfish}"> 갑각류
+		        <input type="checkbox" class="allergy" name="shellfish" th:field="*{shellfish}"> 갑각류
 		    </label>
 		    <label>
-		        <input type="checkbox" name="wheat" th:field="*{wheat}"> 밀
+		        <input type="checkbox" class="allergy" name="wheat" th:field="*{wheat}"> 밀
 		    </label>
 		    <label>
-		        <input type="checkbox" name="leguminoseae" th:field="*{leguminoseae}"> 대두류
+		        <input type="checkbox" class="allergy" name="leguminoseae" th:field="*{leguminoseae}"> 대두류
 		    </label>
 			<br>
 			<br>
 			<label>
-			    <input type="checkbox" name="null"> 없음
+			    <input type="checkbox" id="no-allergy" name="noAllergy"> 없음
 			</label>
 			<br>
 			<br>
@@ -65,5 +55,26 @@
 		</form>
     </div>
 	</center>
+	<script>
+	    // 모든 알러지 체크박스와 '없음' 체크박스를 선택
+	    const allergyCheckboxes = document.querySelectorAll('.allergy');
+	    const noAllergyCheckbox = document.getElementById('no-allergy');
+
+	    // '없음' 체크박스 클릭 시 다른 체크박스 해제
+	    noAllergyCheckbox.addEventListener('change', function () {
+	        if (this.checked) {
+	            allergyCheckboxes.forEach(checkbox => checkbox.checked = false);
+	        }
+	    });
+
+	    // 다른 체크박스 클릭 시 '없음' 체크박스 해제
+	    allergyCheckboxes.forEach(checkbox => {
+	        checkbox.addEventListener('change', function () {
+	            if (this.checked) {
+	                noAllergyCheckbox.checked = false;
+	            }
+	        });
+	    });
+	</script>
 </body>
 </html>
