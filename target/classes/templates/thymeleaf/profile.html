@@ -9,17 +9,6 @@
 	<link rel="stylesheet" href="/css/allergyForm.css">
 </head>
 <body>
-	<header class="header">
-	       <div class="logo">Space</div>
-	       <nav class="nav">
-	           <ul>
-	               <li><a href="#">#유한대학교</a></li>
-	               <li><a href="#">#졸업작품</a></li>
-	               <li><a href="#">#3조</a></li>
-	           </ul>
-	       </nav>
-    </header>
-	<center>
 		<div class="container">
 	    <p th:if="${user != null}">
 	        아이디: <span th:text="${user.id}"></span><br>
@@ -47,6 +36,5 @@
 		<br>
 		<a href="/index">메인 페이지로 돌아가기</a>
 		<div>
-	</center>
 </body>
 </html>

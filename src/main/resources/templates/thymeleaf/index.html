@@ -87,6 +87,15 @@
 	    </div>
 	</div>
 	
+	<div id="profileModal" class="modal-bg">
+	    <div class="modal">
+	        <span class="modal-close" id="closeProfileModal">&times;</span> <!-- 닫기 버튼 -->
+	        <div id="profileModalContent">
+	            <!-- 여기 profile.html 내용이 들어갑니다 -->
+	        </div>
+	    </div>
+	</div>
+	
 	
     <!-- 메인 슬라이드 -->
     <section class="main-slide">
@@ -219,6 +228,27 @@
 				                   xhr.send();
 				               });
 				           }
+						   
+						   // "내 정보" 버튼 클릭 시 모달 열기
+						   const profileBtn = document.querySelector("a[href='/profile']");
+						   if (profileBtn) {
+						       profileBtn.addEventListener("click", function(event) {
+						           event.preventDefault(); // 기본 동작 막기
+
+						           const xhr = new XMLHttpRequest();
+						           xhr.open("GET", "/profile", true);
+						           xhr.onreadystatechange = function() {
+						               if (xhr.readyState === 4 && xhr.status === 200) {
+						                   document.getElementById("profileModalContent").innerHTML = xhr.responseText;
+						                   document.getElementById("profileModal").style.display = "flex";
+						                   document.body.style.overflow = "hidden";
+						               } else if (xhr.readyState === 4) {
+						                   console.error("AJAX 요청 실패: " + xhr.status);
+						               }
+						           };
+						           xhr.send();
+						       });
+						   }			   
 
 	        // 회원가입 버튼 클릭 시 모달 열기
 	        const signupBtn = document.getElementById("signupBtn");
@@ -255,6 +285,16 @@
 	            });
 	        }
 	    });
+		
+		// "내 정보" 모달 닫기 버튼 클릭 시 모달 닫기
+		   const closeProfileModal = document.getElementById("closeProfileModal");
+		   if (closeProfileModal) {
+		       closeProfileModal.addEventListener("click", function() {
+		           document.getElementById("profileModal").style.display = "none";
+		           document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+		       });
+		   }
+		
 		// 모달 닫기 버튼 클릭 시 모달 닫기
 		const closeModal = document.getElementById("closeModal");
 		if (closeModal) {
