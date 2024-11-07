@@ -1,18 +1,10 @@
-body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  background-color: #f4f4f4;
-}
+
 
 .calendar-container {
   text-align: center;
   padding: 20px;
   width: 90vw;
-  max-width: 1200px;
+  max-width: 1440px;
   background-color: #FFFFFF;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -21,7 +13,7 @@ body {
 .top-section {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex;
   margin-bottom: 20px;
 }
 
@@ -142,6 +134,7 @@ td.today {
 }
 
 .selected-meal-info {
+
   margin-left: 20px;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
@@ -234,4 +227,7 @@ button {
   font-weight: bold;
   margin-top: 70px; 
   position: relative;
+}
+.small-text {
+    font-size: 0.6em; /* 글씨 크기를 줄이기 위해 설정 */
 }

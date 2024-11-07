@@ -1,13 +1,5 @@
 /* 기본 설정 */
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-}
+
 
 #container {
     position: fixed; /* 화면 위쪽에 고정 */
@@ -417,3 +409,26 @@ body {
         opacity: 0;
     }
 }
+.button-container button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, background-color 0.2s;
+    background-color: white; /* 기본 배경색 */
+}
+
+.button-container button:hover {
+    transform: scale(1.05);
+}
+
+.button-container button.selected {
+    background-color: #d3d3d3; /* 선택 시 어두운 배경색 */
+}
+
+.button-container button:disabled {
+    background-color: #c0c0c0; /* 비활성화 시 배경색 */
+    cursor: not-allowed;
+}
+

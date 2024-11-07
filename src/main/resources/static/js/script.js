@@ -67,8 +67,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const protein = foodData.protein || 0;
         const fat = foodData.fat || 0;
 
-        mealElement.textContent += ` (칼로리: ${kcal}kcal, 탄수화물: ${carbs}g, 단백질: ${protein}g, 지방: ${fat}g)`;
-      })
+		const smallText = document.createElement('span');
+				smallText.classList.add('small-text');
+				smallText.textContent = ` (Kcal: ${kcal}kcal, 탄: ${carbs}g, 단: ${protein}g, 지: ${fat}g)`;
+
+				// mealElement에 작은 텍스트 추가
+				mealElement.appendChild(smallText);
+			})
       .catch(error => console.error('Fetch error:', error));
   }
   
