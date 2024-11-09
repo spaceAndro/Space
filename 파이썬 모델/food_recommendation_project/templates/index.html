@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음식 추천 시스템</title>
+</head>
+<body>
+    <h1>음식 추천 시스템</h1>
+
+    <!-- 입력 폼 -->
+    <form method="POST" action="/predict">
+        <label>날씨 상태:
+            <select name="weather_condition">
+                <option value="Clear">맑음</option>
+                <option value="Cloudy">흐림</option>
+                <option value="Rain">비</option>
+                <option value="Snow">눈</option>
+            </select>
+        </label><br>
+
+        <label>계절:
+            <select name="season">
+                <option value="Spring">봄</option>
+                <option value="Summer">여름</option>
+                <option value="Fall">가을</option>
+                <option value="Winter">겨울</option>
+            </select>
+        </label><br>
+
+        <label>알레르기 정보: (선택사항)<br>
+            <input type="checkbox" name="allergies" value="우유"> 우유<br>
+            <input type="checkbox" name="allergies" value="달걀"> 달걀<br>
+            <input type="checkbox" name="allergies" value="땅콩"> 땅콩<br>
+            <input type="checkbox" name="allergies" value="견과류"> 견과류<br>
+            <input type="checkbox" name="allergies" value="해산물"> 해산물<br>
+            <input type="checkbox" name="allergies" value="갑각류"> 갑각류<br>
+            <input type="checkbox" name="allergies" value="밀"> 밀<br>
+            <input type="checkbox" name="allergies" value="대두류"> 대두류<br>
+        </label><br>
+
+        <label>선호하는 재료: (선택사항)
+            <select name="preferred_ingredient">
+                <option value="">없음</option>
+                <option value="밀">밀</option>
+                <option value="쌀">쌀</option>
+                <option value="고기">고기</option>
+                <option value="해산물">해산물</option>
+            </select>
+        </label><br>
+
+        <label>음식 분류: (선택사항)
+            <select name="cuisine_type">
+                <option value="없음">없음</option>
+                <option value="한식">한식</option>
+                <option value="중식">중식</option>
+                <option value="일식">일식</option>
+                <option value="양식">양식</option>
+            </select>
+        </label><br>
+
+        <label>음식 종류: (선택사항)
+            <select name="food_category">
+                <option value="없음">없음</option>
+                <option value="국류">국류</option>
+                <option value="밥류">밥류</option>
+                <option value="면류">면류</option>
+                <option value="빵류">빵류</option>
+                <option value="샐러드류">샐러드류</option>
+            </select>
+        </label><br>
+
+        <button type="submit">추천 받기</button>
+    </form>
+
+    <!-- 추천 결과 표시 -->
+    {% if prediction %}
+        <h2>추천 음식: {{ prediction }}</h2>
+    {% endif %}
+
+</body>
+</html>
