@@ -52,6 +52,7 @@
 		<div class="logo" onclick="window.location.href='/index'">	Space</div>
         <nav class="nav">
             <ul>
+				<span th:text="${recommendedFood}" id="recommendedFood"></span>
                 <li><a href="#">#유한대학교</a></li>
                 <li><a href="#">#졸업작품</a></li>
                 <li><a href="#">#3조</a></li>
@@ -148,7 +149,7 @@
     <!-- 메뉴 -->
     <section class="products">
         <div class="product-grid">
-			<div class="product weather-box" onmouseover="showWeatherDetails()" onmouseout="hideWeatherDetails()">
+			<div class="product" onmouseover="showWeatherDetails()" onmouseout="hideWeatherDetails()">
 			    <!-- 날씨 이미지 -->
 			    <img th:if="${weather_condition == 'Clear'}" src="images/weather/Clear.png" alt="Clear Weather">
 			    <img th:if="${weather_condition == 'Cloudy'}" src="images/weather/clouds.png" alt="Cloudy Weather">
@@ -156,17 +157,13 @@
 			    <img th:if="${weather_condition == 'Snow'}" src="images/weather/snow.png" alt="Snowy Weather">
 			    
 			    <!-- 날씨 텍스트 -->
-			    <h2 class="weather-text">오늘의 날씨: <span th:text="${weather_condition}"></span></h2>
+			    <h2 class="pruduct">오늘의 날씨 <span th:text="${weather_condition}"></span></h2>
 			    
-			    <!-- 추가 정보 (온도와 습도) -->
-			    <div class="weather-details">
-			        <p>온도: <span th:text="${temperature}"></span>°C</p>
-			        <p>습도: <span th:text="${humidity}"></span>%</p>
-			    </div>
+
 			</div>
 			<div class="product" onclick="handleProductClick('/index2')"> <!-- handleProductClick 사용 -->
 						    <img src="images/MenuRecommand.png" class="auth-required" alt="음식추천">
-						    <h2>음식추천 : <span th:text="${recommendedFood}"></span></h2> <!-- span 종료 태그 추가 -->
+						    <h2>음식추천 <span th:text="${recommendedFood}"></span></h2> <!-- span 종료 태그 추가 -->
 						</div>
 
 						<div class="product" onclick="handleProductClick('/calendar')"> <!-- handleProductClick 사용 -->
@@ -175,7 +172,9 @@
 						</div>
 			        </div>
     </section>
-
+	<div id="recommended-bar" class="recommended-bar">
+	    <span id="recommended-text">오늘의 추천은?</span>
+	</div>
     <!-- 하단 메뉴 -->
     <footer class="footer">
         <div class="menu">
@@ -184,9 +183,9 @@
     </footer>
 
     <!-- 지도 박스 추가 -->
-    <section class="map-box">
-        <div id="map"></div>
-    </section>
+	<section class="map-box">
+	    <div id="map" style="width:100%;height:400px;"></div>
+	</section>
 
 	<!-- JavaScript 연결 -->
 	<script src="/js/mainScript.js"></script>
@@ -429,7 +428,80 @@
 		}
 		
 	</script>
-    <!-- Google Maps API 추가 (geometry 라이브러리 추가) -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=(api키)&libraries=places,geometry&callback=initMap"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+		        // URL 파라미터에서 recommendedFood 값 가져오기
+		        const urlParams = new URLSearchParams(window.location.search);
+		        const recommendedFood = urlParams.get('recommendedFood') || '음식점'; // 기본값: '음식점'
+		        
+		        console.log("추천된 음식:", recommendedFood); // 확인용
+		
+		        const mapContainer = document.getElementById('map');
+		        const mapOption = { 
+		            center: new kakao.maps.LatLng(37.487543, 126.821558), // 기본 위치 (서울)
+		            level: 4 // 확대 레벨
+		        };
+		        const map = new kakao.maps.Map(mapContainer, mapOption);
+		        const ps = new kakao.maps.services.Places(map); // 장소 검색 객체 생성
+		
+		        // 음식점 검색
+		        searchFoodShops(recommendedFood);
+		
+		        function searchFoodShops(foodName) {
+		            if (foodName) {
+		                const foodKeyword = foodName; 
+		                ps.keywordSearch(foodKeyword, (data, status) => {
+		                    if (status === kakao.maps.services.Status.OK) {
+		                        markPlacesOnMap(data); // 결과 표시
+		                    } else {
+		                        alert("검색된 음식점이 없습니다.");
+		                    }
+		                }, {useMapBounds: true}); // 현재 지도 범위 내에서 검색
+		            }
+		        }
+		
+				function markPlacesOnMap(data) {
+				                data.forEach(place => {
+				                    const markerPosition = new kakao.maps.LatLng(place.y, place.x);
+				                    const marker = new kakao.maps.Marker({
+				                        map: map,
+				                        position: markerPosition
+				                    });
+				
+				                    // 인포윈도우 기본 내용 (이름 표시)
+				                    let infowindowContent = `
+				                        <div class="custom-infowindow">
+				                            <strong>${place.place_name}</strong>
+				                            <div>주소: ${place.road_address_name || place.address_name || '주소 정보 없음'}</div>
+				                            <div>전화번호: ${place.phone || '전화번호 정보 없음'}</div>
+				                            <a href="https://place.map.kakao.com/${place.id}" target="_blank">리뷰 및 평점 보기</a>
+				                        </div>
+				                    `;
+				
+				                    // 인포윈도우 생성
+				                    const infowindow = new kakao.maps.InfoWindow({
+				                        content: infowindowContent,
+				                        removable: true
+				                    });
+				
+				                    // 마커에 마우스를 올렸을 때 인포윈도우 표시
+				                    kakao.maps.event.addListener(marker, 'mouseover', () => infowindow.open(map, marker));
+				                   
+				                });
+				            }
+				        });
+						document.addEventListener("DOMContentLoaded", function() {
+						        // URL 파라미터에서 recommendedFood 값 가져오기
+						        const urlParams = new URLSearchParams(window.location.search);
+						        const recommendedFood = urlParams.get('recommendedFood') || "오늘의 추천은?";
+						
+						        // 추천된 음식 표시
+						        const recommendedText = document.getElementById("recommended-text");
+						        recommendedText.textContent = recommendedFood;
+						    });
+	</script>
+	
+	<!-- 카카오맵 API 추가 (API 키 필요) -->
+	<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=9bc236c8a813de4d532e961b075041fc&libraries=services"></script>
 </body>
 </html>
