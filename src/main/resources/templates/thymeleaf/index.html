@@ -102,6 +102,7 @@
 	    </div>
 	</div>
 	
+	<!-- 내정보 모달 -->
 	<div id="profileModal" class="modal-bg">
 	    <div class="modal">
 	        <span class="modal-close" id="closeProfileModal">&times;</span> <!-- 닫기 버튼 -->
@@ -111,6 +112,16 @@
 	    </div>
 	</div>
 	
+	<!-- 회원탈퇴 모달 -->
+	<div id="confirmDeleteModal" class="modal-bg">
+	    <div class="modal">
+	        <p>정말 회원탈퇴를 진행하시겠습니까?</p>
+	        <button id="confirmDeleteYes">예</button>
+	        <button id="confirmDeleteNo">아니요</button>
+	    </div>
+	</div>
+	
+	<!-- 알러지 설정 모달 -->
 	<div id="AllergyFormModal" class="modal-bg">
 	        <div class="modal">
 	            <span class="modal-close" id="closeAllergyFormModal">&times;</span> <!-- 닫기 버튼 -->
@@ -260,6 +271,18 @@
 		                   document.getElementById("profileModalContent").innerHTML = xhr.responseText;
 		                   document.getElementById("profileModal").style.display = "flex";
 		                   document.body.style.overflow = "hidden";
+						   
+						   // 회원탙뢰 모달
+					   	   const deleteAccountBtn = document.getElementById("deleteAccountBtn");
+					   	   if (deleteAccountBtn) {
+					   	       deleteAccountBtn.addEventListener("click", function(event) {
+					   	           event.preventDefault(); // 기본 동작 막기
+					   
+					 	           // 회원 탈퇴 확인 모달을 표시
+					   	           document.getElementById("confirmDeleteModal").style.display = "flex";
+					   	           document.body.style.overflow = "hidden";
+					   	       });
+					   	   }
 		               } else if (xhr.readyState === 4) {
 		                   console.error("AJAX 요청 실패: " + xhr.status);
 		               }
@@ -267,6 +290,56 @@
 		           xhr.send();
 		       });
 		   }
+		   
+		   // "예" 버튼 클릭 시 회원 탈퇴 요청
+		   const confirmDeleteYesBtn = document.getElementById("confirmDeleteYes");
+		   if (confirmDeleteYesBtn) {
+		       confirmDeleteYesBtn.addEventListener("click", function(event) {
+		           event.preventDefault(); // 기본 링크 동작 막기
+		   
+		           const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+		           const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+		   
+		           fetch("/deleteAccount", {
+		               method: "POST",
+		               headers: {
+		                   "Content-Type": "application/x-www-form-urlencoded",
+		                   [csrfHeader]: csrfToken // CSRF 토큰 추가
+		               }
+		           })
+		           .then(response => {
+		               if (response.ok) {
+		                   alert("회원 탈퇴가 완료되었습니다.");
+		                   window.location.href = "/index"; // 탈퇴 후 메인 페이지로 이동
+		               } else {
+		                   console.error("회원 탈퇴 요청 실패: " + response.status);
+		                   response.text().then(text => console.error("응답 메시지:", text)); // 서버 에러 메시지 출력
+		               }
+		           })
+		           .catch(error => {
+		               console.error("회원 탈퇴 중 오류 발생: ", error);
+		           });
+		       });
+			}
+	   	
+	   	    // "아니요" 버튼 클릭 시 확인 모달 닫기
+	   	    const confirmDeleteNoBtn = document.getElementById("confirmDeleteNo");
+	   	    if (confirmDeleteNoBtn) {
+	   	        confirmDeleteNoBtn.addEventListener("click", function() {
+	   	            document.getElementById("confirmDeleteModal").style.display = "none";
+	   	            document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+	   	        });
+	   	    }
+	   		
+	   		// 모달 닫기 버튼 클릭 시 모달 닫기
+	   		const closeModal = document.getElementById("closeModal");
+	   		if (closeModal) {
+	   		    closeModal.addEventListener("click", function() {
+	   		        document.getElementById("loginModal").style.display = "none";
+	   		        document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+	   		    });
+	 		}
+		   
 		   // "알러지 수정" 버튼 클릭 시 모달 열기
 	       const openAllergyFormBtn = document.getElementById("openAllergyFormBtn");
 	       if (openAllergyFormBtn) {
@@ -379,22 +452,13 @@
 		}
 		
 		// "내 정보" 모달 닫기 버튼 클릭 시 모달 닫기
-		   const closeProfileModal = document.getElementById("closeProfileModal");
-		   if (closeProfileModal) {
-		       closeProfileModal.addEventListener("click", function() {
-		           document.getElementById("profileModal").style.display = "none";
-		           document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
-		       });
-		   }
-		
-		// 모달 닫기 버튼 클릭 시 모달 닫기
-		const closeModal = document.getElementById("closeModal");
-		if (closeModal) {
-		    closeModal.addEventListener("click", function() {
-		        document.getElementById("loginModal").style.display = "none";
-		        document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
-		    });
-		}
+	    const closeProfileModal = document.getElementById("closeProfileModal");
+	    if (closeProfileModal) {
+	        closeProfileModal.addEventListener("click", function() {
+	            document.getElementById("profileModal").style.display = "none";
+	            document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+	        });
+	    }
 
 		// 회원가입 모달 닫기 버튼 클릭 시 모달 닫기
 		const closeSignupModal = document.getElementById("closeSignupModal");

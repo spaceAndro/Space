@@ -1,5 +1,6 @@
 package com.rubypaper.dto;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ public class UserAllergy {
 	public int allSeq;
 	
 	// ManyToOne 에서 OneToOne으로 관계 수정
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "uSeq") // 외래 키로 User의 u_seq를 사용
 	private User user;
 	

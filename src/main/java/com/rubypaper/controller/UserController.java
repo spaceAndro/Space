@@ -87,4 +87,20 @@ public class UserController {
         // User 엔티티를 저장하여 DB에 반영
     }
     
+    @PostMapping("/deleteAccount")
+    public String userDelete() {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    String username = authentication.getName(); // 사용자 이름 (아이디)
+	    
+	    // 사용자 정보 가져오기
+        User user = userService.findByUsername(username);
+        
+        String userId = user.getId();
+    	
+        userService.deleteCalendarByUserId(userId);
+        userService.deleteUser(user);
+        
+    	return "redirect:/index";
+    }
+    
 }
