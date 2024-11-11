@@ -499,6 +499,7 @@
 		
 	</script>
 	<script>
+		
 		document.addEventListener("DOMContentLoaded", function() {
 		        // URL 파라미터에서 recommendedFood 값 가져오기
 		        const urlParams = new URLSearchParams(window.location.search);
@@ -555,7 +556,7 @@
 				                    });
 				
 				                    // 마커에 마우스를 올렸을 때 인포윈도우 표시
-				                    kakao.maps.event.addListener(marker, 'mouseover', () => infowindow.open(map, marker));
+				                    kakao.maps.event.addListener(marker, 'click', () => infowindow.open(map, marker));
 				                   
 				                });
 				            }
