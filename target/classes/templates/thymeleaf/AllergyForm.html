@@ -55,26 +55,5 @@
 		</form>
     </div>
 	</center>
-	<script>
-	    // 모든 알러지 체크박스와 '없음' 체크박스를 선택
-	    const allergyCheckboxes = document.querySelectorAll('.allergy');
-	    const noAllergyCheckbox = document.getElementById('no-allergy');
-
-	    // '없음' 체크박스 클릭 시 다른 체크박스 해제
-	    noAllergyCheckbox.addEventListener('change', function () {
-	        if (this.checked) {
-	            allergyCheckboxes.forEach(checkbox => checkbox.checked = false);
-	        }
-	    });
-
-	    // 다른 체크박스 클릭 시 '없음' 체크박스 해제
-	    allergyCheckboxes.forEach(checkbox => {
-	        checkbox.addEventListener('change', function () {
-	            if (this.checked) {
-	                noAllergyCheckbox.checked = false;
-	            }
-	        });
-	    });
-	</script>
 </body>
 </html>
