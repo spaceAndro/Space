@@ -132,6 +132,7 @@ public class FoodController {
         }
         if(!bFlag || !lFlag || !dFlag) {
         	redirectAttributes.addFlashAttribute("error", "문제가 생겨 작업하지 못했습니다");
+        	calendarService.deleteCalendar(userId, localDate);
         	return "redirect:/calendar";
         }
         
