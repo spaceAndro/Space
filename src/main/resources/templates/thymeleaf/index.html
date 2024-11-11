@@ -346,28 +346,50 @@
 	   		    });
 	 		}
 		   
-		   // "알러지 수정" 버튼 클릭 시 모달 열기
-	       const openAllergyFormBtn = document.getElementById("openAllergyFormBtn");
-	       if (openAllergyFormBtn) {
-	           openAllergyFormBtn.addEventListener("click", function(event) {
-	              event.preventDefault(); // 기본 동작 막기
+			// "알러지 수정" 버튼 클릭 시 모달 열기
+			const openAllergyFormBtn = document.getElementById("openAllergyFormBtn");
+			if (openAllergyFormBtn) {
+			    openAllergyFormBtn.addEventListener("click", function(event) {
+			        event.preventDefault(); // 기본 동작 막기
 
-	              const xhr = new XMLHttpRequest();
-	              xhr.open("GET", "/AllergyForm", true); // 알러지 폼을 로드하는 GET 요청
-	              xhr.onreadystatechange = function() {
-	                  if (xhr.readyState === 4 && xhr.status === 200) {
-	                      // 알러지 폼을 모달에 로드
-	                      document.getElementById("AllergyFormModalContent").innerHTML = xhr.responseText;
-	                      // 모달 표시
-	                      document.getElementById("AllergyFormModal").style.display = "flex";
-	                      document.body.style.overflow = "hidden"; // 스크롤 막기
-	                  } else if (xhr.readyState === 4) {
-	                      console.error("AJAX 요청 실패: " + xhr.status);
-	                  }
-	              };
-	              xhr.send();
-	           });
-	        }			   
+			        const xhr = new XMLHttpRequest();
+			        xhr.open("GET", "/AllergyForm", true); // 알러지 폼을 로드하는 GET 요청
+			        xhr.onreadystatechange = function() {
+			            if (xhr.readyState === 4 && xhr.status === 200) {
+			                // 알러지 폼을 모달에 로드
+			                document.getElementById("AllergyFormModalContent").innerHTML = xhr.responseText;
+			                // 모달 표시
+			                document.getElementById("AllergyFormModal").style.display = "flex";
+			                document.body.style.overflow = "hidden"; // 스크롤 막기
+
+			                // 모달이 로드된 후 체크박스 이벤트 설정
+			                const allergyCheckboxes = document.querySelectorAll('.allergy');
+			                const noAllergyCheckbox = document.getElementById('no-allergy');
+
+			                // '없음' 체크박스 클릭 시 다른 체크박스 해제
+			                if (noAllergyCheckbox) {
+			                    noAllergyCheckbox.addEventListener('change', function () {
+			                        if (this.checked) {
+			                            allergyCheckboxes.forEach(checkbox => checkbox.checked = false);
+			                        }
+			                    });
+			                }
+
+			                // 다른 체크박스 클릭 시 '없음' 체크박스 해제
+			                allergyCheckboxes.forEach(checkbox => {
+			                    checkbox.addEventListener('change', function () {
+			                        if (this.checked) {
+			                            noAllergyCheckbox.checked = false;
+			                        }
+			                    });
+			                });
+			            } else if (xhr.readyState === 4) {
+			                console.error("AJAX 요청 실패: " + xhr.status);
+			            }
+			        };
+			        xhr.send();
+			    });
+			}		   
 
 	        // 회원가입 버튼 클릭 시 모달 열기
 	        const signupBtn = document.getElementById("signupBtn");
