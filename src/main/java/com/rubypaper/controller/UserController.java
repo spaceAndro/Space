@@ -1,7 +1,6 @@
 package com.rubypaper.controller;
 
 import java.security.Principal;
-import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,6 +16,7 @@ import com.rubypaper.dto.User;
 import com.rubypaper.service.UserService;
 import com.rubypaper.service.WeatherService;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -30,15 +30,37 @@ public class UserController {
     private WeatherService weatherService;
 
     @GetMapping("/index")
-    public String index(Model model) {
-        boolean isAuthenticated = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+    public String index(Model model, Principal principal) {
+        boolean isAuthenticated = SecurityContextHolder.getContext().getAuthentication() != null &&
+                                  SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+
+        // 로그인 상태 체크
+        if (isAuthenticated) {
+            String username = principal.getName();
+            boolean isFirstLogin = userService.isFirstLogin(username);
+
+            if (isFirstLogin) {
+                userService.updateFirstLogin(username);  // 최초 로그인 시 firstLogin 업데이트
+            }
+
+            model.addAttribute("isFirstLogin", isFirstLogin);
+        }
+
         model.addAttribute("isAuthenticated", isAuthenticated);
+        
         String weatherCondition = weatherService.getWeatherCondition();
         String season = weatherService.getSeason();
         model.addAttribute("weather_condition", weatherCondition);
         model.addAttribute("season", season);
+
+        // 인증되지 않은 사용자가 접근하려면 로그인 모달을 띄우기 위한 flag 전달
+        if (!isAuthenticated) {
+            model.addAttribute("showLoginModal", true);
+        }
+
         return "index"; // Thymeleaf 템플릿 이름
     }
+    
 
     @GetMapping("/profile")
     public String userInfo(Model model, Principal principal) {
@@ -66,14 +88,7 @@ public class UserController {
     }
     
     
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {    
-            new SecurityContextLogoutHandler().logout(request, response, auth);  // 로그아웃 처리
-        }
-        return "login";  // 로그아웃 후 로그인 페이지로 리다이렉트
-    }
+
     
     @GetMapping("/check-first-login")
     public boolean checkFirstLogin(@AuthenticationPrincipal User user) {
@@ -88,7 +103,7 @@ public class UserController {
     }
     
     @PostMapping("/deleteAccount")
-    public String userDelete() {
+    public String userDelete(HttpServletRequest request, HttpServletResponse response) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    String username = authentication.getName(); // 사용자 이름 (아이디)
 	    
@@ -99,6 +114,20 @@ public class UserController {
     	
         userService.deleteCalendarByUserId(userId);
         userService.deleteUser(user);
+        
+        
+     // 세션 무효화
+        SecurityContextHolder.clearContext(); // 세션을 완전히 무효화
+        
+     // 세션과 쿠키 삭제
+        request.getSession().invalidate();  // 세션 무효화
+        // 쿠키 삭제 (JSESSIONID 쿠키 등)
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);  // 쿠키 만료
+        response.addCookie(cookie);
+
+        
         
     	return "redirect:/index";
     }

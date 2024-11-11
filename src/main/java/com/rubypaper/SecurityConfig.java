@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +30,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // 정적 리소스 접근 허용
-                .requestMatchers("/login", "/signup", "/index", "/").permitAll() // 로그인과 회원가입 페이지는 모두 접근 가능
+                .requestMatchers("/login", "/signup", "/").permitAll() // 로그인과 회원가입 페이지는 모두 접근 가능
                 .requestMatchers("/api/meals/**").permitAll() // /api/meals 경로 접근 허용
                 .requestMatchers("/api/signup/**").permitAll() // /api/signup 경로 접근 허용
                 .anyRequest().authenticated() // 나머지 요청은 인증 필요
@@ -45,8 +46,8 @@ public class SecurityConfig {
                     .permitAll()
                 )
             .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/index")  // 로그아웃 후 리다이렉트할 경로 설정
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                .logoutSuccessUrl("/index") // 로그아웃 후 리다이렉트할 경로 설정
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .clearAuthentication(true) // 인증 정보 초기화
