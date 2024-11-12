@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.rubypaper.dto.User;
+import com.rubypaper.dto.UserAllergy;
+import com.rubypaper.service.UserAllergyService;
 import com.rubypaper.service.UserService;
 import com.rubypaper.service.WeatherService;
 
@@ -25,6 +27,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private UserAllergyService userAllergyService;
     
     @Autowired
     private WeatherService weatherService;
@@ -65,9 +70,17 @@ public class UserController {
     @GetMapping("/profile")
     public String userInfo(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
-
+        UserAllergy userAllergy = userAllergyService.findByUserUSeq(user.getUSeq());
+        
+        boolean noAllergy = userAllergy != null && !userAllergy.isMilk() &&
+        					!userAllergy.isEgg() && !userAllergy.isPeanut() &&
+        					!userAllergy.isNuts() && !userAllergy.isSeafood() &&
+        					!userAllergy.isShellfish() && !userAllergy.isWheat() &&
+        					!userAllergy.isLeguminoseae();
         
         model.addAttribute("user", user);
+        model.addAttribute("userAllergy", userAllergy);
+        model.addAttribute("noAllergy", noAllergy);
         return "profile"; // profile.html 템플릿 반환
     }
     

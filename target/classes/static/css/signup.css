@@ -142,4 +142,19 @@
     background-color: black;
 }
 
+/* 버튼 스타일 */
+.container button {
+    width: 30%;
+    padding: 12px;
+    background-color: #000000; /* 버튼 배경을 검은색으로 */
+    color: white;
+    border: none;
+    border-radius: 25px; /* 둥글게 처리 */
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
 
+.container button:hover {
+    background-color: #333333; /* 호버 시 더 어두운 검은색 */
+}
