@@ -1,19 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="_csrf" th:content="${_csrf.token}" />
-    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
-    <title>음식 추천</title>
-    <link rel="stylesheet" href="/css/recommendStyle.css">
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <title>SpaceProject</title>
+    <link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/modal.css">
+	<link rel="stylesheet" href="/css/recommendStyle.css">
+    <style>
+        
+    </style>
+	<script src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous"></script>
+	<script th:inline="javascript">
+	    window.onload = function() {
+			const urlParams = new URLSearchParams(window.location.search);
+	        /* 컨트롤러에서 loginError가 true로 설정되었는지 확인 */
+	       	var loginError = /*[[${loginError}]]*/ false;// loginError 모델을 불러옴
+			console.log("로그인 에러 상태:", loginError); // 로그인 에러 상태를 콘솔에 출력
+	        if (loginError) {
+	            alert("로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
+	        }
+			
+			// 'error=loginRequired' 파라미터가 있으면 로그인 필요 메시지를 띄운다.
+			            if (urlParams.get('error') === 'loginRequired') {
+			                alert('로그인이 필요합니다.');
+			            }
+	    };
+		
+		
+		function handleProductClick(url) {
+		    fetch(url)
+		        .then(response => {
+		            if (response.status === 401) {
+		                sessionStorage.setItem('loginRequired', 'true');
+		                alert('로그인이 필요합니다.');
+		                window.location.href = '/login'; // 로그인 페이지로 리다이렉트
+		            } else {
+		                window.location.href = url; // URL로 이동
+		            }
+		        })
+		        .catch(error => console.error('인증 오류:', error));
+		}
+		
+	</script>
 </head>
 <body>
-    <div id="container">
-        <div id="handle-left"></div>
-        <div id="handle-right"></div>
-        <h2>음식 추천 폼</h2>
-        <form action="#" th:action="@{/getRecommendation}" method="post">
+    <!-- 헤더 -->
+    <header class="header">
+		<div class="logo" onclick="window.location.href='/index'">Space</div>
+        <nav class="nav">
+            <ul>
+                <li><a>#유한대학교</a></li>
+                <li><a>#졸업작품</a></li>
+                <li><a>#3조</a></li>
+            </ul>
+        </nav>
+        <div class="cart-search">
+            <a href="#" onclick="toggleDropdown(event)" class="user-icon"><i class="fa-regular fa-user"></i></a>
+			<ul id="userDropdown" class="dropdown-menu">
+				<li sec:authorize="hasRole('USER')">
+				    <a href="/profile">내 정보</a>
+				</li>
+				<li sec:authorize="hasRole('USER')">
+				    <a href="#" id="openAllergyFormBtn">알러지 수정</a>
+				</li>
+			    <li sec:authorize="isAuthenticated()">
+			        <a id="logoutBtn" href="#">로그아웃</a>
+			    </li>
+			    <li sec:authorize="isAnonymous()">
+			        <a id="loginBtn" href="#">로그인</a>
+			    </li>
+			    <li sec:authorize="isAnonymous()">
+			        <a id="signupBtn" href="#">회원가입</a>
+			    </li>
+			</ul>
+        </div>
+    </header>
+	
+	<!-- 로그인 모달-->
+	<div id="loginModal" class="modal-bg">
+	    <div class="modal">
+	        <span class="modal-close" id="closeModal">&times;</span> <!-- 닫기 버튼 -->
+	        <div id="modalContent"></div> <!-- 여기 login.html 내용이 들어감 -->
+	    </div>
+	</div>
+	
+	<!-- 회원가입 모달 -->
+	<div id="signupModal" class="modal-bg">
+	    <div class="modal">
+	        <span class="modal-close" id="closeSignupModal">&times;</span> <!-- 닫기 버튼 -->
+	        <div id="signupModalContent">
+				<!-- 여기에 나이 선택 드롭다운 추가 -->
+				           <label for="age">나이</label>
+				           <select id="age" name="age" size="5">
+				               <option value="">선택하세요</option>
+				           </select>
+			</div> <!-- 여기 signup.html 내용이 들어감 -->
+	    </div>
+	</div>
+	
+	<div id="profileModal" class="modal-bg">
+	    <div class="modal">
+	        <span class="modal-close" id="closeProfileModal">&times;</span> <!-- 닫기 버튼 -->
+	        <div id="profileModalContent">
+	            <!-- 여기 profile.html 내용이 들어갑니다 -->
+	        </div>
+	    </div>
+	</div>
+	
+	<div id="AllergyFormModal" class="modal-bg">
+	        <div class="modal">
+	            <span class="modal-close" id="closeAllergyFormModal">&times;</span> <!-- 닫기 버튼 -->
+	            <div id="AllergyFormModalContent">
+	                <!-- 알러지 폼 내용은 여기에 동적으로 로드됩니다. -->
+	            </div>
+	        </div>
+	    </div>
+	
+    <!-- 메인 슬라이드 -->
+    <section class="main-slide">
+        <div id="campfire-container">
+        <div id="campfire">
+            <div class="log1"></div>
+            <div class="log2"></div>
+            <div class="log3"></div>
+            <div class="pot">
+                <div class="inner-surface" id="floating-images-container">
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                    <div class="bubble"></div>
+                </div>
+                <div class="pot-handle left"></div>
+                <div class="pot-handle right"></div>
+            </div>
+            <div class="flame-container">
+                <div class="flame">
+                    <div class="inner-flame"></div>
+                </div>
+                <div class="flame">
+                    <div class="inner-flame"></div>
+                </div>
+                <div class="flame">
+                    <div class="inner-flame"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- 메뉴 -->
+    <section class="products">
+           
+	<form action="#" th:action="@{/getRecommendation}" method="post">
             
             <!-- 선호하는 재료 -->
             <div id="preferred_ingredient_container" class="section">
@@ -89,124 +230,363 @@
                     </button>
                 </div>
             </div>
-
-            <div id="submit-container">
-                <button type="submit">추천받기</button>
-            </div>
+			<input type="hidden" id="preferred_ingredient" name="preferred_ingredient">
+			    <input type="hidden" id="cuisine_type" name="cuisine_type">
+			    <input type="hidden" id="food_category" name="food_category">
+				<div id="recommended-bar" class="recommended-bar">
+				    <span th:text="${recommendedFood}" id="recommendedFood">오늘의 추천은?</span>
+				    <div class="recommend-container">
+				        <button type="submit" class="recommend-button">추천</button>
+				        <button onclick="saveAndRedirect()" type="button" class="recommend-button">저장</button>
+				    </div>
+				</div>
         </form>
-		<div id="return-container">
-		    <button onclick="location.href='/'" type="button">메인으로</button>
-		</div>
-		<h3>추천된 음식: <span th:text="${recommendedFood}" id="recommendedFood"></span></h3>
-		<h3>추천된 음식: <span th:text="${allergies}" id="allergies"></span></h3>
-		<button onclick="saveRecommendedFood()" type="button">추천된 음식 저장</button>
     </div>
-
-    <div id="campfire-container">
-        <div id="campfire">
-            <div class="log1"></div>
-            <div class="log2"></div>
-            <div class="log3"></div>
-            <div class="pot">
-                <div class="inner-surface" id="floating-images-container">
-                    <div class="bubble"></div>
-                    <div class="bubble"></div>
-                    <div class="bubble"></div>
-                </div>
-                <div class="pot-handle left"></div>
-                <div class="pot-handle right"></div>
-            </div>
-            <div class="flame-container">
-                <div class="flame">
-                    <div class="inner-flame"></div>
-                </div>
-                <div class="flame">
-                    <div class="inner-flame"></div>
-                </div>
-                <div class="flame">
-                    <div class="inner-flame"></div>
-                </div>
-            </div>
+    </section>
+	
+    <!-- 하단 메뉴 -->
+    <footer class="footer">
+        <div class="menu">
+			<p>© 2024 Space. All rights reserved.</p>
         </div>
-    </div>
+    </footer>
 
-    <script src="/js/recommend.js"></script>
-    <script>
-        let imageCount = 0;
-        const westernImages = [
-            'images/food/usa.png',
-            'images/food/france.png',
-            'images/food/italy.png',
-            'images/food/germany.png'
-        ];
-        let westernImageIndex = 0;
+	<!-- JavaScript 연결 -->
+	<script src="/js/mainScript.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+	        // 로그아웃 버튼 클릭 시 AJAX 요청
+	        const logoutBtn = document.getElementById("logoutBtn");
 
-        // 양식 버튼 이미지가 자동으로 순환하도록 설정
-        const cuisineButton = document.querySelector("button[onclick*='양식']");
-        setInterval(() => {
-            cuisineButton.querySelector("img").src = westernImages[westernImageIndex];
-            westernImageIndex = (westernImageIndex + 1) % westernImages.length;
-        }, 2000); // 2초마다 이미지 변경
+	        if (logoutBtn) {
+	            logoutBtn.addEventListener("click", function(event) {
+	                event.preventDefault(); // 기본 링크 동작 막기
 
-        function selectOption(inputName, value, imgSrc) {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = inputName;
-            input.value = value;
-            document.querySelector('form').appendChild(input);
-            document.getElementById(`${inputName}_container`).classList.add('hidden');
+	                const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+	                const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-            // 선택한 이미지를 pot 내부로 이동시키기
-            const floatingImagesContainer = document.getElementById('floating-images-container');
-            const img = document.createElement('img');
-            img.src = imgSrc;
-			if (inputName === 'cuisine_type' && value === '양식') {
-			            img.src = westernImages[westernImageIndex]; // 첫 이미지 설정
-			            img.classList.add('floating-cuisine'); // 애니메이션 클래스 추가
+	                fetch("/logout", {
+	                    method: "POST",
+	                    headers: {
+	                        "Content-Type": "application/x-www-form-urlencoded",
+	                        [csrfHeader]: csrfToken // CSRF 토큰 추가
+	                    }
+	                })
+	                .then(response => {
+	                    if (response.ok) {
+	                        window.location.href = "/index"; // 로그아웃 후 리다이렉트할 페이지로 이동
+	                    } else {
+	                        console.error("로그아웃 요청 실패: " + response.status);
+	                    }
+	                })
+	                .catch(error => {
+	                    console.error("로그아웃 중 오류 발생: ", error);
+	                });
+	            });
+	        }
 
-			            // 이미지가 일정 시간마다 변경되도록 설정 (2초 간격)
-			            setInterval(() => {
-			                westernImageIndex = (westernImageIndex + 1) % westernImages.length;
-			                img.src = westernImages[westernImageIndex];
-			            }, 2000); // 2초마다 이미지 변경
-			        } else if(inputName === 'cuisine_type'){
-			            img.classList.add('floating-cuisine'); // 기본 이미지 설정
-			        }
-            // 카테고리별로 애니메이션 클래스를 다르게 추가
-            if (inputName === 'preferred_ingredient') {
-                img.classList.add('floating-ingredient');
-            } else if (inputName === 'food_category') {
-                img.classList.add('floating-food');
-            }
+   			// 로그인 버튼 클릭 시 모달 열기
+           const loginBtn = document.getElementById("loginBtn");
+           if (loginBtn) {
+               loginBtn.addEventListener("click", function(event) {
+                   event.preventDefault(); // 기본 동작 막기
 
-            // 위치 조정 - 이미지가 추가될 때마다 20px씩 오른쪽으로 이동
-            const startPositionX = 30 + imageCount * 20;
-            img.style.transform = `translateX(${startPositionX}px)`;
-            imageCount++; // 다음 이미지를 위한 카운트 증가
+                   const xhr = new XMLHttpRequest();
+                   xhr.open("GET", "/login", true);
+                   xhr.onreadystatechange = function() {
+                       if (xhr.readyState === 4) {
+						console.log("AJAX 요청 상태 코드:", xhr.status); // 상태 코드 출력
+                           if (xhr.status === 200) {
+                               document.getElementById("modalContent").innerHTML = xhr.responseText;
+                               document.getElementById("loginModal").style.display = "flex";
+                               document.body.style.overflow = "auto";
+                           } else if (xhr.status === 401) {
+                               showLoginModal(); // 로그인 모달 띄우기
+                           } else {
+                               console.error("AJAX 요청 실패: " + xhr.status);
+                           }
+                       }
+                   };
+                   xhr.send();
+               });
+           }
+		   
+		   // "내 정보" 버튼 클릭 시 모달 열기
+		   const profileBtn = document.querySelector("a[href='/profile']");
+		   if (profileBtn) {
+		       profileBtn.addEventListener("click", function(event) {
+		           event.preventDefault(); // 기본 동작 막기
 
-            floatingImagesContainer.appendChild(img);
-        }
-		function saveRecommendedFood() {
-		        const recommendedFood = document.getElementById("recommendedFood").innerText;
+		           const xhr = new XMLHttpRequest();
+		           xhr.open("GET", "/profile", true);
+		           xhr.onreadystatechange = function() {
+		               if (xhr.readyState === 4 && xhr.status === 200) {
+		                   document.getElementById("profileModalContent").innerHTML = xhr.responseText;
+		                   document.getElementById("profileModal").style.display = "flex";
+		                   document.body.style.overflow = "hidden";
+		               } else if (xhr.readyState === 4) {
+		                   console.error("AJAX 요청 실패: " + xhr.status);
+		               }
+		           };
+		           xhr.send();
+		       });
+		   }
+		   // "알러지 수정" 버튼 클릭 시 모달 열기
+	       const openAllergyFormBtn = document.getElementById("openAllergyFormBtn");
+	       if (openAllergyFormBtn) {
+	           openAllergyFormBtn.addEventListener("click", function(event) {
+	              event.preventDefault(); // 기본 동작 막기
+
+	              const xhr = new XMLHttpRequest();
+	              xhr.open("GET", "/AllergyForm", true); // 알러지 폼을 로드하는 GET 요청
+	              xhr.onreadystatechange = function() {
+	                  if (xhr.readyState === 4 && xhr.status === 200) {
+	                      // 알러지 폼을 모달에 로드
+	                      document.getElementById("AllergyFormModalContent").innerHTML = xhr.responseText;
+	                      // 모달 표시
+	                      document.getElementById("AllergyFormModal").style.display = "flex";
+	                      document.body.style.overflow = "hidden"; // 스크롤 막기
+	                  } else if (xhr.readyState === 4) {
+	                      console.error("AJAX 요청 실패: " + xhr.status);
+	                  }
+	              };
+	              xhr.send();
+	           });
+	        }			   
+
+	        // 회원가입 버튼 클릭 시 모달 열기
+	        const signupBtn = document.getElementById("signupBtn");
+	        if (signupBtn) {
+	            signupBtn.addEventListener("click", function(event) {
+	                event.preventDefault(); // 기본 동작 막기
+
+	                const xhr = new XMLHttpRequest();
+					
+	                xhr.open("GET", "/signup", true);
+	                xhr.onreadystatechange = function() {
+	                    if (xhr.readyState === 4 && xhr.status === 200) {
+	                        document.getElementById("signupModalContent").innerHTML = xhr.responseText;
+	                        document.getElementById("signupModal").style.display = "flex";
+							
+							
+							// 여기서 옵션 추가 코드 실행
+			                const ageSelect = document.getElementById("age");
+			                for (let i = 10; i <= 80; i++) {
+			                    const option = document.createElement("option");
+			                    option.value = i;
+			                    option.text = i;
+			                    ageSelect.appendChild(option);
+			                }
+							
+							// 이메일 중복 검사 기능 추가
+		                    const checkEmailBtn = document.getElementById("check-email");
+		                    if (checkEmailBtn) {
+		                        checkEmailBtn.addEventListener("click", function() {
+									const emailField = document.getElementById("email");
+									const email = emailField.value;
+		                            const passwordField = document.getElementById("password");
+		                            
+		                            fetch(`/api/signup/checkEmail?id=${email}`)
+		                                .then(response => {
+											if(!response.ok) {
+									            throw new Error("네트워크 응답에 문제가 있습니다."); // 응답 상태가 OK가 아닌 경우 에러 처리
+									        }
+									        return response.json(); // JSON으로 변환
+										})
+		                                .then(data => {
+											console.log(data);
+											if (data.exists) {
+									            alert("이미 사용 중인 아이디입니다.");
+									            emailField.focus();
+									        } else {
+									            alert("사용 가능한 아이디입니다.");
+									            emailField.setAttribute("readonly", true); // 이메일 필드 확정
+									            passwordField.focus(); // 포커스를 비밀번호 필드로 이동
+									        }
+		                                })
+		                                .catch(error => console.error('Error:', error));
+		                        });
+		                    }
+							
+							// 가입하기 버튼 클릭 이벤트
+							const signupBtn = document.getElementById("signup");
+						    if (signupBtn) {
+						        signupBtn.addEventListener("click", function(event) {
+									const emailField = document.getElementById("email");
+						            // 이메일 필드가 readonly 상태가 아니면 제출 막기
+						            if (!emailField.hasAttribute("readonly")) {
+						                event.preventDefault(); // 폼 제출 막기
+						                alert("이메일 중복 검사를 통과해야 합니다.");
+						                emailField.focus(); // emailField로 포커스 이동
+						            }
+						        });
+						    }
+							
+	                        document.body.style.overflow = "auto";
+							
+	                    } else if (xhr.readyState === 4) {
+	                        console.error("AJAX 요청 실패: " + xhr.status);
+	                    }
+	                };
+	                xhr.send();
+	            });
+	        }
+	    });
 		
-		        // 서버로 POST 요청 전송
-		        fetch('/saveFoodToCalendar', {
-		            method: 'POST',
-		            headers: {
-		                'Content-Type': 'application/json',
-		                'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content // CSRF 토큰
-		            },
-		            body: JSON.stringify({ foodName: recommendedFood })
-		        })
-		        .then(response => {
-		            if (response.ok) {
-		                alert("추천된 음식이 저장되었습니다.");
-		            } else {
-		                alert("저장에 실패했습니다.");
-		            }
-		        })
-		        .catch(error => console.error("Error:", error));
-		    }
-    </script>
+		// 알러지 폼 모달 닫기 버튼 클릭 시 모달 닫기
+		const closeAllergyFormModal = document.getElementById("closeAllergyFormModal");
+		if (closeAllergyFormModal) {
+		    closeAllergyFormModal.addEventListener("click", function() {
+		        document.getElementById("AllergyFormModal").style.display = "none";
+		        document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+		    });
+		}
+		
+		// "내 정보" 모달 닫기 버튼 클릭 시 모달 닫기
+		   const closeProfileModal = document.getElementById("closeProfileModal");
+		   if (closeProfileModal) {
+		       closeProfileModal.addEventListener("click", function() {
+		           document.getElementById("profileModal").style.display = "none";
+		           document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+		       });
+		   }
+		
+		// 모달 닫기 버튼 클릭 시 모달 닫기
+		const closeModal = document.getElementById("closeModal");
+		if (closeModal) {
+		    closeModal.addEventListener("click", function() {
+		        document.getElementById("loginModal").style.display = "none";
+		        document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+		    });
+		}
+
+		// 회원가입 모달 닫기 버튼 클릭 시 모달 닫기
+		const closeSignupModal = document.getElementById("closeSignupModal");
+		if (closeSignupModal) {
+		    closeSignupModal.addEventListener("click", function() {
+		        document.getElementById("signupModal").style.display = "none";
+		        document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+		    });
+		}
+
+	    // 드롭다운 토글 함수
+	    function toggleDropdown(event) {
+	        event.stopPropagation();  // 클릭 이벤트가 상위로 전달되지 않도록
+	        const dropdown = document.getElementById("userDropdown");
+	        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+	    }
+
+	    // 페이지의 다른 곳을 클릭했을 때 드롭다운을 닫는 기능
+	    window.onclick = function(event) {
+	        if (!event.target.matches('.user-icon')) {
+	            const dropdown = document.getElementById("userDropdown");
+	            if (dropdown.style.display === "block") {
+	                dropdown.style.display = "none";
+	            }
+	        }
+	    }
+		// 로그인 모달을 띄우는 함수
+		function showLoginModal() {
+		    document.getElementById("loginModal").style.display = "flex";
+		    document.body.style.overflow = "hidden"; // 스크롤 막기
+		}
+		</script>
+		<script>
+		        let imageCount = 0;
+		        const westernImages = [
+		            'images/food/usa.png',
+		            'images/food/france.png',
+		            'images/food/italy.png',
+		            'images/food/germany.png'
+		        ];
+		        let westernImageIndex = 0;
+		
+		        // 양식 버튼 이미지가 자동으로 순환하도록 설정
+		        const cuisineButton = document.querySelector("button[onclick*='양식']");
+		        setInterval(() => {
+		            cuisineButton.querySelector("img").src = westernImages[westernImageIndex];
+		            westernImageIndex = (westernImageIndex + 1) % westernImages.length;
+		        }, 2000); // 2초마다 이미지 변경
+		
+				function selectOption(inputName, value, imgSrc) {
+				    // 선택된 버튼을 찾고, 기존 선택을 초기화
+				    const container = document.getElementById(`${inputName}_container`);
+				    const buttons = container.querySelectorAll('button');
+				    
+				    // 이전에 선택된 버튼의 비활성화 상태를 초기화
+				    buttons.forEach(button => {
+				        button.classList.remove('selected'); // 선택 클래스 제거
+				        button.disabled = false; // 버튼 활성화
+				    });
+				
+				    // 현재 클릭된 버튼을 선택 상태로 설정하고 비활성화
+				    const clickedButton = Array.from(buttons).find(button => button.onclick.toString().includes(value));
+				    if (clickedButton) {
+				        clickedButton.classList.add('selected'); // 선택된 버튼에 클래스 추가
+				        clickedButton.disabled = true; // 버튼 비활성화
+				    }
+				
+				    // 숨겨진 입력 필드에 값 설정
+				    document.getElementById(inputName).value = value;
+				
+				    // 선택한 카테고리에 해당하는 기존 이미지를 모두 제거
+				    const floatingImagesContainer = document.getElementById('floating-images-container');
+				    const existingImages = floatingImagesContainer.querySelectorAll(`.${inputName}-image`);
+				    existingImages.forEach(image => floatingImagesContainer.removeChild(image));
+				
+				    // 새로 선택한 이미지를 솥 안에 추가
+				    const img = document.createElement('img');
+				    img.src = imgSrc;
+				    img.classList.add(`${inputName}-image`); // 카테고리별 클래스 추가
+				
+				    // 카테고리별로 애니메이션 클래스를 다르게 추가
+				    if (inputName === 'cuisine_type' && value === '양식') {
+				        img.classList.add('floating-cuisine');
+				    } else if (inputName === 'cuisine_type') {
+				        img.classList.add('floating-cuisine');
+				    } else if (inputName === 'preferred_ingredient') {
+				        img.classList.add('floating-ingredient');
+				    } else if (inputName === 'food_category') {
+				        img.classList.add('floating-food');
+				    }
+				
+				    // 위치 조정 - 이미지가 추가될 때마다 20px씩 오른쪽으로 이동
+				    const startPositionX = 30 + imageCount * 20;
+				    img.style.transform = `translateX(${startPositionX}px)`;
+				    imageCount++;
+				
+				    floatingImagesContainer.appendChild(img);
+				}
+
+		
+		
+				function saveAndRedirect() {
+				        const recommendedFood = document.getElementById("recommendedFood").innerText;
+				
+				        // 추천된 음식을 서버에 저장한 후 메인 페이지로 이동
+				        fetch('/saveFoodToCalendar', {
+				            method: 'POST',
+				            headers: {
+				                'Content-Type': 'application/json',
+				                'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').content // CSRF 토큰
+				            },
+				            body: JSON.stringify({ foodName: recommendedFood })
+				        })
+				        .then(response => {
+				            if (response.ok) {
+				                alert("추천된 음식이 저장되었습니다.");
+				                redirectToIndex(recommendedFood); // 저장 성공 시 메인 페이지로 이동
+				            } else {
+				                alert("저장에 실패했습니다.");
+				            }
+				        })
+				        .catch(error => console.error("Error:", error));
+				    }
+				
+				    function redirectToIndex(recommendedFood) {
+				        // recommendedFood 값을 URL 파라미터로 index.html에 전달
+				        window.location.href = `/index?recommendedFood=${encodeURIComponent(recommendedFood)}`;
+				    }
+		    </script>
 </body>
 </html>

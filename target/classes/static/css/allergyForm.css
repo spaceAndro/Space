@@ -1,13 +1,102 @@
-body {
-	width : 500px
-	
+.modal{
+	background-color: rgb(255, 255, 255);
+}
+.profile-header {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 10px;
+    text-align: center;
+    border-radius: 15px; /* 둥근 모서리 */
+    margin-bottom: 20px;
 }
 
-.container {
-    border: 2px solid #4CAF50; /* 테두리 색상 및 두께 */
-    border-radius: 10px; /* 모서리 둥글게 */
-    padding: 20px; /* 내부 여백 */
-    margin: 20px auto; /* 상하 여백 및 가운데 정렬 */
-    width: 300px; /* 너비 설정 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+.profile-table {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    border-radius: 10px; /* 테이블 둥근 모서리 */
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+.profile-table th,
+.profile-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.profile-table th {
+    background-color: #333333;
+    color: #ffffff;
+    font-weight: normal;
+}
+
+.profile-table tr:last-child td {
+    border-bottom: none; /* 마지막 행 테두리 제거 */
+}
+
+#deleteAccountBtn {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; /* 둥근 버튼 */
+    cursor: pointer;
+    font-size: 1em;
+    display: block;
+    margin: 20px auto;
+}
+#deleteAccountBtn:hover {
+    background-color: #333333;
+}
+.allergy-table {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.allergy-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.allergy-table tr:last-child td {
+    border-bottom: none; /* 마지막 행 테두리 제거 */
+}
+
+.allergy-table label {
+    font-weight: normal;
+    font-size: 1em;
+    color: #333333;
+}
+
+#no-allergy {
+    margin-left: 5px;
+}
+
+.submit-btn {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    display: block;
+    margin: 20px auto;
+}
+
+.submit-btn:hover {
+    background-color: #333333;
 }

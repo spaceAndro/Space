@@ -14,12 +14,12 @@
 		<form th:action="@{/changeFood}" method="post">
 			<input type="hidden" name="_csrf" th:value="${_csrf.token}">
 			
-	        <label for="breakfastInput">아침 : </label>
-	        <input type="text" id="breakfastInput" name="foods"><br>
-	        <label for="lunchInput">점심 : </label>
-	        <input type="text" id="lunchInput" name="foods"><br>
-	        <label for="dinnerInput">저녁 : </label>
-	        <input type="text" id="dinnerInput" name="foods">
+			<label for="breakfastInput">아침 : </label>
+			<input type="text" id="breakfastInput" name="breakfast"><br>
+			<label for="lunchInput">점심 : </label>
+			<input type="text" id="lunchInput" name="lunch"><br>
+			<label for="dinnerInput">저녁 : </label>
+			<input type="text" id="dinnerInput" name="dinner">
 			
 			<!-- 숨겨진 input 필드로 savedDate 추가 -->
 			<input type="hidden" id="savedDateInput" name="savedDate">

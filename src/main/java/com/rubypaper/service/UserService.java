@@ -1,5 +1,6 @@
 package com.rubypaper.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.rubypaper.dto.User;
+import com.rubypaper.jpa.CalendarRepository;
+import com.rubypaper.jpa.UserAllergyRepository;
 import com.rubypaper.jpa.UserRepository;
+
+import jakarta.transaction.Transactional;
 
 
 @Service
@@ -16,6 +21,12 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private CalendarRepository calendarRepository;
+    
+    @Autowired
+    private UserAllergyRepository userAllergyRepository;
 
     public User findByUsername(String username) {
         return userRepository.findById(username).orElse(null);
@@ -44,4 +55,28 @@ public class UserService {
         return findByUsername(username);
     }
 
+    // id 중복검사
+    public boolean isEmailExists(String id) {
+    	List<String> allUser = userRepository.findAllId();
+    	
+    	for(String user : allUser) {
+    		System.out.println(user);
+    		if(id.equals(user))
+    			return true;
+    	}
+    	
+    	return false;
+    }
+    
+    // Calendar 정보 삭제
+    @Transactional
+    public void deleteCalendarByUserId(String userId) {
+        calendarRepository.deleteByUserId(userId); // CalendarRepository에서 userId 기반 삭제 메서드
+    }
+
+    // User 삭제
+    @Transactional
+    public void deleteUser(User user) {
+        userRepository.delete(user); // UserRepository에서 해당 User 삭제
+    }
 }

@@ -14,33 +14,49 @@
     </style>
 	<script src="https://kit.fontawesome.com/fa3564ba68.js" crossorigin="anonymous"></script>
 	<script th:inline="javascript">
+		
+		/*<![CDATA[*/
+		    var isAuthenticated = /*[[${isAuthenticated}]]*/ false;
+			
+		    /*]]>*/
+				
 	    window.onload = function() {
+			const urlParams = new URLSearchParams(window.location.search);
 	        /* 컨트롤러에서 loginError가 true로 설정되었는지 확인 */
 	       	var loginError = /*[[${loginError}]]*/ false;// loginError 모델을 불러옴
+			
 			console.log("로그인 에러 상태:", loginError); // 로그인 에러 상태를 콘솔에 출력
 	        if (loginError) {
 	            alert("로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
 	        }
+			
+			// 'error=loginRequired' 파라미터가 있으면 로그인 필요 메시지를 띄운다.
+			            if (urlParams.get('error') === 'loginRequired') {
+			                alert('로그인이 필요합니다.');
+			            }
 	    };
-		function handleProductClick(link) {
-		    fetch(link)
-		        .then(response => {
-		            if (response.status === 401) {
-		                alert("로그인 후 이용 가능합니다."); // 인증 필요 시 알림
-		            } else {
-		                window.location.href = link; // 정상적으로 리다이렉트
-		            }
-		        })
-		        .catch(error => console.error("인증 오류:", error));
+		
+		
+		function handleProductClick(url) {
+			console.log("로그인 에러 상태:", isAuthenticated); // 로그인 에러 상태를 콘솔에 출력
+		    if (!isAuthenticated) {  // 로그인되지 않은 경우
+		        alert("로그인이 필요합니다.");
+		    } else {
+		        // 로그인된 상태일 경우, URL로 이동
+		        window.location.href = url;
+		    }
 		}
+
+		
 	</script>
 </head>
 <body>
     <!-- 헤더 -->
     <header class="header">
-        <div class="logo">Space</div>
+		<div class="logo" onclick="window.location.href='/index'">	Space</div>
         <nav class="nav">
             <ul>
+				<span th:text="${recommendedFood}" id="recommendedFood"></span>
                 <li><a href="#">#유한대학교</a></li>
                 <li><a href="#">#졸업작품</a></li>
                 <li><a href="#">#3조</a></li>
@@ -52,8 +68,11 @@
 				<li sec:authorize="hasRole('USER')">
 				    <a href="/profile">내 정보</a>
 				</li>
+				<li sec:authorize="hasRole('USER')">
+				    <a href="#" id="openAllergyFormBtn">알러지 수정</a>
+				</li>
 			    <li sec:authorize="isAuthenticated()">
-			        <a id="logoutBtn" href="#">로그아웃</a>
+			        <a href="/logout">로그아웃</a>
 			    </li>
 			    <li sec:authorize="isAnonymous()">
 			        <a id="loginBtn" href="#">로그인</a>
@@ -87,6 +106,34 @@
 	    </div>
 	</div>
 	
+	<!-- 내정보 모달 -->
+	<div id="profileModal" class="modal-bg">
+	    <div class="modal">
+	        <span class="modal-close" id="closeProfileModal">&times;</span> <!-- 닫기 버튼 -->
+	        <div id="profileModalContent">
+	            <!-- 여기 profile.html 내용이 들어갑니다 -->
+	        </div>
+	    </div>
+	</div>
+	
+	<!-- 회원탈퇴 모달 -->
+	<div id="confirmDeleteModal" class="modal-bg">
+	    <div class="modal">
+	        <p>정말 회원탈퇴를 진행하시겠습니까?</p>
+	        <button id="confirmDeleteYes">예</button>
+	        <button id="confirmDeleteNo">아니요</button>
+	    </div>
+	</div>
+	
+	<!-- 알러지 설정 모달 -->
+	<div id="AllergyFormModal" class="modal-bg">
+	        <div class="modal">
+	            <span class="modal-close" id="closeAllergyFormModal">&times;</span> <!-- 닫기 버튼 -->
+	            <div id="AllergyFormModalContent">
+	                <!-- 알러지 폼 내용은 여기에 동적으로 로드됩니다. -->
+	            </div>
+	        </div>
+	    </div>
 	
     <!-- 메인 슬라이드 -->
     <section class="main-slide">
@@ -117,7 +164,7 @@
     <!-- 메뉴 -->
     <section class="products">
         <div class="product-grid">
-			<div class="product weather-box" onmouseover="showWeatherDetails()" onmouseout="hideWeatherDetails()">
+			<div class="product" onmouseover="showWeatherDetails()" onmouseout="hideWeatherDetails()">
 			    <!-- 날씨 이미지 -->
 			    <img th:if="${weather_condition == 'Clear'}" src="images/weather/Clear.png" alt="Clear Weather">
 			    <img th:if="${weather_condition == 'Cloudy'}" src="images/weather/clouds.png" alt="Cloudy Weather">
@@ -125,17 +172,13 @@
 			    <img th:if="${weather_condition == 'Snow'}" src="images/weather/snow.png" alt="Snowy Weather">
 			    
 			    <!-- 날씨 텍스트 -->
-			    <h2 class="weather-text">오늘의 날씨: <span th:text="${weather_condition}"></span></h2>
+			    <h2 class="pruduct">오늘의 날씨 <span th:text="${weather_condition}"></span></h2>
 			    
-			    <!-- 추가 정보 (온도와 습도) -->
-			    <div class="weather-details">
-			        <p>온도: <span th:text="${temperature}"></span>°C</p>
-			        <p>습도: <span th:text="${humidity}"></span>%</p>
-			    </div>
+
 			</div>
 			<div class="product" onclick="handleProductClick('/index2')"> <!-- handleProductClick 사용 -->
 						    <img src="images/MenuRecommand.png" class="auth-required" alt="음식추천">
-						    <h2>음식추천 : <span th:text="${recommendedFood}"></span></h2> <!-- span 종료 태그 추가 -->
+						    <h2>음식추천 <span th:text="${recommendedFood}"></span></h2> <!-- span 종료 태그 추가 -->
 						</div>
 
 						<div class="product" onclick="handleProductClick('/calendar')"> <!-- handleProductClick 사용 -->
@@ -144,81 +187,209 @@
 						</div>
 			        </div>
     </section>
-
+	<div id="recommended-bar" class="recommended-bar">
+	    <span id="recommended-text">오늘의 추천은?</span>
+	</div>
     <!-- 하단 메뉴 -->
     <footer class="footer">
         <div class="menu">
-            <a href="#">메뉴</a>
-            <a href="#">혜택</a>
-            <a href="#">나의 정보</a>
-            <a href="#">최근 먹은 음식</a>
+			<p>© 2024 Space. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- 지도 박스 추가 -->
-    <section class="map-box">
-        <div id="map"></div>
-    </section>
+	<section class="map-box">
+	    <div id="map" style="width:100%;height:400px;"></div>
+	</section>
 
 	<!-- JavaScript 연결 -->
 	<script src="/js/mainScript.js"></script>
-	<script>
+	<script th:inline="javascript">
 		document.addEventListener("DOMContentLoaded", function() {
 	        // 로그아웃 버튼 클릭 시 AJAX 요청
 	        const logoutBtn = document.getElementById("logoutBtn");
+			const isAuthenticated = /*[[${isAuthenticated}]]*/ false;
+			const isFirstLogin = /*[[${isFirstLogin}]]*/ false;
+			
+			
+			if (isAuthenticated && isFirstLogin) {
+			        loadAllergyForm();
+			    }
+				
+				function loadAllergyForm() {
+				        const xhr = new XMLHttpRequest();
+				        xhr.open("GET", "/AllergyForm", true);
+				        xhr.onreadystatechange = function() {
+				            if (xhr.readyState === 4 && xhr.status === 200) {
+				                // 모달에 알러지 폼을 로드
+				                document.getElementById("AllergyFormModalContent").innerHTML = xhr.responseText;
+				                // 모달 표시
+				                document.getElementById("AllergyFormModal").style.display = "flex";
+				                document.body.style.overflow = "hidden"; // 스크롤 막기
+				            } else if (xhr.readyState === 4) {
+				                console.error("AJAX 요청 실패: " + xhr.status);
+				            }
+				        };
+				        xhr.send();
+				    }
 
-	        if (logoutBtn) {
-	            logoutBtn.addEventListener("click", function(event) {
-	                event.preventDefault(); // 기본 링크 동작 막기
 
-	                const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-	                const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-	                fetch("/logout", {
-	                    method: "POST",
-	                    headers: {
-	                        "Content-Type": "application/x-www-form-urlencoded",
-	                        [csrfHeader]: csrfToken // CSRF 토큰 추가
-	                    }
-	                })
-	                .then(response => {
-	                    if (response.ok) {
-	                        window.location.href = "/index"; // 로그아웃 후 리다이렉트할 페이지로 이동
-	                    } else {
-	                        console.error("로그아웃 요청 실패: " + response.status);
-	                    }
-	                })
-	                .catch(error => {
-	                    console.error("로그아웃 중 오류 발생: ", error);
-	                });
-	            });
-	        }
+   			// 로그인 버튼 클릭 시 모달 열기
+           const loginBtn = document.getElementById("loginBtn");
+           if (loginBtn) {
+               loginBtn.addEventListener("click", function(event) {
+                   event.preventDefault(); // 기본 동작 막기
 
-				   // 로그인 버튼 클릭 시 모달 열기
-				           const loginBtn = document.getElementById("loginBtn");
-				           if (loginBtn) {
-				               loginBtn.addEventListener("click", function(event) {
-				                   event.preventDefault(); // 기본 동작 막기
+                   const xhr = new XMLHttpRequest();
+                   xhr.open("GET", "/login", true);
+                   xhr.onreadystatechange = function() {
+                       if (xhr.readyState === 4) {
+						console.log("AJAX 요청 상태 코드:", xhr.status); // 상태 코드 출력
+                           if (xhr.status === 200) {
+                               document.getElementById("modalContent").innerHTML = xhr.responseText;
+                               document.getElementById("loginModal").style.display = "flex";
+                               document.body.style.overflow = "auto";
+                           } else if (xhr.status === 401) {
+                               showLoginModal(); // 로그인 모달 띄우기
+                           } else {
+                               console.error("AJAX 요청 실패: " + xhr.status);
+                           }
+                       }
+                   };
+                   xhr.send();
+               });
+           }
+		   
+		   // "내 정보" 버튼 클릭 시 모달 열기
+		   const profileBtn = document.querySelector("a[href='/profile']");
+		   if (profileBtn) {
+		       profileBtn.addEventListener("click", function(event) {
+		           event.preventDefault(); // 기본 동작 막기
 
-				                   const xhr = new XMLHttpRequest();
-				                   xhr.open("GET", "/login", true);
-				                   xhr.onreadystatechange = function() {
-				                       if (xhr.readyState === 4) {
-										console.log("AJAX 요청 상태 코드:", xhr.status); // 상태 코드 출력
-				                           if (xhr.status === 200) {
-				                               document.getElementById("modalContent").innerHTML = xhr.responseText;
-				                               document.getElementById("loginModal").style.display = "flex";
-				                               document.body.style.overflow = "auto";
-				                           } else if (xhr.status === 401) {
-				                               showLoginModal(); // 로그인 모달 띄우기
-				                           } else {
-				                               console.error("AJAX 요청 실패: " + xhr.status);
-				                           }
-				                       }
-				                   };
-				                   xhr.send();
-				               });
-				           }
+		           const xhr = new XMLHttpRequest();
+		           xhr.open("GET", "/profile", true);
+		           xhr.onreadystatechange = function() {
+		               if (xhr.readyState === 4 && xhr.status === 200) {
+		                   document.getElementById("profileModalContent").innerHTML = xhr.responseText;
+		                   document.getElementById("profileModal").style.display = "flex";
+		                   document.body.style.overflow = "hidden";
+						   
+						   // 회원탙뢰 모달
+					   	   const deleteAccountBtn = document.getElementById("deleteAccountBtn");
+					   	   if (deleteAccountBtn) {
+					   	       deleteAccountBtn.addEventListener("click", function(event) {
+					   	           event.preventDefault(); // 기본 동작 막기
+					   
+					 	           // 회원 탈퇴 확인 모달을 표시
+					   	           document.getElementById("confirmDeleteModal").style.display = "flex";
+					   	           document.body.style.overflow = "hidden";
+					   	       });
+					   	   }
+		               } else if (xhr.readyState === 4) {
+		                   console.error("AJAX 요청 실패: " + xhr.status);
+		               }
+		           };
+		           xhr.send();
+		       });
+		   }
+		   
+		   // "예" 버튼 클릭 시 회원 탈퇴 요청
+		   const confirmDeleteYesBtn = document.getElementById("confirmDeleteYes");
+		   if (confirmDeleteYesBtn) {
+		       confirmDeleteYesBtn.addEventListener("click", function(event) {
+		           event.preventDefault(); // 기본 링크 동작 막기
+		   
+		           const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+		           const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+		   
+		           fetch("/deleteAccount", {
+		               method: "POST",
+		               headers: {
+		                   "Content-Type": "application/x-www-form-urlencoded",
+		                   [csrfHeader]: csrfToken // CSRF 토큰 추가
+		               }
+		           })
+				   .then(response => {
+				       if (response.ok) {
+				           // 쿠키 삭제 - JSESSIONID와 같은 쿠키를 만료시킴
+				           document.cookie = "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+				           
+				           alert("회원 탈퇴가 완료되었습니다.");
+				           window.location.href = "/index"; // 탈퇴 후 메인 페이지로 이동
+				       } else {
+				           console.error("회원 탈퇴 요청 실패: " + response.status);
+				           response.text().then(text => console.error("응답 메시지:", text)); // 서버 에러 메시지 출력
+				       }
+				   })
+				   .catch(error => {
+				       console.error("회원 탈퇴 중 오류 발생: ", error);
+				   });
+		       });
+			}
+	   	
+	   	    // "아니요" 버튼 클릭 시 확인 모달 닫기
+	   	    const confirmDeleteNoBtn = document.getElementById("confirmDeleteNo");
+	   	    if (confirmDeleteNoBtn) {
+	   	        confirmDeleteNoBtn.addEventListener("click", function() {
+	   	            document.getElementById("confirmDeleteModal").style.display = "none";
+	   	            document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+	   	        });
+	   	    }
+	   		
+	   		// 모달 닫기 버튼 클릭 시 모달 닫기
+	   		const closeModal = document.getElementById("closeModal");
+	   		if (closeModal) {
+	   		    closeModal.addEventListener("click", function() {
+	   		        document.getElementById("loginModal").style.display = "none";
+	   		        document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+	   		    });
+	 		}
+		   
+			// "알러지 수정" 버튼 클릭 시 모달 열기
+			const openAllergyFormBtn = document.getElementById("openAllergyFormBtn");
+			if (openAllergyFormBtn) {
+			    openAllergyFormBtn.addEventListener("click", function(event) {
+			        event.preventDefault(); // 기본 동작 막기
+
+			        const xhr = new XMLHttpRequest();
+			        xhr.open("GET", "/AllergyForm", true); // 알러지 폼을 로드하는 GET 요청
+			        xhr.onreadystatechange = function() {
+			            if (xhr.readyState === 4 && xhr.status === 200) {
+			                // 알러지 폼을 모달에 로드
+			                document.getElementById("AllergyFormModalContent").innerHTML = xhr.responseText;
+			                // 모달 표시
+			                document.getElementById("AllergyFormModal").style.display = "flex";
+			                document.body.style.overflow = "hidden"; // 스크롤 막기
+
+			                // 모달이 로드된 후 체크박스 이벤트 설정
+			                const allergyCheckboxes = document.querySelectorAll('.allergy');
+			                const noAllergyCheckbox = document.getElementById('no-allergy');
+
+			                // '없음' 체크박스 클릭 시 다른 체크박스 해제
+			                if (noAllergyCheckbox) {
+			                    noAllergyCheckbox.addEventListener('change', function () {
+			                        if (this.checked) {
+			                            allergyCheckboxes.forEach(checkbox => checkbox.checked = false);
+			                        }
+			                    });
+			                }
+
+			                // 다른 체크박스 클릭 시 '없음' 체크박스 해제
+			                allergyCheckboxes.forEach(checkbox => {
+			                    checkbox.addEventListener('change', function () {
+			                        if (this.checked) {
+			                            noAllergyCheckbox.checked = false;
+			                        }
+			                    });
+			                });
+			            } else if (xhr.readyState === 4) {
+			                console.error("AJAX 요청 실패: " + xhr.status);
+			            }
+			        };
+			        xhr.send();
+			    });
+			}		   
 
 	        // 회원가입 버튼 클릭 시 모달 열기
 	        const signupBtn = document.getElementById("signupBtn");
@@ -236,14 +407,57 @@
 							
 							
 							// 여기서 옵션 추가 코드 실행
-							                const ageSelect = document.getElementById("age");
-							                for (let i = 10; i <= 80; i++) {
-							                    const option = document.createElement("option");
-							                    option.value = i;
-							                    option.text = i;
-							                    ageSelect.appendChild(option);
-							                }
+			                const ageSelect = document.getElementById("age");
+			                for (let i = 10; i <= 80; i++) {
+			                    const option = document.createElement("option");
+			                    option.value = i;
+			                    option.text = i;
+			                    ageSelect.appendChild(option);
+			                }
 							
+							// 이메일 중복 검사 기능 추가
+		                    const checkEmailBtn = document.getElementById("check-email");
+		                    if (checkEmailBtn) {
+		                        checkEmailBtn.addEventListener("click", function() {
+									const emailField = document.getElementById("email");
+									const email = emailField.value;
+		                            const passwordField = document.getElementById("password");
+		                            
+		                            fetch(`/api/signup/checkEmail?id=${email}`)
+		                                .then(response => {
+											if(!response.ok) {
+									            throw new Error("네트워크 응답에 문제가 있습니다."); // 응답 상태가 OK가 아닌 경우 에러 처리
+									        }
+									        return response.json(); // JSON으로 변환
+										})
+		                                .then(data => {
+											console.log(data);
+											if (data.exists) {
+									            alert("이미 사용 중인 아이디입니다.");
+									            emailField.focus();
+									        } else {
+									            alert("사용 가능한 아이디입니다.");
+									            emailField.setAttribute("readonly", true); // 이메일 필드 확정
+									            passwordField.focus(); // 포커스를 비밀번호 필드로 이동
+									        }
+		                                })
+		                                .catch(error => console.error('Error:', error));
+		                        });
+		                    }
+							
+							// 가입하기 버튼 클릭 이벤트
+							const signupBtn = document.getElementById("signup");
+						    if (signupBtn) {
+						        signupBtn.addEventListener("click", function(event) {
+									const emailField = document.getElementById("email");
+						            // 이메일 필드가 readonly 상태가 아니면 제출 막기
+						            if (!emailField.hasAttribute("readonly")) {
+						                event.preventDefault(); // 폼 제출 막기
+						                alert("이메일 중복 검사를 통과해야 합니다.");
+						                emailField.focus(); // emailField로 포커스 이동
+						            }
+						        });
+						    }
 							
 	                        document.body.style.overflow = "auto";
 							
@@ -255,14 +469,24 @@
 	            });
 	        }
 	    });
-		// 모달 닫기 버튼 클릭 시 모달 닫기
-		const closeModal = document.getElementById("closeModal");
-		if (closeModal) {
-		    closeModal.addEventListener("click", function() {
-		        document.getElementById("loginModal").style.display = "none";
+		
+		// 알러지 폼 모달 닫기 버튼 클릭 시 모달 닫기
+		const closeAllergyFormModal = document.getElementById("closeAllergyFormModal");
+		if (closeAllergyFormModal) {
+		    closeAllergyFormModal.addEventListener("click", function() {
+		        document.getElementById("AllergyFormModal").style.display = "none";
 		        document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
 		    });
 		}
+		
+		// "내 정보" 모달 닫기 버튼 클릭 시 모달 닫기
+	    const closeProfileModal = document.getElementById("closeProfileModal");
+	    if (closeProfileModal) {
+	        closeProfileModal.addEventListener("click", function() {
+	            document.getElementById("profileModal").style.display = "none";
+	            document.body.style.overflow = "auto"; // 스크롤 다시 가능하게
+	        });
+	    }
 
 		// 회원가입 모달 닫기 버튼 클릭 시 모달 닫기
 		const closeSignupModal = document.getElementById("closeSignupModal");
@@ -296,7 +520,81 @@
 		}
 		
 	</script>
-    <!-- Google Maps API 추가 (geometry 라이브러리 추가) -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=(api키)&libraries=places,geometry&callback=initMap"></script>
+	<script>
+		
+		document.addEventListener("DOMContentLoaded", function() {
+		        // URL 파라미터에서 recommendedFood 값 가져오기
+		        const urlParams = new URLSearchParams(window.location.search);
+		        const recommendedFood = urlParams.get('recommendedFood') || '음식점'; // 기본값: '음식점'
+		        
+		        console.log("추천된 음식:", recommendedFood); // 확인용
+		
+		        const mapContainer = document.getElementById('map');
+		        const mapOption = { 
+		            center: new kakao.maps.LatLng(37.487543, 126.821558), // 기본 위치 (서울)
+		            level: 5 // 확대 레벨
+		        };
+		        const map = new kakao.maps.Map(mapContainer, mapOption);
+		        const ps = new kakao.maps.services.Places(map); // 장소 검색 객체 생성
+		
+		        // 음식점 검색
+		        searchFoodShops(recommendedFood);
+		
+		        function searchFoodShops(foodName) {
+		            if (foodName) {
+		                const foodKeyword = foodName; 
+		                ps.keywordSearch(foodKeyword, (data, status) => {
+		                    if (status === kakao.maps.services.Status.OK) {
+		                        markPlacesOnMap(data); // 결과 표시
+		                    } else {
+		                        alert("검색된 음식점이 없습니다.");
+		                    }
+		                }, {useMapBounds: true}); // 현재 지도 범위 내에서 검색
+		            }
+		        }
+		
+				function markPlacesOnMap(data) {
+				                data.forEach(place => {
+				                    const markerPosition = new kakao.maps.LatLng(place.y, place.x);
+				                    const marker = new kakao.maps.Marker({
+				                        map: map,
+				                        position: markerPosition
+				                    });
+				
+				                    // 인포윈도우 기본 내용 (이름 표시)
+				                    let infowindowContent = `
+				                        <div class="custom-infowindow">
+				                            <strong>${place.place_name}</strong>
+				                            <div>주소: ${place.road_address_name || place.address_name || '주소 정보 없음'}</div>
+				                            <div>전화번호: ${place.phone || '전화번호 정보 없음'}</div>
+				                            <a href="https://place.map.kakao.com/${place.id}" target="_blank">리뷰 및 평점 보기</a>
+				                        </div>
+				                    `;
+				
+				                    // 인포윈도우 생성
+				                    const infowindow = new kakao.maps.InfoWindow({
+				                        content: infowindowContent,
+				                        removable: true
+				                    });
+				
+				                    // 마커에 마우스를 올렸을 때 인포윈도우 표시
+				                    kakao.maps.event.addListener(marker, 'click', () => infowindow.open(map, marker));
+				                   
+				                });
+				            }
+				        });
+						document.addEventListener("DOMContentLoaded", function() {
+						        // URL 파라미터에서 recommendedFood 값 가져오기
+						        const urlParams = new URLSearchParams(window.location.search);
+						        const recommendedFood = urlParams.get('recommendedFood') || "오늘의 추천은?";
+						
+						        // 추천된 음식 표시
+						        const recommendedText = document.getElementById("recommended-text");
+						        recommendedText.textContent = recommendedFood;
+						    });
+	</script>
+	
+	<!-- 카카오맵 API 추가 (API 키 필요) -->
+	<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=9bc236c8a813de4d532e961b075041fc&libraries=services"></script>
 </body>
 </html>

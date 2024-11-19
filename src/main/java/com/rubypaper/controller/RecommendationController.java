@@ -78,7 +78,6 @@ public class RecommendationController {
             if (userAllergy.isLeguminoseae()) allergies.add("8");
         }
         
-        
         model.addAttribute("allergies", allergies);
         // Flask 서버 URL
         String url = "http://localhost:5000/predict"; // Flask 서버의 URL로 변경하세요.

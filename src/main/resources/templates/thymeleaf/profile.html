@@ -9,44 +9,48 @@
 	<link rel="stylesheet" href="/css/allergyForm.css">
 </head>
 <body>
-	<header class="header">
-	       <div class="logo">Space</div>
-	       <nav class="nav">
-	           <ul>
-	               <li><a href="#">#유한대학교</a></li>
-	               <li><a href="#">#졸업작품</a></li>
-	               <li><a href="#">#3조</a></li>
-	           </ul>
-	       </nav>
-    </header>
-	<center>
-		<div class="container">
-	    <p th:if="${user != null}">
-	        아이디: <span th:text="${user.id}"></span><br>
-	        이름: <span th:text="${user.name}"></span><br>
-	        나이: <span th:text="${user.age}"></span><br>
-	        성별: <span th:text="${user.gender}"></span><br>
-	    </p>
-	    <p th:if="${userAllergy != null}">
-	        알러지 정보:<br>
-	        <span th:if="${userAllergy.1}">우유 </span>
-	        <span th:if="${userAllergy.2}">달걀 </span>
-	        <span th:if="${userAllergy.3}">땅콩 </span>
-	        <span th:if="${userAllergy.4}">견과류 </span>
-	        <span th:if="${userAllergy.5}">해산물 </span>
-	        <span th:if="${userAllergy.6}">갑각류 </span>
-	        <span th:if="${userAllergy.7}">밀 </span>
-	        <span th:if="${userAllergy.8}">대두류 </span>
-	        <span th:if="${userAllergy.none}">없음</span>
-	    </p>
-	    <p th:if="${user == null}">사용자 정보를 찾을 수 없습니다.</p>
-		<br>
-		<br>
-		<a href="/AllergyForm">알러지 정보 수정하기</a>
-		<br>
-		<br>
-		<a href="/index">메인 페이지로 돌아가기</a>
-		<div>
-	</center>
+	<body>
+	    <header class="profile-header">내정보</header>
+	    <div class="container">
+	        <table class="profile-table">
+	            <tr>
+	                <th>아이디</th>
+	                <td th:text="${user != null ? user.id : 'N/A'}"></td>
+	            </tr>
+	            <tr>
+	                <th>이름</th>
+	                <td th:text="${user != null ? user.name : 'N/A'}"></td>
+	            </tr>
+	            <tr>
+	                <th>나이</th>
+	                <td th:text="${user != null ? user.age : 'N/A'}"></td>
+	            </tr>
+	            <tr>
+	                <th>성별</th>
+	                <td th:text="${user != null ? user.gender : 'N/A'}"></td>
+	            </tr>
+	            <tr>
+	                <th>알러지 정보</th>
+	                <td>
+	                    <span th:if="${userAllergy != null}">
+	                        <span th:if="${!noAllergy}">
+	                            <span th:if="${userAllergy.milk}">우유 </span>
+	                            <span th:if="${userAllergy.egg}">달걀 </span>
+	                            <span th:if="${userAllergy.peanut}">땅콩 </span>
+	                            <span th:if="${userAllergy.nuts}">견과류 </span>
+	                            <span th:if="${userAllergy.seafood}">해산물 </span>
+	                            <span th:if="${userAllergy.shellfish}">갑각류 </span>
+	                            <span th:if="${userAllergy.wheat}">밀 </span>
+	                            <span th:if="${userAllergy.leguminoseae}">대두류 </span>
+	                        </span>
+	                        <span th:if="${noAllergy}">없음</span>
+	                    </span>
+	                    <span th:if="${userAllergy == null}">없음</span>
+	                </td>
+	            </tr>
+	        </table>
+	        <br>
+	        <button id="deleteAccountBtn">회원탈퇴</button>
+	    </div>
 </body>
 </html>

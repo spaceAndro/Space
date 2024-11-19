@@ -279,42 +279,88 @@ body {
             border-radius: 15px; /* 지도의 모서리를 둥글게 설정 */
         }
 
-/* 기본 날씨 박스 스타일 */
+/* 날씨 박스 디자인 (음식 추천 박스와 동일한 스타일 적용) */
 .weather-box {
-    position: relative; /* 다른 요소에 영향을 주지 않고 확장되도록 설정 */
-    width: 200px;
-    height: 200px;
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: width 0.5s ease;
-    z-index: 1; /* 다른 박스 위에 위치 */
+    background-color: #f8f8f8; /* 배경 색상 */
+    border: 1px solid #ddd; /* 테두리 색상 */
+    border-radius: 15px; /* 둥근 모서리 */
+    padding: 20px;
+    margin: 20px 0;
+    width: 200px; /* 각 박스의 너비 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+    cursor: pointer; /* 박스를 버튼처럼 클릭 가능하게 */
+    text-align: center; /* 텍스트 중앙 정렬 */
 }
 
-/* 확장된 날씨 박스 스타일 */
-.weather-box:hover {
-    width: 400px; /* 왼쪽으로만 확장 */
+/* 텍스트 스타일 통일 */
+.weather-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
 }
 
-/* 기본 날씨 텍스트 스타일 */
-.weather-text {
-    position: absolute;
-    left: 20px;
-    top: 20px;
-    transition: left 0.5s ease;
+/* 기본 텍스트 스타일 */
+.weather-text, .weather-details {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
 }
+.custom-infowindow {
+            background-color: #ffffff;
+			border: 3px solid #000000;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+            width: 250px;
+            font-family: Arial, sans-serif;
+        }
+        .custom-infowindow strong {
+            font-size: 16px;
+            color: #0077FF;
+        }
+        .custom-infowindow a {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 10px;
+            background-color: #0077FF;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .custom-infowindow a:hover {
+            background-color: #005bb5;
+        }
+.recommended-bar {
+        background-color: #ffffff;
+        color: #333333;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left;
+        padding: 12px 20px;
+        margin: 20px auto;
+        border-radius: 25px;
+        max-width: 90%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 2px solid #333333;
+        display: flex;
+        align-items: center;
+    }
 
-/* 추가 정보 영역 기본 스타일 (숨김 상태) */
-.weather-details {
-    opacity: 0;
-    position: absolute;
-    top: 60px;
-    left: 220px;
-    transition: opacity 0.5s ease;
-}
+    /* 검색창 아이콘 스타일 */
+    .recommended-bar::before {
+        content: '\f002'; /* Font Awesome 검색 아이콘 */
+        font-family: 'Font Awesome 5 Free'; 
+        font-weight: 900;
+        margin-right: 10px;
+        font-size: 18px;
+        color: #333333;
+    }
 
-/* 확장 시 추가 정보가 나타나는 효과 */
-.weather-box:hover .weather-details {
-    opacity: 1;
-}
+    /* 텍스트 스타일 */
+    #recommended-text {
+        flex: 1; /* 검색창처럼 중앙 정렬되도록 */
+    }

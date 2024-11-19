@@ -95,8 +95,10 @@ public class FoodController {
 	}
 	
 	@PostMapping("/changeFood")
-	public String changeFood(@RequestParam("foods") List<String> foods,
-							 @RequestParam("savedDate") String savedDate,
+	public String changeFood(@RequestParam("breakfast") String breakfast,
+				             @RequestParam("lunch") String lunch,
+				             @RequestParam("dinner") String dinner,
+				             @RequestParam("savedDate") String savedDate,
 							 RedirectAttributes redirectAttributes) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    String username = authentication.getName(); // 사용자 이름 (아이디)
@@ -110,24 +112,31 @@ public class FoodController {
         Calendar calendar = calendarService.getCalendarsByUserIdAndSaveDate(userId, localDate);
         
         List<String> allFNames = foodRepository.findAllFNames();
-        List<String> saveFoods = new ArrayList<>();
         
-        for (String food : foods) {
-        	boolean flag = false;
-            for (String fName : allFNames) {
-                if (food.equals(fName) || food == "") {
-                	flag = true;
-                	saveFoods.add(food);
-                    continue; // 일치하는 항목을 찾았으므로 다음 food로 넘어감
-                }
+    	boolean bFlag = false;
+    	boolean lFlag = false;
+    	boolean dFlag = false;
+    	
+        for (String fName : allFNames) {
+            if (breakfast.equals(fName) || breakfast == "") {
+            	bFlag = true;
             }
-            if(!flag) {
-            	redirectAttributes.addFlashAttribute("error", "문제가 생겨 작업하지 못했습니다");
-            	return "redirect:/calendar";
+            if (lunch.equals(fName) || lunch == "") {
+            	lFlag = true;
             }
+            if (dinner.equals(fName) || dinner == "") {
+            	dFlag = true;
+            }
+            if(bFlag && lFlag && dFlag)
+            	break;
+        }
+        if(!bFlag || !lFlag || !dFlag) {
+        	redirectAttributes.addFlashAttribute("error", "문제가 생겨 작업하지 못했습니다");
+        	calendarService.deleteCalendar(userId, localDate);
+        	return "redirect:/calendar";
         }
         
-        calendarService.saveCalendar(calendar, saveFoods);
+        calendarService.saveCalendar(calendar, breakfast, lunch, dinner);
 		
 		return "redirect:/calendar";
 	}

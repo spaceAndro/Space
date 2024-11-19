@@ -43,19 +43,11 @@ public class LoginController {
     }
     
     @GetMapping("/loginSuccess")
-    public String loginSuccess(Model model, Authentication authentication) {
-        String username = authentication.getName();
-        
-        if (userService.isFirstLogin(username)) {
-            // 최초 로그인 시 firstLogin 값을 false로 업데이트
-            userService.updateFirstLogin(username);
-            return "redirect:/AllergyForm"; // 설문조사 페이지로 리다이렉트
-        }
-        
+    public String loginSuccess() {
+
         return "redirect:/index"; // 일반 로그인 성공 시 인덱스 페이지로 이동
     }
 
-    
     
     @GetMapping("/")
     public String indexPage(@RequestParam(value = "error", required = false) String error, Model model) {

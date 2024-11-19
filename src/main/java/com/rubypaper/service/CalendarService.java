@@ -41,11 +41,7 @@ public class CalendarService {
         return calendar;
     }
     // 수정 calendar 정보 저장
-    public void saveCalendar(Calendar calendar, List<String> foods) {
-    	String breakfast = foods.get(0);
-        String lunch = foods.get(1);
-        String dinner = foods.get(2);
-    	
+    public void saveCalendar(Calendar calendar, String breakfast, String lunch, String dinner) {
     	calendar.setBreakfast(breakfast);
     	calendar.setLunch(lunch);
     	calendar.setDinner(dinner);
