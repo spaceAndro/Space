@@ -1,4 +1,4 @@
-### <h1>음식추천 AI 개발</h1>
+![image](https://github.com/user-attachments/assets/127c6078-db65-409c-9168-d51d95a7331d)### <h1>음식추천 AI 개발</h1>
 <div align="center">
 
 <!-- logo -->
@@ -46,6 +46,7 @@
 ## API
 
 ## DB ERD
+![spaceERD](https://github.com/user-attachments/assets/0a3d5949-a3ed-48f1-9644-fad511fa2f14)
 
 ## 사용한 기술 스택
 
