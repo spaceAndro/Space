@@ -1,3 +1,4 @@
+### <h1>음식추천 AI 개발</h1>
 <div align="center">
 
 <!-- logo -->
@@ -5,7 +6,7 @@
 
 
 
-### 음식추천 AI
+### 사용언어
 
  <img src="https://img.shields.io/badge/spring-%236DB33F.svg?&style=for-the-badge&logo=spring&logoColor=white" >
   <img src="https://img.shields.io/badge/javascript-%23F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=black" />
@@ -30,23 +31,23 @@
 - 기술적 이슈와 해결 과정
 
 
-### 👨‍🎓팀원
-팀장 : 송원석<br>
-팀원 : 박상원<br>
-팀원 : 김지민<br>
-팀원 : 문승신<br>
+## 👨‍🎓 팀원
+👨‍🎓 팀장 : 송원석 🖥️ <br>
+🙎‍♂️ 팀원 : 박상원 🖥️ <br>
+🙎‍♂️ 팀원 : 김지민 🖥️ <br>
+🙎‍♂️ 팀원 : 문승신 🖥️ <br>
 
-### 페이지 구성
+## 페이지 구성
 
-### API
+## API
 
-### 사용한 기술 스택
+## 사용한 기술 스택
 
-### 홈페이지 개발
+## 홈페이지 개발
 
-### AI 개발
+## AI 개발
 
-### 기술적 이슈와 해결 과정
+## 기술적 이슈와 해결 과정
 
 
 
