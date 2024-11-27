@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.rubypaper.dto.Calendar;
-import com.rubypaper.dto.Meal;
 
 public interface CalendarRepository extends JpaRepository<Calendar, Integer> {
 	// userId로 캘린더 항목을 찾는 메소드

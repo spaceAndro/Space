@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rubypaper.dto.Calendar;
-import com.rubypaper.dto.Meal;
 import com.rubypaper.jpa.CalendarRepository;
 
 @Service

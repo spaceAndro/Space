@@ -24,11 +24,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.rubypaper.dto.Calendar;
-import com.rubypaper.dto.Meal;
 import com.rubypaper.dto.User;
 import com.rubypaper.dto.UserAllergy;
 import com.rubypaper.jpa.CalendarRepository;
-import com.rubypaper.jpa.MealRepository;
 import com.rubypaper.service.UserService;
 import com.rubypaper.service.WeatherService;
 

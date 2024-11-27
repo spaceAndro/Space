@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rubypaper.dto.Food;
-import com.rubypaper.dto.Meal;
 import com.rubypaper.service.FoodService;
 
 @RestController

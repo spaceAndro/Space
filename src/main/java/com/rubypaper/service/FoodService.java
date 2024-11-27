@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rubypaper.dto.Food;
-import com.rubypaper.dto.Meal;
 import com.rubypaper.jpa.FoodRepository;
 
 import java.time.LocalDate;

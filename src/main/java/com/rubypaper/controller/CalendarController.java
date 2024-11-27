@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rubypaper.dto.Calendar;
-import com.rubypaper.dto.Meal;
 import com.rubypaper.dto.User;
 import com.rubypaper.jpa.CalendarRepository;
 import com.rubypaper.service.CalendarService;
