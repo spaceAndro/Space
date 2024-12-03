@@ -4,8 +4,6 @@
 <!-- logo -->
 ![image](https://github.com/user-attachments/assets/3f6b27a3-8231-4318-8b24-9b88950d4b96)
 
-
-
 ### 사용언어
 
  <img src="https://img.shields.io/badge/spring-%236DB33F.svg?&style=for-the-badge&logo=spring&logoColor=white" >
@@ -25,8 +23,8 @@
 - 프로젝트 팀원
 - DB ERD
 - 홈페이지 구조도
+- 사용한 API 
 - 페이지 구성
-- 프로젝트 API 설계
 - AI 개발
 - 기술적 이슈와 해결 과정
 
@@ -42,6 +40,12 @@
 
 ## 홈페이지 구조도
 ![image](https://github.com/user-attachments/assets/fc4c1e76-1e99-48e4-9a30-2a143686ac14)
+
+## 사용한 API
+![image](https://github.com/user-attachments/assets/32c8f3ad-a8a6-4d1f-b76f-42dda67442d2)<br>
+-Openweather API 홈페이지 : https://openweathermap.org/<br>
+![image](https://github.com/user-attachments/assets/84ae64a3-edbb-49ba-a903-9c367331272a)<br>
+-카카오 맵 API 홈페이지 : https://developers.kakao.com/<br>
 
 ## 페이지 구성
 ### 메인페이지<br>
@@ -72,13 +76,6 @@
 -음식추천에서 저장된 시간에 맞춰서 오늘 날짜의 아침,점심,저녁에 저장되고 하루마다 총 칼로리를 계산하고 또 한달마다 총 칼로리를 계산해서 보여줍니다. 해당 달력을 보면서 이용자는 오늘 하루 먹은 칼로리와 한달 칼로리를 확인할 수 있고 수정 삭제하면서 자신만의 음식달력을 만들어갈 수 있습니다.<br><br>
 ▼이미지
 ![image](https://github.com/user-attachments/assets/e8acb8c6-ec37-42b9-b264-ab643624e2d6)<br>
-
-## 사용한 API
-![image](https://github.com/user-attachments/assets/32c8f3ad-a8a6-4d1f-b76f-42dda67442d2)<br>
--Openweather API 홈페이지 : https://openweathermap.org/<br>
-![image](https://github.com/user-attachments/assets/84ae64a3-edbb-49ba-a903-9c367331272a)<br>
--카카오 맵 API 홈페이지 : https://developers.kakao.com/<br>
-
 
 
 
