@@ -23,10 +23,10 @@
 
 ## 📝 소개
 - 프로젝트 팀원
+- DB ERD
 - 홈페이지 구조도
 - 페이지 구성
 - 프로젝트 API 설계
-- DB ERD
 - AI 개발
 - 기술적 이슈와 해결 과정
 
@@ -36,6 +36,9 @@
 🙎‍♂️ 팀원 : 박상원 🖥️ <br>
 🙎‍♂️ 팀원 : 김지민 🖥️ <br>
 🙎‍♂️ 팀원 : 문승신 🖥️ <br>
+
+## DB ERD
+![spaceERD](https://github.com/user-attachments/assets/0a3d5949-a3ed-48f1-9644-fad511fa2f14)
 
 ## 홈페이지 구조도
 ![image](https://github.com/user-attachments/assets/fc4c1e76-1e99-48e4-9a30-2a143686ac14)
@@ -62,7 +65,7 @@
 ### 음식추천 페이지
 -음식 추천페이지에서 선호재료, 음식타입등을 입력받고 자동으로 현재 날씨와 알레르기 정보를 가져오고 모든 정보를 json형식으로 변환해 AI가 작동하고있는 flask 서버로 넘겨줍니다.<br>
 -AI가 추천한 음식을 json형식으로 가져오고 다시 string 형식으로 변환하여 추천된음식을 띄워줍니다.<br>
--추천된 음식을 저장하면 메인화면으로 넘겨줍니다.<br>
+-추천된 음식을 저장하면 메인화면으로 넘겨줍니다.<br><br>
 ▼이미지
 ![image](https://github.com/user-attachments/assets/23f7ec70-6871-4566-8b3a-1692e4bcd977)<br>
 ### 달력 페이지
@@ -71,10 +74,11 @@
 ![image](https://github.com/user-attachments/assets/e8acb8c6-ec37-42b9-b264-ab643624e2d6)<br>
 
 ## 사용한 API
--Openweather API<br>
--카카오 맵 API<br>
-## DB ERD
-![spaceERD](https://github.com/user-attachments/assets/0a3d5949-a3ed-48f1-9644-fad511fa2f14)
+![image](https://github.com/user-attachments/assets/32c8f3ad-a8a6-4d1f-b76f-42dda67442d2)<br>
+-Openweather API 홈페이지 : https://openweathermap.org/<br>
+![image](https://github.com/user-attachments/assets/84ae64a3-edbb-49ba-a903-9c367331272a)<br>
+-카카오 맵 API 홈페이지 : https://developers.kakao.com/<br>
+
 
 
 
