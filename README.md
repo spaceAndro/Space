@@ -37,6 +37,61 @@
 
 ## DB ERD
 ![spaceERD](https://github.com/user-attachments/assets/0a3d5949-a3ed-48f1-9644-fad511fa2f14)
+### User<br>
+-회원의 기본 정보를 저장합니다.<br>
+-first_login으로 최초 로그인 여부를 판단합니다.<br><br>
+
+### User_allergy<br>
+-회원의 알러지 정보를 저장하는 테이블입니다.<br>
+-알러지 종류는 우유, 계란, 땅콩, 견과류, 해산물, 갑각류, 밀, 대두류로 총 8가지로 구성되어[image](https://github.com/user-attachments/assets/3f6b27a3-8231-4318-8b24-9b88950d4b96)
+
+### 사용언어
+
+ <img src="https://img.shields.io/badge/spring-%236DB33F.svg?&style=for-the-badge&logo=spring&logoColor=white" >
+  <img src="https://img.shields.io/badge/javascript-%23F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=black" />
+<br>
+  <img src="https://img.shields.io/badge/java-%23007396.svg?&style=for-the-badge&logo=java&logoColor=white" />
+  <img src="https://img.shields.io/badge/python-%233776AB.svg?&style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/html5-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white" />
+<br>
+  <img src="https://img.shields.io/badge/mysql-%234479A1.svg?&style=for-the-badge&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/css3-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white" />
+<br/> <img src="https://img.shields.io/badge/프로젝트 기간-2024.06.02~2024.11.07-green?style=flat&logo=&logoColor=white" />
+
+</div> 
+
+## 📝 소개
+- 프로젝트 팀원
+- DB ERD
+- 홈페이지 구조도
+- 사용한 API 
+- 페이지 구성
+- AI 개발
+- 기술적 이슈와 해결 과정
+
+
+## 👨‍🎓 팀원
+👨‍🎓 팀장 : 송원석 🖥️ <br>
+🙎‍♂️ 팀원 : 박상원 🖥️ <br>
+🙎‍♂️ 팀원 : 김지민 🖥️ <br>
+🙎‍♂️ 팀원 : 문승신 🖥️ <br>
+
+## DB ERD
+![spaceERD](https://github.com/user-attachments/assets/0a3d5949-a3ed-48f1-9644-fad511fa2f14)
+### User<br>
+-회원의 기본 정보를 저장합니다.<br>
+-first_login으로 최초 로그인 여부를 판단합니다.<br><br>
+
+### User_allergy<br>
+-회원의 알러지 정보를 저장하는 테이블입니다.<br>
+-알러지 종류는 우유, 계란, 땅콩, 견과류, 해산물, 갑각류, 밀, 대두류로 총 8가지로 구성되어 있습니다.<br>
+
+### Calendar<br>
+-회원이 먹은 음식의 정보를 저장하는 테이블입니다.<br><br>
+
+### Food<br>
+-기초적인 음식 정보가 들어있는 테이블입니다.<br>
+-칼로리와 3대 영양소인 탄수화물, 단백질, 지방에 대한 값이 들어있습니다.<br><br>
 
 ## 홈페이지 구조도
 ![image](https://github.com/user-attachments/assets/fc4c1e76-1e99-48e4-9a30-2a143686ac14)
