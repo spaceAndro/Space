@@ -29,14 +29,14 @@
 - 기술적 이슈와 해결 과정
 
 ## 👨‍🎓 팀원
-👨‍🎓 팀장 : 송원석 🖥️ [총괄,백엔드,프론트엔드]<br>
--AI, API사용, 메인페이지, 음식추천페이지<br>
-🙎‍♂️ 팀원 : 박상원 🖥️ [백엔드,프론트엔드,DBA]<br>
--로그인/회원가입/설문지 모달, DB연동<br>
-🙎‍♂️ 팀원 : 김지민 🖥️ [프론트엔드,DBA]<br>
--DB관리, DB연동, 달력페이지<br>
-🙎‍♂️ 팀원 : 문승신 🖥️ [데이터라벨링]<br>
--AI학습데이터 라벨링, 데이터 구상<br>
+- 👨‍🎓 팀장 : 송원석 🖥️ [총괄,백엔드,프론트엔드]<br>
+:small_blue_diamond: AI, API사용, 메인페이지, 음식추천페이지<br>
+- 🙎‍♂️ 팀원 : 박상원 🖥️ [백엔드,프론트엔드,DBA]<br>
+:small_blue_diamond: 로그인/회원가입/설문지 모달, DB연동<br>
+- 🙎‍♂️ 팀원 : 김지민 🖥️ [프론트엔드,DBA]<br>
+:small_blue_diamond: DB관리, DB연동, 달력페이지<br>
+- 🙎‍♂️ 팀원 : 문승신 🖥️ [데이터라벨링]<br>
+:small_blue_diamond: AI학습데이터 라벨링, 데이터 구상<br>
 
 ## DB ERD
 ![spaceERD](https://github.com/user-attachments/assets/0a3d5949-a3ed-48f1-9644-fad511fa2f14)
